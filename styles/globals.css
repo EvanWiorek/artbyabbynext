@@ -96,18 +96,37 @@ html {
   margin-bottom: -15px;
 }
 
-.parallax img {
-  width: 150%;
+.hero-header {
+  width: 100vw;
+  height: 200vh;
+  background-image: url("/static/images/header-bg.jpg");
+  animation-name: bgMove;
+  animation-duration: 100s;
+  animation-iteration-count: infinite;
+  animation-timing-function: ease-in-out;
 }
 
-.parallax-container {
-  height: 70vh !important;
+@keyframes bgMove {
+  0% {
+    background-size: 150%;
+  }
+  50% {
+    background-size: 100%;
+  }
+
+  100% {
+    background-size: 150%;
+  }
 }
 
-.parallax-header-style-1 {
-  max-height: 150vh;
+.navbar-white {
+  width: 100vw;
+  height: 129px;
+  background-color: white;
 }
 
-.header {
-  background-image: url("https://images.pexels.com/photos/66997/pexels-photo-66997.jpeg");
+.body-white {
+  width: 100vw;
+  height: 100vh;
+  background-color: white;
 }
