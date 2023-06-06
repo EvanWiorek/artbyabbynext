@@ -94,31 +94,15 @@ html {
   opacity: 0;
   margin-bottom: -15px;
 }
+
 .parallax-container {
-  height: 70vh !important;
+  height: 80vh !important;
+  background: url("/static/videos/header-one.mp4");
 }
 
-.parallax img {
-  /* width: 150%; */
-  animation-name: bgMove;
-  animation-duration: 100s;
-  animation-iteration-count: infinite;
-  animation-timing-function: linear;
+.parallax-container video {
+  width: 100%;
 }
-
-
-/* @keyframes bgMove {
-  0% {
-    width: 150%;
-  }
-  50% {
-    width: 100%;
-  }
-  100% {
-    width: 150%;
-  }
-} */
-
 
 .navbar-white {
   width: 100vw;
