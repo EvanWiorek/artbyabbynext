@@ -1,6 +1,5 @@
 import '@/styles/globals.css'
 import '../node_modules/bootstrap/dist/css/bootstrap.min.css'
-import 'materialize-css/dist/css/materialize.min.css';
 
 export default function App({ Component, pageProps }) {
   return <Component {...pageProps} />

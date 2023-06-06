@@ -74,20 +74,37 @@ html {
 .links a {
   text-decoration: none;
   color: black;
-  font-size: 1.1rem;
+  font-size: 1rem;
+}
+
+.nav-search input, .nav-search button {
+  height: 30px;
+}
+
+.nav-search button {
+  padding: 0 8px;
+  border-radius: 0 10px 10px 0;
+  border: 1px solid rgb(216, 219, 222);
+  background-color: rgb(255, 255, 255);
+  color: rgb(124, 126, 128);
+  transition: .2s;
+}
+
+.nav-search button:hover {
+  background-color: rgb(231,234,237);
+  color: rgb(255, 255, 255);
 }
 
 .site-logo img {
-  width: 200px;
+  width: 130px;
   transition: .2s;
-}
-
-.smaller {
-  width: 160px !important;
+  margin-top: -5px;
 }
 
 .abby-name {
+  font-size: .6rem;
   transition: .2s;
+  margin-bottom: 4px;
 }
 
 .display-none {
@@ -96,8 +113,7 @@ html {
 }
 
 .parallax-container {
-  height: 80vh !important;
-  background: url("/static/videos/header-one.mp4");
+  height: 75vh !important;
 }
 
 .parallax-container video {
@@ -111,7 +127,8 @@ html {
 }
 
 .body-white {
-  width: 100vw;
-  height: 100vh;
-  background-color: white;
+  background-color: rgb(255, 255, 255);
+  box-shadow: 2px 0px 3px rgba(0, 0, 0, .2);
+  position: relative;
+  z-index: 1;
 }

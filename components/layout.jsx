@@ -18,6 +18,9 @@ export default function Layout({ children, home }) {
       </Head>
       <Navbar />
       <main>{children}</main>
+      <div className="footer">
+        
+      </div>
     </div>
   )
 }
