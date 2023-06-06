@@ -84,7 +84,6 @@ html {
 
 .smaller {
   width: 160px !important;
-  /* padding-bottom: 20px; */
 }
 
 .abby-name {
@@ -95,33 +94,63 @@ html {
   opacity: 0;
   margin-bottom: -15px;
 }
+.parallax-container {
+  height: 70vh !important;
+}
 
-.hero-header {
-  width: 100vw;
-  height: 200vh;
-  background-image: url("/static/images/header-bg.jpg");
+.parallax img {
+  width: 150%;
   animation-name: bgMove;
   animation-duration: 100s;
   animation-iteration-count: infinite;
-  animation-timing-function: ease-in-out;
+  animation-timing-function: linear;
 }
 
-@keyframes bgMove {
+/* @keyframes bgMove {
   0% {
-    background-size: 150%;
+    left: 30%;
+    top: -200%;
   }
   50% {
-    background-size: 100%;
+    left: 75%;
+    top: -100%;
   }
 
   100% {
-    background-size: 150%;
+    left: 30%;
+    top: -200%;
+  }
+} */
+
+@keyframes bgMove {
+  0% {
+    width: 150%;
+  }
+  50% {
+    width: 100%;
+  }
+  100% {
+    width: 150%;
   }
 }
 
+/* @keyframes bgMove {
+  0% {
+    filter: blur(0);
+  }
+  50% {
+    filter: blur(15px);
+  }
+
+  100% {
+    filter: blur(0);
+    
+  }
+} */
+
 .navbar-white {
   width: 100vw;
-  height: 129px;
+  height: 125px;
   background-color: white;
 }
 
