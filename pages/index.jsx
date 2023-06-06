@@ -1,75 +1,65 @@
 import Head from 'next/head'
-import Layout from '@/components/layout'
-import { Parallax, ParallaxLayer } from '@react-spring/parallax'
-import { useInView } from '@react-spring/web'
-import { useState, useRef, useMemo, useEffect } from 'react'
+import Layout from '@/components/Layout'
+import { useState, useRef, useMemo, useEffect } from 'react';
+import $ from "jquery";
+import HeaderOne from '../components/HeaderOne'
+
 
 export default function Home() {
-  // const myRef = useRef(null);
-  const [ref, inView] = useInView();
 
   useEffect(() => {
-    // const observer = new IntersectionObserver((entries) => {
-    //   const entry = entries[0];
-    //   console.log('entry', entry);
-    // })
-    // return observer.observe(myRef.current);
+    let elems
+
+    if (typeof window !== 'undefined') {
+      const M = require('materialize-css');
+      elems = document.querySelectorAll('.parallax');
+      M.Parallax.init(elems);
+    }
+
   }, [])
-  
+
   return (
     <Layout home>
       <Head>
         <title>Art By Abby | Home</title>
       </Head>
       <main>
-        <Parallax pages={3}>
-          <ParallaxLayer offset={0} speed={.4} factor={2}>
-            <div className="hero-header"></div>
-          </ParallaxLayer>
+        <div className="navbar-white"></div>
 
-          <ParallaxLayer offset={.5}
-            speed={0.05} className='text-center'>
-            <h1 className='display-4'>Welcome to Art By Abby</h1>
-          </ParallaxLayer>
+        <HeaderOne />
 
-          <ParallaxLayer offset={0} style={{ backgroundColor: `white`, height: `129px`, width: `110vw` }}>
-          </ParallaxLayer>
+        <div className="body-white border-on-top">
+          <br />
+          <br />
+          <br />
+          <br />
+          <br />
+          <br />
+          <br />
+          <br />
+          <br />
+          <br />
+          <br />
+          <br />
+          <br />
+          <br />
+          <br />
+          <br />
+          <br />
+          <br />
+          <br />
+          <br />
+          <br />
+          <br />
+          <br />
 
-          <ParallaxLayer offset={.9}
-            speed={0.05}>
-            <div className="body-white">
-              <br />
-              <br />
-              <br />
-              <br />
-              <br />
-              <br />
-              <br />
-              <br />
-              <br />
-              <br />
-              <br />
-              <br />
-              <br />
-              <br />
-              <br />
-              <br />
-              <br />
-              <br />
-              <br />
-              <br />
-              <br />
-              <br />
-              <br />
+          <div>
+            <h1>TEST</h1>
+          </div>
 
-              <div ref={ref}>
-                <h1>{inView ? 'Hello World' : 'TEST'}</h1>
-              </div>
-            </div>
-          </ParallaxLayer>
+        </div>
 
-        </Parallax>
       </main>
-    </Layout>
+    </Layout >
   )
 }
