@@ -37,24 +37,10 @@ export default function Home() {
         <div className="navbar-white"></div>
 
         <div className="parallax-container" ref={myRef}>
-          <video src="/static/videos/header-one.mp4" autoPlay muted loop controls></video>
+          <video src="/static/videos/header-one.mp4" autoPlay muted loop></video>
         </div>
 
         <div className="body-white">
-          <br />
-          <br />
-          <br />
-          <br />
-          <br />
-          <br />
-          <br />
-          <br />
-          <br />
-          <br />
-          <br />
-          <br />
-          <br />
-          <br />
           <br />
           <br />
           <br />
