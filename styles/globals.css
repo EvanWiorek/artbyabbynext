@@ -99,30 +99,15 @@ html {
 }
 
 .parallax img {
-  width: 150%;
+  /* width: 150%; */
   animation-name: bgMove;
   animation-duration: 100s;
   animation-iteration-count: infinite;
   animation-timing-function: linear;
 }
 
+
 /* @keyframes bgMove {
-  0% {
-    left: 30%;
-    top: -200%;
-  }
-  50% {
-    left: 75%;
-    top: -100%;
-  }
-
-  100% {
-    left: 30%;
-    top: -200%;
-  }
-} */
-
-@keyframes bgMove {
   0% {
     width: 150%;
   }
@@ -132,21 +117,8 @@ html {
   100% {
     width: 150%;
   }
-}
-
-/* @keyframes bgMove {
-  0% {
-    filter: blur(0);
-  }
-  50% {
-    filter: blur(15px);
-  }
-
-  100% {
-    filter: blur(0);
-    
-  }
 } */
+
 
 .navbar-white {
   width: 100vw;
