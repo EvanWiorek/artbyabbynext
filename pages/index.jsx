@@ -107,10 +107,6 @@ export default function Home() {
           <br />
           <br />
           <br />
-          <div>
-            <h1>TEST</h1>
-          </div>
-
         </div>
 
       </main>
