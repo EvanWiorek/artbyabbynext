@@ -13,23 +13,12 @@ export default function Home() {
       setIsVisible(entry.isIntersecting)
     })
     observer.observe(myRef.current)
-
-    if (isVisible) {
-      document.querySelector(".logo-img").style = "width: 200px; margin-top: 0;"
-      document.querySelector(".abby-name").style = "font-size: 1rem;"
-    }
-    else {
-      document.querySelector(".logo-img").style = "width: 130px;"
-      document.querySelector(".abby-name").style = "font-size: .6rem; margin-bottom: 4px;"
-    }
   }, [isVisible])
-
-  console.log(isVisible);
 
 
 
   return (
-    <Layout home>
+    <Layout isVisible={isVisible} setIsVisible={setIsVisible}>
       <Head>
         <title>Home | Art by Abby</title>
       </Head>

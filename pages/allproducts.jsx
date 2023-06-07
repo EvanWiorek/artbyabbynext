@@ -1,10 +1,10 @@
 import Head from 'next/head'
 import Layout from '@/components/Layout'
 
-const allproducts = () => {
+const allproducts = ({isVisible}) => {
 
   return (
-    <Layout home>
+    <Layout home isVisible={isVisible}>
       <Head>
         <title>All Products | Art by Abby</title>
       </Head>

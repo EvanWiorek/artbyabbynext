@@ -31,6 +31,15 @@ html {
   border: 0px;
 }
 
+::selection {
+  background: rgb(131, 180, 192);
+  color: white;
+}
+::-moz-selection {
+  background: rgb(131, 180, 192);
+  color: white;
+}
+
 .animate-fade-in-slow {
   opacity: 0;
   transition: 3s;
@@ -69,20 +78,64 @@ html {
 .links {
   font-family: 'Bressay Trial', sans-serif;
   filter: drop-shadow(0px 0px 20px rgba(255, 255, 255, 1)) drop-shadow(0px 0px 10px rgba(255, 255, 255, 1));
+  transition: .2s;
+}
+
+.site-logo img {
+  width: 130px;
+  transition: .2s;
+  margin-top: -5px;
+  image-rendering:auto;
+}
+
+.abby-name {
+  font-size: .6rem;
+  transition: .2s;
+  margin-bottom: 4px;
+  color: black;
+}
+
+.site-logo:hover p {
+  /* opacity: .7; */
+  color: rgb(131, 180, 192);
+}
+
+.site-logo:hover img {
+  filter: invert(73%) sepia(37%) saturate(262%) hue-rotate(120deg) brightness(100%) contrast(110%);
 }
 
 .links a {
   text-decoration: none;
   color: black;
   font-size: 1rem;
+  margin-top: -8px;
+  transition: .2s;
+}
+
+.links a:hover {
+  color: rgb(131, 180, 192);
 }
 
 .nav-search input, .nav-search button {
+  font-family: 'Bressay Trial', sans-serif;
+  font-size: .9rem;
   height: 30px;
 }
 
+.nav-search input {
+  border-radius: 10px 0 0 10px;
+}
+
+input {
+  caret-color: rgba(0,0,0,.5);
+}
+
+input:focus {
+  box-shadow: 0px 0px 5px rgb(131, 180, 192) !important;
+}
+
 .nav-search button {
-  padding: 0 8px;
+  padding: 5px 8px;
   border-radius: 0 10px 10px 0;
   border: 1px solid rgb(216, 219, 222);
   background-color: rgb(255, 255, 255);
@@ -96,10 +149,10 @@ html {
 }
 
 .cart-button {
-  padding: 4px 9px;
-  border-radius: 50%;
-  border: 0px solid rgb(216, 219, 222);
-  background-color: transparent;
+  padding: 3px 7px;
+  border-radius: 10px;
+  border: 1px solid rgb(216, 219, 222);
+  background-color: rgb(255, 255, 255);
   transition: .2s;
   color: rgb(124, 126, 128);
 }
@@ -111,24 +164,11 @@ html {
 
 .items-count {
   border: 1px solid rgb(216, 219, 222);
-  background-color: rgba(255, 255, 255, .8);
+  background-color: rgba(255, 255, 255, .7);
   color: rgb(124, 126, 128) !important;
-  top: 10px;
-  left: 90%;
+  top: 3px;
+  left: 95%;
   font-size: .6rem !important;
-}
-
-.site-logo img {
-  width: 130px;
-  transition: .2s;
-  margin-top: -5px;
-}
-
-.abby-name {
-  font-size: .6rem;
-  transition: .2s;
-  margin-bottom: 4px;
-  color: black;
 }
 
 .display-none {
