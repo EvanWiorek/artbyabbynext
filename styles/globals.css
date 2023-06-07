@@ -215,8 +215,8 @@ input:focus {
 .cart-menu-body {
   width: 0%;
   height: 100vh;
-  background-color: rgba(255, 255, 255, 0.4);
-  backdrop-filter: blur(25px);
+  /* background-color: rgba(255, 255, 255, 0.4); */
+  backdrop-filter: blur(25px) brightness(125%);
   position: fixed;
   right: 0;
   z-index: 200;
