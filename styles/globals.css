@@ -40,6 +40,10 @@ html {
   color: white;
 }
 
+.site-font {
+  font-family: 'Bressay Trial', sans-serif;
+}
+
 .animate-fade-in-slow {
   opacity: 0;
   transition: 3s;
@@ -209,25 +213,76 @@ input:focus {
 }
 
 .cart-menu-body {
-  width: 22%;
+  width: 0%;
   height: 100vh;
-  background-color: white;
+  background-color: rgba(255, 255, 255, 0.4);
+  backdrop-filter: blur(25px);
   position: fixed;
   right: 0;
   z-index: 200;
   box-shadow: 0px 0px 3px rgba(0, 0, 0, .2);
-  display: none;
-  transition: .2s;
+  transition: .3s;
   animation-name: enterMenu;
-  animation-duration: .5s;
 }
+
+.cart-menu-content {
+  transition: .3s;
+  animation-name: enterDark;
+  opacity: 0;
+}
+
+.cart-menu-bottom {
+  position: absolute;
+  bottom: 0;
+  padding: 20px;
+}
+
+.cart-menu-middle {
+  padding: 20px;
+}
+
+.view-cart {
+  background-color: rgb(131, 180, 192);
+  color: rgb(255, 255, 255);
+  padding: 9px;
+  border: none;
+  text-decoration: none;
+  text-align: center;
+  transition: .2s;
+}
+
+.view-cart:hover {
+  background-color: rgb(125, 169, 181);
+}
+
+.screen-darken {
+  width: 100vw;
+  height: 100vh;
+  background-color: rgba(0,0,0,.25);
+  position: fixed;
+  z-index: 150;
+  transition: .3s;
+  animation-name: enterDark;
+  opacity: 0;
+  pointer-events: none;
+}
+
 
 @keyframes enterMenu {
   0% {
-    right: -22%;
+    
   }
   100% {
     right: 0;
+  }
+}
+
+@keyframes enterDark {
+  0% {
+    opacity: 0;
+  }
+  100% {
+    opacity: 1;
   }
 }
 

@@ -19,12 +19,16 @@ const Navbar = ({ isVisible, setIsVisible }) => {
 
   const handleOpen = () => {
     setCartMenuVisible(true);
-    document.querySelector(".cart-menu-body").style = "display: block;"
+    document.querySelector(".cart-menu-body").style = "width: 20%;"
+    document.querySelector(".screen-darken").style = "opacity: 1"
+    setTimeout(() => document.querySelector(".cart-menu-content").style = "opacity: 1", 150)
   }
 
   const handleClose = () => {
     setCartMenuVisible(false);
-    document.querySelector(".cart-menu-body").style = "display: none;"
+    setTimeout(() => document.querySelector(".cart-menu-body").style = "width: 0;", 150)
+    setTimeout(() => document.querySelector(".screen-darken").style = "opacity: 0", 150)
+    document.querySelector(".cart-menu-content").style = "opacity: 0"
   }
 
   console.log('from navbar:', cartMenuVisible);
@@ -55,19 +59,34 @@ const Navbar = ({ isVisible, setIsVisible }) => {
                 <button type="button"><span className="bi-search"></span></button>
               </div>
             </div>
-            <button type="button" class="position-relative cart-button" style={{ marginTop: `-17px` }} onClick={handleOpen}>
-              <i class="bi bi-bag" style={{ fontSize: `1rem` }}></i>
-              <span class="position-absolute translate-middle badge rounded-pill items-count">
+            <button type="button" className="position-relative cart-button" style={{ marginTop: `-17px` }} onClick={handleOpen}>
+              <i className="bi bi-bag" style={{ fontSize: `1rem` }}></i>
+              <span className="position-absolute translate-middle badge rounded-pill items-count">
                 12
-                <span class="visually-hidden">Number of Items in Cart</span>
+                <span className="visually-hidden">Number of Items in Cart</span>
               </span>
             </button>
           </div>
         </div>
       </div>
 
-      <div className='cart-menu-body box-shadow'>
-        <button onClick={handleClose}>Close</button>
+      <div className="screen-darken"></div>
+
+      <div className='cart-menu-body box-shadow site-font'>
+        <div className="cart-menu-content">
+          <div className="cart-menu-top">
+            <div className='d-flex justify-content-end'>
+              <p onClick={handleClose} style={{ marginRight: `10px`, marginTop: `5px`, cursor: `pointer` }}><i className="bi bi-x-lg" style={{ color: `rgb(124, 126, 128)` }}></i></p>
+            </div>
+          </div>
+          <div className="cart-menu-middle">
+            <p>Your cart is currently empty.</p>
+          </div>
+          <div className="cart-menu-bottom d-flex flex-column">
+            <p>Your subtotal today is $14.99. Shipping and taxes will calculated at checkout.</p>
+            <Link href="/cart" className='view-cart'>View Cart</Link>
+          </div>
+        </div>
       </div>
 
     </div>
