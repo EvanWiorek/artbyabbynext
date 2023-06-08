@@ -51,10 +51,11 @@ const Navbar = ({ headerIsVisible }) => {
   }
 
   const handleOpenMobileMenu = () => {
+    document.querySelector(".mobile-menu-content").style = "display: block;"
     document.querySelector(".mobile-menu-body").style = "width: 80vw;"
     document.querySelector(".screen-darken").style = "display: block"
     setTimeout(() => document.querySelector(".screen-darken").style = "display: block; opacity: 1", 100)
-    setTimeout(() => document.querySelector(".mobile-menu-content").style = "opacity: 1", 150)
+    setTimeout(() => document.querySelector(".mobile-menu-content").style = "opacity: 1; display: block;", 150)
     setTimeout(() => document.querySelector(".mobile-menu-body").style = "background-color: rgba(255, 255, 255, 0); width: 80vw;", 200)
   }
 
@@ -62,7 +63,8 @@ const Navbar = ({ headerIsVisible }) => {
     setTimeout(() => document.querySelector(".mobile-menu-body").style = "width: 0px; background-color: rgba(255, 255, 255, 1); backdrop-filter: blur(0px) brightness(100%);   pointer-events: none;", 200)
     setTimeout(() => document.querySelector(".screen-darken").style = "opacity: 0; display: block; transition: .2s", 200)
     setTimeout(() => document.querySelector(".screen-darken").style = "display: none", 600)
-    document.querySelector(".mobile-menu-content").style = "opacity: 0"
+    document.querySelector(".mobile-menu-content").style = "opacity: 0; display: block;"
+    setTimeout(() => document.querySelector(".mobile-menu-content").style = "display: none", 600)
   }
 
   const handleRoute = (href) => {

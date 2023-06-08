@@ -279,6 +279,7 @@ input:focus {
 .mobile-menu-content {
   transition: .3s;
   opacity: 0;
+  display: none;
 }
 
 .mobile-menu-links {
