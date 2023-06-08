@@ -3,11 +3,11 @@ import Link from 'next/link';
 import { useEffect, useState } from 'react';
 import { useRouter } from 'next/router';
 
-const Navbar = ({ isVisible, setIsVisible }) => {
+const Navbar = ({ headerIsVisible }) => {
   const router = useRouter();
 
   useEffect(() => {
-    if (isVisible) {
+    if (headerIsVisible) {
       document.querySelector(".logo-img").style = "width: 200px;"
       document.querySelector(".abby-name").style = "font-size: 1rem;"
     }

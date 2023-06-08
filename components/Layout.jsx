@@ -2,7 +2,7 @@ import Head from 'next/head';
 import Navbar from './Navbar';
 import Footer from './Footer';
 
-export default function Layout({ children, isVisible, setIsVisible }) {
+export default function Layout({ children, headerIsVisible}) {
   return (
     <div>
       <Head>
@@ -17,7 +17,7 @@ export default function Layout({ children, isVisible, setIsVisible }) {
         <meta name="viewport" content="width=device-width, initial-scale=1" />
         <link rel="icon" href="/favicon.ico" />
       </Head>
-      <Navbar isVisible={isVisible} setIsVisible={setIsVisible}/>
+      <Navbar headerIsVisible={headerIsVisible}/>
       <main>
         {children}
       </main>

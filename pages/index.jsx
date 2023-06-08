@@ -5,24 +5,31 @@ import { useState, useRef, useMemo, useEffect } from 'react';
 
 export default function Home() {
   const myRef = useRef();
-  const [isVisible, setIsVisible] = useState();
+  const [headerIsVisible, setHeaderIsVisible] = useState();
 
   useEffect(() => {
     const observer = new IntersectionObserver((entries) => {
       const entry = entries[0];
-      setIsVisible(entry.isIntersecting)
+      setHeaderIsVisible(entry.isIntersecting)
     })
     observer.observe(myRef.current)
-  }, [isVisible])
+
+    if(headerIsVisible) {
+      document.querySelector(".page-content").style = "opacity: 1;"
+    }
+    else {
+      document.querySelector(".page-content").style = "opacity: 0;"
+    }
+  }, [headerIsVisible])
 
 
 
   return (
-    <Layout isVisible={isVisible} setIsVisible={setIsVisible}>
+    <Layout headerIsVisible={headerIsVisible}>
       <Head>
         <title>Home | Art by Abby</title>
       </Head>
-      <main>
+      <main className='page-content'>
         <div className="navbar-white"></div>
 
         <div className="parallax-container" ref={myRef}>

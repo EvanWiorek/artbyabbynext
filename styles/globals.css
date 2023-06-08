@@ -41,6 +41,11 @@ html {
   color: white;
 }
 
+.page-content {
+  opacity: 0;
+  transition: .3s;
+}
+
 .site-font {
   font-family: 'Bressay Trial', sans-serif;
 }
