@@ -18,10 +18,10 @@ const Navbar = ({ headerIsVisible }) => {
   })
 
   const closeSideMenu = () => {
-    if (document.querySelector(".cart-menu-body").style.width == "90vw" || document.querySelector(".cart-menu-body").style.width == "20%") {
+    if (document.querySelector(".cart-menu-body").style.width == "80vw" || document.querySelector(".cart-menu-body").style.width == "20%") {
       handleCloseCart();
     }
-    if (document.querySelector(".mobile-menu-body").style.width == "90vw") {
+    if (document.querySelector(".mobile-menu-body").style.width == "80vw") {
       handleCloseMobileMenu();
     }
   }
@@ -35,32 +35,33 @@ const Navbar = ({ headerIsVisible }) => {
   }
 
   const handleOpenCartMobile = () => {
-    document.querySelector(".cart-menu-body").style = "width: 90vw;"
+    document.querySelector(".mobile-menu-content").style = "display: none"
+    document.querySelector(".cart-menu-body").style = "width: 80vw;"
     document.querySelector(".screen-darken").style = "display: block"
     setTimeout(() => document.querySelector(".screen-darken").style = "display: block; opacity: 1", 100)
     setTimeout(() => document.querySelector(".cart-menu-content").style = "opacity: 1", 150)
-    setTimeout(() => document.querySelector(".cart-menu-body").style = "background-color: rgba(255, 255, 255, 0); width: 90vw;", 200)
+    setTimeout(() => document.querySelector(".cart-menu-body").style = "background-color: rgba(255, 255, 255, 0); width: 80vw;", 200)
   }
 
   const handleCloseCart = () => {
     setTimeout(() => document.querySelector(".cart-menu-body").style = "width: 0px; background-color: rgba(255, 255, 255, 1); backdrop-filter: blur(0px) brightness(100%);", 200)
-    setTimeout(() => document.querySelector(".screen-darken").style = "opacity: 0; display: block", 200)
-    setTimeout(() => document.querySelector(".screen-darken").style = "display: none", 1000)
+    setTimeout(() => document.querySelector(".screen-darken").style = "opacity: 0; display: block; transition: .2s", 200)
+    setTimeout(() => document.querySelector(".screen-darken").style = "display: none", 600)
     document.querySelector(".cart-menu-content").style = "opacity: 0"
   }
 
   const handleOpenMobileMenu = () => {
-    document.querySelector(".mobile-menu-body").style = "width: 90vw;"
+    document.querySelector(".mobile-menu-body").style = "width: 80vw;"
     document.querySelector(".screen-darken").style = "display: block"
     setTimeout(() => document.querySelector(".screen-darken").style = "display: block; opacity: 1", 100)
     setTimeout(() => document.querySelector(".mobile-menu-content").style = "opacity: 1", 150)
-    setTimeout(() => document.querySelector(".mobile-menu-body").style = "background-color: rgba(255, 255, 255, 0); width: 90vw;", 200)
+    setTimeout(() => document.querySelector(".mobile-menu-body").style = "background-color: rgba(255, 255, 255, 0); width: 80vw;", 200)
   }
 
   const handleCloseMobileMenu = () => {
     setTimeout(() => document.querySelector(".mobile-menu-body").style = "width: 0px; background-color: rgba(255, 255, 255, 1); backdrop-filter: blur(0px) brightness(100%);   pointer-events: none;", 200)
-    setTimeout(() => document.querySelector(".screen-darken").style = "opacity: 0; display: block", 200)
-    setTimeout(() => document.querySelector(".screen-darken").style = "display: none", 1000)
+    setTimeout(() => document.querySelector(".screen-darken").style = "opacity: 0; display: block; transition: .2s", 200)
+    setTimeout(() => document.querySelector(".screen-darken").style = "display: none", 600)
     document.querySelector(".mobile-menu-content").style = "opacity: 0"
   }
 
