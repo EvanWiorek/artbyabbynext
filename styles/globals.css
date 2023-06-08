@@ -286,10 +286,10 @@ input:focus {
   padding: 20px;
 }
 
-.mobile-menu-links a {
-  text-decoration: none;
+.mobile-menu-links p {
   color: black;
   font-size: 1.3rem;
+  margin-bottom: 0;
 }
 
 .mobile-nav-search input, .mobile-nav-search button {

@@ -68,9 +68,7 @@ const Navbar = ({ headerIsVisible }) => {
   }
 
   const handleRoute = (href) => {
-
     if (router.asPath == "/") {
-      console.log(router.asPath);
       document.querySelector(".navbar-white").style = "height: 0;"
       document.querySelector(".logo-img").style = "width: 130px;"
       document.querySelector(".abby-name").style = "font-size: .6rem;"
@@ -78,8 +76,12 @@ const Navbar = ({ headerIsVisible }) => {
     }
     if (router.asPath != "/") {
       router.push(href)
-
     }
+  }
+
+  const handleRouteMobile = (href) => {
+    handleCloseMobileMenu()
+    setTimeout(() => router.push(href), 500)
   }
 
   return <>
@@ -161,14 +163,11 @@ const Navbar = ({ headerIsVisible }) => {
             </div>
           </div>
           <div className="mobile-menu-links site-font">
-            <Link href="/updates">News</Link>
+            <p onClick={() => handleRouteMobile("/updates")}>News</p>
             <br />
+            <p onClick={() => handleRouteMobile("/lessons")}>Art Lessons</p>
             <br />
-            <Link href="/lessons">Art Lessons</Link>
-            <br />
-            <br />
-            <Link href="/allproducts">Browse All Products</Link>
-            <br />
+            <p onClick={() => handleRouteMobile("/allproducts")}>Browse All Products</p>
             <br />
             <div className="horizontal-line m-auto"></div>
             <br />
