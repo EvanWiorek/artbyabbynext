@@ -17,24 +17,51 @@ const Navbar = ({ headerIsVisible }) => {
     }
   })
 
-  const handleOpenDesktop = () => {
+  const closeSideMenu = () => {
+    if (document.querySelector(".cart-menu-body").style.width == "90vw" || document.querySelector(".cart-menu-body").style.width == "20%") {
+      handleCloseCart();
+    }
+    if (document.querySelector(".mobile-menu-body").style.width == "90vw") {
+      handleCloseMobileMenu();
+    }
+  }
+
+  const handleOpenCartDesktop = () => {
     document.querySelector(".cart-menu-body").style = "width: 20%;"
-    document.querySelector(".screen-darken").style = "opacity: 1"
+    document.querySelector(".screen-darken").style = "display: block"
+    setTimeout(() => document.querySelector(".screen-darken").style = "display: block; opacity: 1", 100)
     setTimeout(() => document.querySelector(".cart-menu-content").style = "opacity: 1", 150)
     setTimeout(() => document.querySelector(".cart-menu-body").style = "background-color: rgba(255, 255, 255, 0); width: 20%;", 200)
   }
 
-  const handleOpenMobile = () => {
+  const handleOpenCartMobile = () => {
     document.querySelector(".cart-menu-body").style = "width: 90vw;"
-    document.querySelector(".screen-darken").style = "opacity: 1"
+    document.querySelector(".screen-darken").style = "display: block"
+    setTimeout(() => document.querySelector(".screen-darken").style = "display: block; opacity: 1", 100)
     setTimeout(() => document.querySelector(".cart-menu-content").style = "opacity: 1", 150)
     setTimeout(() => document.querySelector(".cart-menu-body").style = "background-color: rgba(255, 255, 255, 0); width: 90vw;", 200)
   }
 
-  const handleClose = () => {
-    setTimeout(() => document.querySelector(".cart-menu-body").style = "width: 0; background-color: rgba(255, 255, 255, 1); backdrop-filter: blur(0px) brightness(100%);", 200)
-    setTimeout(() => document.querySelector(".screen-darken").style = "opacity: 0", 150)
+  const handleCloseCart = () => {
+    setTimeout(() => document.querySelector(".cart-menu-body").style = "width: 0px; background-color: rgba(255, 255, 255, 1); backdrop-filter: blur(0px) brightness(100%);", 200)
+    setTimeout(() => document.querySelector(".screen-darken").style = "opacity: 0; display: block", 200)
+    setTimeout(() => document.querySelector(".screen-darken").style = "display: none", 1000)
     document.querySelector(".cart-menu-content").style = "opacity: 0"
+  }
+
+  const handleOpenMobileMenu = () => {
+    document.querySelector(".mobile-menu-body").style = "width: 90vw;"
+    document.querySelector(".screen-darken").style = "display: block"
+    setTimeout(() => document.querySelector(".screen-darken").style = "display: block; opacity: 1", 100)
+    setTimeout(() => document.querySelector(".mobile-menu-content").style = "opacity: 1", 150)
+    setTimeout(() => document.querySelector(".mobile-menu-body").style = "background-color: rgba(255, 255, 255, 0); width: 90vw;", 200)
+  }
+
+  const handleCloseMobileMenu = () => {
+    setTimeout(() => document.querySelector(".mobile-menu-body").style = "width: 0px; background-color: rgba(255, 255, 255, 1); backdrop-filter: blur(0px) brightness(100%);   pointer-events: none;", 200)
+    setTimeout(() => document.querySelector(".screen-darken").style = "opacity: 0; display: block", 200)
+    setTimeout(() => document.querySelector(".screen-darken").style = "display: none", 1000)
+    document.querySelector(".mobile-menu-content").style = "opacity: 0"
   }
 
   const handleRoute = (href) => {
@@ -52,8 +79,6 @@ const Navbar = ({ headerIsVisible }) => {
     }
   }
 
-  // console.log('from navbar:', cartMenuVisible);
-
   return <>
     <div>
       <div className="navbar-body pt-3 border-on-bottom">
@@ -68,7 +93,7 @@ const Navbar = ({ headerIsVisible }) => {
             </div>
           </div>
           <div className="left-side-mobile desktop-hide">
-            <button style={{ marginTop: `-17px` }}><i className="bi bi-list"></i></button>
+            <button style={{ marginTop: `-17px` }} onClick={handleOpenMobileMenu}><i className="bi bi-list"></i></button>
           </div>
           <div className="middle site-logo text-center mobile-indent">
             <Link href="/" style={{ textDecoration: 'none' }}>
@@ -84,7 +109,7 @@ const Navbar = ({ headerIsVisible }) => {
                 <button type="button"><span className="bi-search"></span></button>
               </div>
             </div>
-            <button type="button" className="position-relative cart-button mobile-hide" style={{ marginTop: `-17px` }} onClick={handleOpenDesktop}>
+            <button type="button" className="position-relative cart-button mobile-hide" style={{ marginTop: `-17px` }} onClick={handleOpenCartDesktop}>
               <i className="bi bi-bag" style={{ fontSize: `1rem` }}></i>
               <span className="position-absolute translate-middle badge rounded-pill items-count">
                 12
@@ -94,7 +119,7 @@ const Navbar = ({ headerIsVisible }) => {
           </div>
 
           <div className="right-side-mobile desktop-hide">
-            <button type="button" className="position-relative cart-button" style={{ marginTop: `-17px` }} onClick={handleOpenMobile}>
+            <button type="button" className="position-relative cart-button" style={{ marginTop: `-17px` }} onClick={handleOpenCartMobile}>
               <i className="bi bi-bag" style={{ fontSize: `1rem` }}></i>
               <span className="position-absolute translate-middle badge rounded-pill items-count">
                 12
@@ -106,13 +131,13 @@ const Navbar = ({ headerIsVisible }) => {
         </div>
       </div>
 
-      <div className="screen-darken"></div>
+      <div className="screen-darken" onClick={closeSideMenu}></div>
 
       <div className='cart-menu-body box-shadow site-font'>
         <div className="cart-menu-content">
           <div className="cart-menu-top">
             <div className='d-flex justify-content-end'>
-              <p onClick={handleClose} style={{ marginRight: `10px`, marginTop: `5px`, cursor: `pointer` }}><i className="bi bi-x-lg close-cart-menu" style={{ color: `rgb(124, 126, 128)` }}></i></p>
+              <p onClick={handleCloseCart} style={{ marginRight: `15px`, marginTop: `10px`, cursor: `pointer` }}><i className="bi bi-x-lg close-cart-menu" style={{ color: `rgb(124, 126, 128)` }}></i></p>
             </div>
           </div>
           <div className="cart-menu-middle">
@@ -121,6 +146,35 @@ const Navbar = ({ headerIsVisible }) => {
           <div className="cart-menu-bottom d-flex flex-column">
             <p>Your subtotal today is $14.99. Shipping and taxes will calculated at checkout.</p>
             <Link href="/cart" className='view-cart'>View Cart</Link>
+          </div>
+        </div>
+      </div>
+
+      <div className='mobile-menu-body box-shadow site-font'>
+        <div className="mobile-menu-content">
+          <div className="mobile-menu-top">
+            <div className='d-flex justify-content-end'>
+              <p onClick={handleCloseMobileMenu} style={{ marginRight: `15px`, marginTop: `10px`, cursor: `pointer` }}><i className="bi bi-x-lg close-cart-menu" style={{ color: `rgb(124, 126, 128)` }}></i></p>
+            </div>
+          </div>
+          <div className="mobile-menu-links site-font">
+            <Link href="/updates">News</Link>
+            <br />
+            <br />
+            <Link href="/lessons">Art Lessons</Link>
+            <br />
+            <br />
+            <Link href="/allproducts">Browse All Products</Link>
+            <br />
+            <br />
+            <div className="horizontal-line m-auto"></div>
+            <br />
+            <div className="input-group mb-3 mobile-nav-search">
+              <input type="text" className="form-control" placeholder="Search" aria-label="Search" aria-describedby="basic-addon2" />
+              <div className="input-group-append">
+                <button type="button"><span className="bi-search"></span></button>
+              </div>
+            </div>
           </div>
         </div>
       </div>
