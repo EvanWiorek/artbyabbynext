@@ -191,6 +191,7 @@ input:focus {
 
 .parallax-container video {
   width: 100%;
+  pointer-events: none;
 }
 
 .navbar-white {
