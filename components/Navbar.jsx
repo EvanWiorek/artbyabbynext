@@ -1,9 +1,10 @@
 
 import Link from 'next/link';
 import { useEffect, useState } from 'react';
+import { useRouter } from 'next/router';
 
 const Navbar = ({ isVisible, setIsVisible }) => {
-  const [cartMenuVisible, setCartMenuVisible] = useState(false);
+  const router = useRouter();
 
   useEffect(() => {
     if (isVisible) {
@@ -17,7 +18,6 @@ const Navbar = ({ isVisible, setIsVisible }) => {
   })
 
   const handleOpenDesktop = () => {
-    setCartMenuVisible(true);
     document.querySelector(".cart-menu-body").style = "width: 20%;"
     document.querySelector(".screen-darken").style = "opacity: 1"
     setTimeout(() => document.querySelector(".cart-menu-content").style = "opacity: 1", 150)
@@ -25,7 +25,6 @@ const Navbar = ({ isVisible, setIsVisible }) => {
   }
 
   const handleOpenMobile = () => {
-    setCartMenuVisible(true);
     document.querySelector(".cart-menu-body").style = "width: 90vw;"
     document.querySelector(".screen-darken").style = "opacity: 1"
     setTimeout(() => document.querySelector(".cart-menu-content").style = "opacity: 1", 150)
@@ -33,10 +32,24 @@ const Navbar = ({ isVisible, setIsVisible }) => {
   }
 
   const handleClose = () => {
-    setCartMenuVisible(false);
     setTimeout(() => document.querySelector(".cart-menu-body").style = "width: 0; background-color: rgba(255, 255, 255, 1); backdrop-filter: blur(0px) brightness(100%);", 200)
     setTimeout(() => document.querySelector(".screen-darken").style = "opacity: 0", 150)
     document.querySelector(".cart-menu-content").style = "opacity: 0"
+  }
+
+  const handleRoute = (href) => {
+
+    if (router.asPath == "/") {
+      console.log(router.asPath);
+      document.querySelector(".navbar-white").style = "height: 0;"
+      document.querySelector(".logo-img").style = "width: 130px;"
+      document.querySelector(".abby-name").style = "font-size: .6rem;"
+      setTimeout(() => router.push(href), 200)
+    }
+    if (router.asPath != "/") {
+      router.push(href)
+
+    }
   }
 
   // console.log('from navbar:', cartMenuVisible);
@@ -47,11 +60,11 @@ const Navbar = ({ isVisible, setIsVisible }) => {
         <div className="navbar-content d-flex align-items-center justify-content-around col-lg-11 m-auto">
           <div className="left-side-desktop col-3 mobile-hide" >
             <div className="links d-flex custom-gap">
-              <Link href="/updates">News</Link>
+              <p onClick={() => handleRoute("/updates")}>News</p>
               <br />
-              <Link href="/lessons">Art Lessons</Link>
+              <p onClick={() => handleRoute("/lessons")}>Art Lessons</p>
               <br />
-              <Link href="/allproducts">Browse All Products</Link>
+              <p onClick={() => handleRoute("/allproducts")}>Browse All Products</p>
             </div>
           </div>
           <div className="left-side-mobile desktop-hide">

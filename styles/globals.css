@@ -10,6 +10,7 @@ html,
 body {
   max-width: 100vw;
   overflow-x: hidden;
+  overflow-y: overlay;
 }
 
 html {
@@ -71,7 +72,7 @@ html {
   background-color: transparent;
   position: fixed;
   background-color: rgba(255, 172, 236, 0.07);
-  backdrop-filter: blur(15px);
+  backdrop-filter: blur(15px) brightness(110%);
   width: 100%;
   z-index: 99;
   padding: 15px 0px;
@@ -111,15 +112,16 @@ html {
   filter: invert(73%) sepia(37%) saturate(262%) hue-rotate(120deg) brightness(100%) contrast(110%);
 }
 
-.links a {
+.links p {
   text-decoration: none;
   color: black;
   font-size: 1rem;
-  margin-top: -8px;
   transition: .2s;
+  cursor: pointer;
+  margin-bottom: 0;
 }
 
-.links a:hover {
+.links p:hover {
   color: rgb(131, 180, 192);
 }
 
@@ -188,8 +190,9 @@ input:focus {
 
 .navbar-white {
   width: 100vw;
-  height: 125px;
+  height: 127px;
   background-color: white;
+  transition: .2s;
 }
 
 .body-white {
@@ -339,7 +342,7 @@ input:focus {
 
   .navbar-white {
     width: 100vw;
-    height: 82px;
+    height: 91px;
     background-color: white;
   }
 
