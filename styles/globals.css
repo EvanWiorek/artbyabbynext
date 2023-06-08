@@ -74,6 +74,7 @@ html {
   backdrop-filter: blur(15px);
   width: 100%;
   z-index: 99;
+  padding: 15px 0px;
 }
 
 .white-bg {
@@ -92,19 +93,17 @@ html {
 .site-logo img {
   width: 130px;
   transition: .2s;
-  margin-top: -5px;
   image-rendering:auto;
 }
 
 .abby-name {
   font-size: .6rem;
   transition: .2s;
-  margin-bottom: 4px;
+  margin-bottom: 0;
   color: black;
 }
 
 .site-logo:hover p {
-  /* opacity: .7; */
   color: rgb(131, 180, 192);
 }
 
@@ -179,11 +178,6 @@ input:focus {
   font-size: .6rem !important;
 }
 
-.display-none {
-  opacity: 0;
-  margin-bottom: -15px;
-}
-
 .parallax-container {
   height: 75vh !important;
 }
@@ -215,14 +209,13 @@ input:focus {
 .cart-menu-body {
   width: 0%;
   height: 100vh;
-  /* background-color: rgba(255, 255, 255, 0.4); */
+  background-color: rgba(255,255,255,1);
   backdrop-filter: blur(25px) brightness(125%);
   position: fixed;
   right: 0;
   z-index: 200;
   box-shadow: 0px 0px 3px rgba(0, 0, 0, .2);
   transition: .3s;
-  animation-name: enterMenu;
 }
 
 .cart-menu-content {
@@ -255,6 +248,14 @@ input:focus {
   background-color: rgb(125, 169, 181);
 }
 
+.close-cart-menu {
+  transition: .2s;
+}
+
+.close-cart-menu:hover {
+  color: rgb(131, 180, 192) !important;
+}
+
 .screen-darken {
   width: 100vw;
   height: 100vh;
@@ -262,34 +263,59 @@ input:focus {
   position: fixed;
   z-index: 150;
   transition: .3s;
-  animation-name: enterDark;
   opacity: 0;
   pointer-events: none;
 }
 
-
-@keyframes enterMenu {
-  0% {
-    
-  }
-  100% {
-    right: 0;
-  }
+.left-side-mobile button {
+  padding: 3px 7px;
+  border-radius: 10px;
+  border: 1px solid rgb(216, 219, 222);
+  background-color: rgb(255, 255, 255);
+  transition: .2s;
+  color: rgb(124, 126, 128);
 }
 
-@keyframes enterDark {
-  0% {
-    opacity: 0;
-  }
-  100% {
-    opacity: 1;
-  }
+.left-side-mobile button:hover {
+  background-color: rgb(131, 180, 192);
+  color: rgb(255, 255, 255);
+}
+
+.mobile-hide {
+  display: block;
+}
+
+.desktop-hide {
+  display: none;
+}
+
+.custom-gap {
+  gap: .5vw;
+}
+
+.left-side-desktop a {
+  font-size: 1.1vw !important;
 }
 
 /* Mobile */
-@media (max-width: 700px) {
+@media only screen and (min-width: 240px) and (max-width: 767px) {
   .mobile-hide {
-    display: none;
+    display: none !important;
+    width: 0 !important;
+    gap: 0 !important;
+  }
+
+  .navbar-content {
+    width: 95vw;
+  }
+
+  .desktop-hide {
+    display: block;
+  }
+
+  .mobile-indent {
+    position: relative;
+    left: 7%;
   }
 
   .parallax-container {
@@ -303,12 +329,12 @@ input:focus {
   }
 
   .site-logo img {
-    width: 120px !important;
+    width: 130px !important;
     margin-top: -5px !important;
   }
   
   .abby-name {
-    font-size: .6rem !important;
+    font-size: .7rem !important;
   }
 
   .navbar-white {
@@ -316,10 +342,18 @@ input:focus {
     height: 82px;
     background-color: white;
   }
+
+  .cart-button {
+    transform: scale(1.2);
+  }
+
+  .left-side-mobile button {
+    transform: scale(1.2);
+  }
 }
 
 /* Tablet and Smaller Desktop */
-@media (min-width: 701px) and (max-width: 1023px) {
+@media only screen and (min-width: 767px) and (max-width: 1023px) {
   .parallax-container {
     height: 60vh !important;
   }
@@ -331,6 +365,10 @@ input:focus {
   }
   
   .mobile-hide {
+    display: block;
+  }
+
+  .desktop-hide {
     display: none;
   }
 
@@ -340,7 +378,7 @@ input:focus {
   }
   
   .abby-name {
-    font-size: .65rem !important;
+    font-size: .7rem !important;
   }
 
   .navbar-white {
