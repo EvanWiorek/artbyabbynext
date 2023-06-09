@@ -7,6 +7,7 @@ const AdminPage = ({ isVisible }) => {
   const myRef = useRef();
   const [contentIsVisible, setContentIsVisible] = useState();
   const router = useRouter();
+  const [loggedIn, setLoggedIn] = useState();
 
   useEffect(() => {
     const observer = new IntersectionObserver((entries) => {
@@ -24,6 +25,7 @@ const AdminPage = ({ isVisible }) => {
   }, [contentIsVisible])
 
   const handlePassword = () => {
+    setLoggedIn(true);
     document.querySelector(".admin-page-dark").style = "opacity: 0"
     setTimeout(() => document.querySelector(".admin-page-dark").style = "opacity: 0; display: none", 600)
     document.querySelector(".admin-card").style = "opacity: 0"
@@ -73,7 +75,8 @@ const AdminPage = ({ isVisible }) => {
           </ul>
         </div >
         <button className='view-cart mt-3 mb-4 site-font' style={{ position: `relative`, zIndex: `200`, marginLeft: `20px` }} onClick={backToHome}>Back to Home</button>
-        <div className="form-container box-shadow site-font p-3">
+        
+        {loggedIn && <div className="form-container box-shadow site-font p-3">
           <div className="forms d-flex justify-content-around">
             <div className="left-side manage-products form-body box-shadow">
               <h3 className='display-6'>Manage Products</h3>
@@ -103,7 +106,7 @@ const AdminPage = ({ isVisible }) => {
             </div>
           </div>
 
-        </div>
+        </div>}
 
       </main>
     </ >
