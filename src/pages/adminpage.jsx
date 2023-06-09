@@ -165,8 +165,9 @@ const AdminPage = ({ isVisible }) => {
                       <label>Post Title</label>
                     </div>
                     <div className="form-floating">
-                      <input
+                      <textarea
                         type="text"
+                        rows="4"
                         placeholder="p"
                         className="form-control"
                         value={postContent}

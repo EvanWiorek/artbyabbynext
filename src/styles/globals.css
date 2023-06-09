@@ -43,7 +43,7 @@ html {
 
 .page-content {
   opacity: 0;
-  transition: .3s;
+  transition: 1s;
 }
 
 .site-font {
@@ -115,6 +115,19 @@ html {
 
 .site-logo:hover img {
   filter: invert(73%) sepia(37%) saturate(262%) hue-rotate(120deg) brightness(100%) contrast(110%);
+}
+
+a {
+  text-decoration: none !important;
+  color: black !important;
+  font-size: 1rem;
+  transition: .2s;
+  cursor: pointer;
+  margin-bottom: 0;
+}
+
+a:hover {
+  color: rgb(131, 180, 192) !important;
 }
 
 .links p {
@@ -330,6 +343,14 @@ input:focus {
   background-color: rgba(255,255,255,.5);
 }
 
+.horizontal-line-dark {
+  height: .5px;
+  width: 100%;
+  background-color: rgba(0,0,0,.2);
+  margin-top: 15px;
+  margin-bottom: 15px;
+}
+
 .screen-darken {
   width: 100vw;
   height: 100vh;
@@ -388,9 +409,9 @@ input:focus {
   left: 50%;
   -ms-transform: translate(-50%, -50%);
   transform: translate(-50%, -50%);
-  backdrop-filter: blur(25px) brightness(120%);
   z-index: 350;
   border-radius: 10px;
+  backdrop-filter: blur(25px) brightness(120%);
   border: 1px solid rgba(255,255,255,.3);
 }
 
@@ -521,6 +542,28 @@ input:focus {
 }
 
 
+/* Lessons Posts */
+/* .lesson-post-list > .card {
+  border: 1px solid rgba(255,255,255,.3);
+  background-size: 100%;
+  background-position: center;
+} */
+
+.lesson-post-list img {
+  width: 250px;
+}
+
+.read-more-line {
+  width: 50%;
+  height: 1px;
+  background-color: rgba(0,0,0,.2);
+  transition: .2s;
+}
+
+.read-more:hover .read-more-line {
+  background-color: rgb(131, 180, 192);
+  width: 90%;
+}
 
 @keyframes animate {
 
