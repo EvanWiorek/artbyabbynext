@@ -1,6 +1,6 @@
 import Head from 'next/head'
-import Layout from '@/components/Layout'
-import { useState, useRef, useMemo, useEffect } from 'react';
+import Layout from '../components/Layout'
+import { useState, useRef, useEffect } from 'react';
 
 
 export default function Home() {

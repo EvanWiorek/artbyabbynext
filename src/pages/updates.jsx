@@ -1,8 +1,8 @@
 import Head from 'next/head'
-import Layout from '@/components/Layout'
+import Layout from '../components/Layout'
 import { useEffect, useRef, useState } from 'react'
 
-const Lessons = () => {
+const Updates = () => {
   const myRef = useRef();
   const [contentIsVisible, setContentIsVisible] = useState();
 
@@ -13,7 +13,7 @@ const Lessons = () => {
     })
     observer.observe(myRef.current)
 
-    if (contentIsVisible) {
+    if(contentIsVisible) {
       document.querySelector(".page-content").style = "opacity: 1;"
     }
     else {
@@ -21,15 +21,16 @@ const Lessons = () => {
     }
   }, [contentIsVisible])
 
+
   return (
     <Layout home>
       <Head>
-        <title>Virtual Art Lessons | Art by Abby</title>
+        <title>Updates & News | Art by Abby</title>
       </Head>
       <main ref={myRef} className='page-content'>
 
         <div className="body-white" style={{ paddingTop: `100px` }}>
-          <h1>Virtual Art Lessons</h1>
+          <h1>News & Updates</h1>
         </div>
 
       </main>
@@ -38,4 +39,4 @@ const Lessons = () => {
 
 }
 
-export default Lessons;
+export default Updates;

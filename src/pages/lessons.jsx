@@ -1,8 +1,8 @@
 import Head from 'next/head'
-import Layout from '@/components/Layout'
+import Layout from '../components/Layout'
 import { useEffect, useRef, useState } from 'react'
 
-const allproducts = ({ isVisible }) => {
+const Lessons = () => {
   const myRef = useRef();
   const [contentIsVisible, setContentIsVisible] = useState();
 
@@ -21,16 +21,15 @@ const allproducts = ({ isVisible }) => {
     }
   }, [contentIsVisible])
 
-
   return (
-    <Layout home isVisible={isVisible}>
+    <Layout home>
       <Head>
-        <title>All Products | Art by Abby</title>
+        <title>Virtual Art Lessons | Art by Abby</title>
       </Head>
       <main ref={myRef} className='page-content'>
 
         <div className="body-white" style={{ paddingTop: `100px` }}>
-          <h1>All Products</h1>
+          <h1>Virtual Art Lessons</h1>
         </div>
 
       </main>
@@ -39,4 +38,4 @@ const allproducts = ({ isVisible }) => {
 
 }
 
-export default allproducts;
+export default Lessons;
