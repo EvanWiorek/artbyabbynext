@@ -57,11 +57,10 @@ const Lessons = () => {
 
             {allLessons.map((lesson) => (
               <div key={lesson._id} className='m-auto mt-3'>
-                {/* <div key={lesson._id} className='m-auto mt-3 card box-shadow' style={{ backgroundImage: `url(${`http://img.youtube.com/vi/${getTrueURL(lesson.videoURL)}/0.jpg`})` }}> */}
                   <div className="d-flex gap-3 card-body">
                     <img src={`http://img.youtube.com/vi/${getTrueURL(lesson.videoURL)}/0.jpg`} alt="Thumbnail" />
                     <div>
-                      <h5 className='site-font'>                          <Link href={`/api/get/post/${lesson._id}`}>{lesson.postTitle}</Link></h5>
+                      <h5 className='site-font'>                          <Link href={`/lessons/${lesson._id}`}>{lesson.postTitle}</Link></h5>
                       <div className='d-flex gap-2 text-secondary site-font'>
                         <p>{dayjs(lesson.createdAt).format('MMMM D, YYYY')}</p>
                         <p>•</p>
@@ -70,15 +69,13 @@ const Lessons = () => {
                       <p>{lesson.postContent.slice(0, 200)}...</p>
                       <div className="d-flex justify-content-end">
                         <div className="d-flex flex-column align-items-center read-more">
-                          <Link href={`/api/get/post/${lesson._id}`} style={{ fontSize: `.8rem` }}>R E A D &nbsp; M O R E</Link>
+                          <Link href={`/lessons/${lesson._id}`} style={{ fontSize: `.8rem` }}>R E A D &nbsp; M O R E</Link>
                           <div className="read-more-line"></div>
                         </div>
                       </div>
                     </div>
                   </div>
-                  {/* <p style={{ whiteSpace: `pre-wrap` }}>{lesson.postContent}</p> */}
-                  {/* <iframe width="600" height="345" src={`https://www.youtube.com/embed/${getTrueURL(lesson.videoURL)}`}>
-                </iframe> */}
+
                 <div className="horizontal-line-dark"></div>
                 </div>
             ))}
