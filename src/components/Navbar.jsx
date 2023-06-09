@@ -107,9 +107,9 @@ const Navbar = ({ headerIsVisible }) => {
             </Link>
           </div>
 
-          <div className="right-side-desktop col-3 d-flex align-items-center gap-4 mobile-hide">
-            <div className="input-group mb-3 nav-search mobile-hide">
-              <input type="text" className="form-control" placeholder="Search" aria-label="Search" aria-describedby="basic-addon2" />
+          <div className="right-side-desktop col-3 d-flex-alt align-items-center gap-4">
+            <div className="input-group mb-3 nav-search">
+              <input type="text" className="form-control" placeholder="Search" />
               <div className="input-group-append">
                 <button type="button"><span className="bi-search"></span></button>
               </div>

@@ -55,6 +55,10 @@ const OneLesson = ({ isVisible }) => {
     }
   }
 
+  const handleGoBack = () => {
+    router.push("/lessons")
+  }
+
   return (
     <Layout home isVisible={isVisible}>
       <Head>
@@ -62,9 +66,14 @@ const OneLesson = ({ isVisible }) => {
       </Head>
       <main ref={myRef} className='page-content'>
 
+
+
         <div className="body-white" style={{ paddingTop: `100px` }}>
           {loaded &&
-            <div className='col-6 m-auto mt-3'>
+            <div className='col-lg-5 m-auto mt-3 one-lesson-container'>
+              <div className="links mb-3" style={{ marginLeft: `10px` }} onClick={handleGoBack}>
+                <p><i class="bi bi-arrow-left" style={{ fontSize: `.9rem` }}></i> Back to Lessons</p>
+              </div>
               <h2 className='site-font text-center'>{oneLesson.postTitle}</h2>
               <div className='d-flex gap-3 justify-content-center text-secondary site-font'>
                 <p>By Abby</p>
@@ -72,10 +81,12 @@ const OneLesson = ({ isVisible }) => {
                 <p>{dayjs(oneLesson.createdAt).format('MMMM D, YYYY')}</p>
               </div>
               <div className="d-flex justify-content-center">
-                <iframe width="600" height="345" src={`https://www.youtube.com/embed/${getTrueURL(oneLesson.videoURL)}`}>
+                <iframe src={`https://www.youtube.com/embed/${getTrueURL(oneLesson.videoURL)}`} className='one-lesson-video'>
                 </iframe>
               </div>
-              <p style={{ whiteSpace: `pre-wrap` }} className='mt-3 col-10 m-auto'>{oneLesson.postContent}</p>
+              <div className='post-content m-auto'>
+                <p style={{ whiteSpace: `pre-wrap` }} className='mt-3 m-auto'>{oneLesson.postContent}</p>
+              </div>
               <br />
             </div>}
         </div>

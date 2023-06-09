@@ -41,6 +41,10 @@ html {
   color: white;
 }
 
+.d-flex-alt {
+  display: flex;
+}
+
 .page-content {
   opacity: 0;
   transition: 1s;
@@ -392,6 +396,8 @@ input:focus {
   font-size: 1.1vw !important;
 }
 
+/* adminPage */
+
 .admin-page-dark {
   width: 100vw;
   height: 100vh;
@@ -543,14 +549,9 @@ input:focus {
 
 
 /* Lessons Posts */
-/* .lesson-post-list > .card {
-  border: 1px solid rgba(255,255,255,.3);
-  background-size: 100%;
-  background-position: center;
-} */
-
 .lesson-post-list img {
   width: 250px;
+  height: 100%;
 }
 
 .read-more-line {
@@ -563,6 +564,15 @@ input:focus {
 .read-more:hover .read-more-line {
   background-color: rgb(131, 180, 192);
   width: 90%;
+}
+
+.read-more-flex {
+  justify-content: end;
+}
+
+.one-lesson-video {
+  width: 600px;
+  height: 345px;
 }
 
 @keyframes animate {
@@ -595,11 +605,6 @@ input:focus {
 
   .desktop-hide {
     display: block;
-  }
-
-  .mobile-indent {
-    position: relative;
-    left: 7%;
   }
 
   .parallax-container {
@@ -638,6 +643,27 @@ input:focus {
   .admin-page-dark > .card {
     width: 90vw;
   }
+
+  .right-side-desktop {
+    display: none !important;
+  }
+
+  .lesson-post-list img {
+    width: 100%;
+  }
+
+  .read-more-flex {
+    justify-content: center;
+  }
+
+  .one-lesson-video {
+    width: 90vw;
+    height: 245px;
+  }
+
+  .post-content {
+    width: 90vw;
+  }
 }
 
 /* Tablet and Smaller Desktop */
@@ -653,11 +679,23 @@ input:focus {
   }
   
   .mobile-hide {
-    display: block;
+    display: none;
   }
 
   .desktop-hide {
-    display: none;
+    display: block;
+  }
+
+  .right-side-desktop {
+    display: none !important;
+  }
+
+  .lesson-post-list img {
+    width: 100%;
+  }
+
+  .read-more-flex {
+    justify-content: center;
   }
 
   .site-logo img {
@@ -673,5 +711,9 @@ input:focus {
     width: 100vw;
     height: 86px;
     background-color: white;
+  }
+
+  .post-content {
+    width: 90vw;
   }
 }

@@ -3,7 +3,7 @@ import { useEffect, useRef, useState } from "react";
 import { useRouter } from "next/router";
 import axios from "axios";
 
-const AdminPage = ({ isVisible }) => {
+const AdminPage = () => {
   const myRef = useRef();
   const [contentIsVisible, setContentIsVisible] = useState();
   const router = useRouter();
