@@ -72,6 +72,11 @@ textarea:focus {
   box-shadow: 0px 0px 5px rgb(131, 180, 192) !important;
 }
 
+.disabled {
+  pointer-events: none;
+  filter: saturate(0);
+}
+
 .page-content {
   opacity: 0;
   transition: 1s;

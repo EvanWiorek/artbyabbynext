@@ -1,15 +1,26 @@
 import { useState } from "react";
 import axios from "axios";
 
-export default function CreatePostForm({ setCreateFormOpen }) {
+export default function CreatePostForm({ setCreateFormOpen, setPostTitleError, setPostTypeError, formIsValid, postTitleError, postTypeError }) {
   const [postTitle, setPostTitle] = useState("");
   const [postContent, setPostContent] = useState("");
   const [videoURL, setVideoURL] = useState("");
   const [imageURL, setImageURL] = useState("");
   const [postType, setPostType] = useState("");
 
-  const onPostTypeSelect = (e) => {
+  const handlePostType = (e) => {
     setPostType(e.target.value)
+    setPostTypeError(null)
+  }
+
+  const handlePostTitle = (e) => {
+    setPostTitle(e.target.value);
+    if (e.target.value.length < 1) {
+      setPostTitleError("Post title cannot be blank.")
+    }
+    else {
+      setPostTitleError(null)
+    }
   }
 
   const handleCreatePost = (e) => {
@@ -24,17 +35,20 @@ export default function CreatePostForm({ setCreateFormOpen }) {
       isUpdateCheck = true;
       isLessonCheck = false;
     }
-    console.log(postTitle);
-    axios.post('/api/create/post', {
-      postTitle,
-      postContent,
-      videoURL,
-      imageURL,
-      isLesson: isLessonCheck,
-      isUpdate: isUpdateCheck
-    })
-      .then((res) => console.log(res))
-      .catch((err) => console.log(err))
+    if (formIsValid === true) {
+      axios.post('/api/create/post', {
+        postTitle,
+        postContent,
+        videoURL,
+        imageURL,
+        isLesson: isLessonCheck,
+        isUpdate: isUpdateCheck
+      })
+        .then((res) => console.log(res))
+        .catch((err) => console.log(err))
+
+      handleFormClose();
+    }
   };
 
   const handleFormClose = () => {
@@ -46,12 +60,19 @@ export default function CreatePostForm({ setCreateFormOpen }) {
         "opacity: 0; display: none"),
       600
     );
+    setPostTitle("");
+    setPostTitleError("");
+    setPostContent("");
+    setVideoURL("");
+    setImageURL("");
+    setPostType("");
+    setPostTypeError("");
   }
 
   return (
     <div className="admin-card box-shadow site-font">
       <div className="admin-card-header text-center p-3 d-flex justify-content-between align-items-center">
-        <div className="empty-div"><i className="bi bi-x-lg close-cart-menu" style={{ color: `rgba(124, 126, 128,0)`}}></i></div>
+        <div className="empty-div"><i className="bi bi-x-lg close-cart-menu" style={{ color: `rgba(124, 126, 128,0)` }}></i></div>
         <h3 style={{ marginBottom: 0 }}>Create New Post</h3>
         <div className='d-flex justify-content-end'>
           <p onClick={handleFormClose}><i className="bi bi-x-lg close-cart-menu" style={{ color: `rgba(255,255,255,1)`, cursor: `pointer` }}></i></p>
@@ -67,9 +88,16 @@ export default function CreatePostForm({ setCreateFormOpen }) {
               placeholder="p"
               className="form-control thin-control"
               value={postTitle}
-              onChange={(e) => setPostTitle(e.target.value)}
+              onChange={handlePostTitle}
             />
             <label className="thin-label">Post Title</label>
+            {postTitleError ? (
+              <p style={{ color: "tomato" }} className="mt-1">
+                {postTitleError}
+              </p>
+            ) : (
+              ""
+            )}
           </div>
           <div className="form-floating thin-floating mt-2">
             <textarea
@@ -104,16 +132,23 @@ export default function CreatePostForm({ setCreateFormOpen }) {
           </div>
           <div className="radio-options mt-3">
             <h5>What kind of post is this?</h5>
-            <input type="radio" name="isOption" value="isLesson" id="isLesson" onChange={onPostTypeSelect} />
+            <input type="radio" name="isOption" value="isLesson" id="isLesson" onChange={handlePostType} />
             <label htmlFor="isLesson">&nbsp; This is an art lesson</label>
             <br />
-            <input type="radio" name="isOption" value="isUpdate" id="isUpdate" onChange={onPostTypeSelect} />
+            <input type="radio" name="isOption" value="isUpdate" id="isUpdate" onChange={handlePostType} />
             <label htmlFor="isUpdate">&nbsp; This is news/an update</label>
+            {postTypeError ? (
+              <p style={{ color: "tomato" }} className="mt-2">
+                {postTypeError}
+              </p>
+            ) : (
+              ""
+            )}
           </div>
           <br />
           <div className="d-flex gap-3 justify-content-end">
             <button className="btn-site-cancel" onClick={handleFormClose}>Cancel</button>
-            <button type="submit" className="btn-site-blue">Create Post</button>
+            <button type="submit" className={`btn-site-blue ${formIsValid ? "" : "disabled"}`}>Create Post</button>
           </div>
         </form>
       </div>

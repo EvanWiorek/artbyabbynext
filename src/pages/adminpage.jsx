@@ -6,15 +6,15 @@ import CreatePostForm from "../components/CreatePostForm";
 
 const AdminPage = () => {
   const myRef = useRef();
-  const [contentIsVisible, setContentIsVisible] = useState();
   const router = useRouter();
   const [loggedIn, setLoggedIn] = useState("");
-  const [postTitle, setPostTitle] = useState("");
-  const [postContent, setPostContent] = useState("");
-  const [videoURL, setVideoURL] = useState("");
-  const [imageURL, setImageURL] = useState("");
-  const [postType, setPostType] = useState("");
   const [createFormOpen, setCreateFormOpen] = useState(false)
+  const [postTitleError, setPostTitleError] = useState("");
+  // const adminPassword = ""
+  const [postTypeError, setPostTypeError] = useState("");
+
+  let formIsValid = false;
+  formIsValid = postTitleError === null && postTypeError=== null;
 
   const handlePassword = () => {
     setLoggedIn(true);
@@ -109,10 +109,10 @@ const AdminPage = () => {
               <div className="horizontal-line"></div>
               <ul>
                 <li>View list of posts</li>
-                <li>
+                <li style={{ textDecoration: `line-through` }}>
                   Add a new post, indicate if it is a lesson, or update/news
                 </li>
-                <li>
+                <li style={{ textDecoration: `line-through` }}>
                   If lesson, allow for video embedding (likely from YouTube)
                 </li>
                 <li>Delete a post</li>
@@ -139,7 +139,10 @@ const AdminPage = () => {
                 Update Products
               </button>
             </div>
-            {createFormOpen && <CreatePostForm setCreateFormOpen={setCreateFormOpen} />}
+            {createFormOpen && <CreatePostForm setCreateFormOpen={setCreateFormOpen} setPostTitleError={setPostTitleError} setPostTypeError={setPostTypeError}
+            formIsValid={formIsValid}
+            postTitleError={postTitleError}
+            postTypeError={postTypeError} />}
           </div>
         )}
 
