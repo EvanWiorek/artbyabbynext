@@ -82,6 +82,10 @@ textarea:focus {
   transition: 1s;
 }
 
+.table>:not(caption)>*>* {
+  background-color: rgba(255,255,255,0) !important;
+}
+
 .site-font {
   font-family: 'Bressay Trial', sans-serif;
 }
@@ -201,7 +205,6 @@ a:hover {
 .nav-search input {
   border-radius: 10px 0 0 10px;
 }
-
 
 .nav-search button {
   padding: 5px 8px;
@@ -459,10 +462,11 @@ a:hover {
   z-index: 300;
   transition: .3s;
   backdrop-filter: blur(5px);
+  position: fixed;
 }
 
 .admin-card {
-  position: absolute;
+  position: fixed;
   width: 500px;
   top: 50%;
   left: 50%;
@@ -631,6 +635,17 @@ a:hover {
 
 }
 
+.table-button-small {
+  padding: 4px 7px !important;
+}
+
+.all-posts-list-container {
+  max-height: 300px;
+  overflow-y: scroll;
+  overflow-x: hidden;
+  padding: 5px !important;
+}
+
 /* Mobile */
 @media only screen and (min-width: 240px) and (max-width: 767px) {
   .mobile-hide {
@@ -703,6 +718,19 @@ a:hover {
 
   .one-lesson-container {
     width: 90vw;
+  }
+
+  .table>:not(caption)>*>* {
+    font-size: .8rem;
+  }
+
+  .table-button-small {
+    font-size: .6rem !important;
+    padding: 3px 5px !important;
+  }
+
+  .all-posts-list-container {
+    max-height: 50vh;
   }
 
 }

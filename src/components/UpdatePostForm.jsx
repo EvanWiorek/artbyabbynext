@@ -1,17 +1,27 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import axios from "axios";
 import { useRouter } from "next/router";
 
-export default function CreatePostForm({ setCreateFormOpen, setPostTitleError, setPostTypeError, postTitleError, postTypeError }) {
-  const [postTitle, setPostTitle] = useState("");
-  const [postContent, setPostContent] = useState("");
-  const [videoURL, setVideoURL] = useState("");
-  const [imageURL, setImageURL] = useState("");
+export default function CreatePostForm({ setUpdateFormOpen, setPostTitleError, setPostTypeError, postTitleError, onePost }) {
+  const [postTitle, setPostTitle] = useState(onePost.postTitle);
+  const [postContent, setPostContent] = useState(onePost.postContent);
+  const [videoURL, setVideoURL] = useState(onePost.videoURL);
+  const [imageURL, setImageURL] = useState(onePost.imageURL);
   const [postType, setPostType] = useState("");
+  const [postId, setPostId] = useState("");
   const router = useRouter();
 
+  useEffect(() => {
+    setPostId(onePost._id);
+    if(onePost.isLesson === true) {
+      setPostType("isLesson")
+    } else if (onePost.isUpdate === true) {
+      setPostType("isUpdate")
+    }
+  })
+
   let formIsValid = false;
-  formIsValid = postTitleError === null && postTypeError === null;
+  formIsValid = postTitleError === null;
 
   const handlePostType = (e) => {
     setPostType(e.target.value)
@@ -28,7 +38,7 @@ export default function CreatePostForm({ setCreateFormOpen, setPostTitleError, s
     }
   }
 
-  const handleCreatePost = (e) => {
+  const handleUpdatePost = (e) => {
     e.preventDefault();
     let isLessonCheck = false;
     let isUpdateCheck = false;
@@ -41,7 +51,7 @@ export default function CreatePostForm({ setCreateFormOpen, setPostTitleError, s
       isLessonCheck = false;
     }
     if (formIsValid === true) {
-      axios.post('/api/posts/create', {
+      axios.post(`/api/posts/update/${postId}`, {
         postTitle,
         postContent,
         videoURL,
@@ -58,7 +68,7 @@ export default function CreatePostForm({ setCreateFormOpen, setPostTitleError, s
   };
 
   const handleFormClose = () => {
-    setCreateFormOpen(false);
+    setUpdateFormOpen(false);
     document.querySelector(".admin-page-dark").style = "opacity: 0";
     setTimeout(
       () =>
@@ -66,13 +76,6 @@ export default function CreatePostForm({ setCreateFormOpen, setPostTitleError, s
         "opacity: 0; display: none"),
       600
     );
-    setPostTitle("");
-    setPostTitleError("");
-    setPostContent("");
-    setVideoURL("");
-    setImageURL("");
-    setPostType("");
-    setPostTypeError("");
   }
 
   return (
@@ -87,7 +90,7 @@ export default function CreatePostForm({ setCreateFormOpen, setPostTitleError, s
       <div className="horizontal-line"></div>
       <div className="admin-card-body p-4">
 
-        <form onSubmit={handleCreatePost} method="POST" className="col-lg-11 m-auto">
+        <form onSubmit={handleUpdatePost} method="POST" className="col-lg-11 m-auto">
           <div className="form-floating thin-floating">
             <input
               type="text"
@@ -138,23 +141,16 @@ export default function CreatePostForm({ setCreateFormOpen, setPostTitleError, s
           </div>
           <div className="radio-options mt-3">
             <h5>What kind of post is this?</h5>
-            <input type="radio" name="isOption" value="isLesson" id="isLesson" onChange={handlePostType} />
+            {postType === 'isLesson'? <input type="radio" name="isOption" value="isLesson" id="isLesson" onChange={handlePostType} checked /> : <input type="radio" name="isOption" value="isLesson" id="isLesson" onChange={handlePostType} />}
             <label htmlFor="isLesson">&nbsp; This is an art lesson</label>
             <br />
-            <input type="radio" name="isOption" value="isUpdate" id="isUpdate" onChange={handlePostType} />
+            {postType === 'isUpdate' ? <input type="radio" name="isOption" value="isUpdate" id="isUpdate" onChange={handlePostType} checked /> : <input type="radio" name="isOption" value="isUpdate" id="isUpdate" onChange={handlePostType} />}
             <label htmlFor="isUpdate">&nbsp; This is news/an update</label>
-            {postTypeError ? (
-              <p style={{ color: "tomato" }} className="mt-2">
-                {postTypeError}
-              </p>
-            ) : (
-              ""
-            )}
           </div>
           <br />
           <div className="d-flex gap-3 justify-content-end">
             <button className="btn-site-cancel" onClick={handleFormClose}>Cancel</button>
-            <button type="submit" className={`btn-site-blue ${formIsValid ? "" : "disabled"}`}>Create Post</button>
+            <button type="submit" className={`btn-site-blue ${formIsValid ? "" : "disabled"}`}>Update Post</button>
           </div>
         </form>
       </div>

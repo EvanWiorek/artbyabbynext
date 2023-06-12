@@ -9,10 +9,10 @@ import AbbyPost from "@/src/models/post.model";
 export const getServerSideProps = async (context) => {
   const routeId = context.params.id
   try {
-    console.log(routeId, 'FROM [id].jsx PAGE');
+    // console.log(routeId, 'FROM [id].jsx PAGE');
     await connectMongoDB();
     const oneLesson = await AbbyPost.findOne({_id: routeId});
-    console.log(oneLesson);
+    // console.log(oneLesson);
     return {
       props: {
         oneLesson: JSON.parse(JSON.stringify(oneLesson))

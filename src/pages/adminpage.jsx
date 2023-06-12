@@ -1,20 +1,39 @@
 import Head from "next/head";
 import { useEffect, useRef, useState } from "react";
 import { useRouter } from "next/router";
-import axios from "axios";
 import CreatePostForm from "../components/CreatePostForm";
+import UpdatePostForm from "../components/UpdatePostForm";
+import { connectMongoDB } from "../libs/MongoConnect";
+import AbbyPost from "../models/post.model";
 
-const AdminPage = () => {
+export const getServerSideProps = async () => {
+  try {
+    await connectMongoDB();
+    const allPosts = await AbbyPost.find();
+    return {
+      props: {
+        allPosts: JSON.parse(JSON.stringify(allPosts))
+      }
+    }
+  }
+  catch (err) {
+    console.log(err);
+    return {
+      notFound: true
+    }
+  }
+}
+
+const AdminPage = ({ allPosts }) => {
   const myRef = useRef();
   const router = useRouter();
   const [loggedIn, setLoggedIn] = useState("");
   const [createFormOpen, setCreateFormOpen] = useState(false)
+  const [updateFormOpen, setUpdateFormOpen] = useState(false)
   const [postTitleError, setPostTitleError] = useState("");
   // const adminPassword = ""
   const [postTypeError, setPostTypeError] = useState("");
-
-  let formIsValid = false;
-  formIsValid = postTitleError === null && postTypeError=== null;
+  const [onePost, setOnePost] = useState();
 
   const handlePassword = () => {
     setLoggedIn(true);
@@ -38,11 +57,31 @@ const AdminPage = () => {
     router.push("/");
   };
 
-
   const handleCreateFormOpen = () => {
     document.querySelector(".admin-page-dark").style =
       "opacity: 1; display: block"
     setCreateFormOpen(true);
+  }
+
+  const deletePost = async (postId) => {
+    const response = await fetch(`/api/posts/delete/${postId}`, {
+      method: 'DELETE'
+    })
+    const data = await response.json();
+    console.log(data);
+    router.replace(router.asPath);
+  }
+
+  const handleUpdateFormOpen = async (postId) => {
+    const response = await fetch(`/api/posts/${postId}`, {
+      method: 'GET'
+    })
+    const data = await response.json();
+    console.log(data);
+    setOnePost(data)
+    document.querySelector(".admin-page-dark").style =
+    "opacity: 1; display: block"
+    setUpdateFormOpen(true)
   }
 
   return (
@@ -103,26 +142,53 @@ const AdminPage = () => {
         </button>
 
         {loggedIn && (
-          <div className="form-container box-shadow site-font p-3 m-auto col-lg-9">
+          <div className="form-container box-shadow p-3 m-auto col-lg-9">
             <div className="right-side create-post form-body box-shadow">
               <h3 className="display-6">Manage Posts</h3>
               <div className="horizontal-line"></div>
-              <ul>
-                <li>View list of posts</li>
-                <li style={{ textDecoration: `line-through` }}>
-                  Add a new post, indicate if it is a lesson, or update/news
-                </li>
-                <li style={{ textDecoration: `line-through` }}>
-                  If lesson, allow for video embedding (likely from YouTube)
-                </li>
-                <li>Delete a post</li>
-                <li>Edit an existing post</li>
-                <br />
-                <button onClick={handleCreateFormOpen} className="btn-site-blue d-flex align-items-center gap-2" style={{ borderRadius: `10px` }}>
-                  <i class="bi bi-plus-circle" style={{ fontSize: `1.3rem` }}></i>
-                  <p style={{ marginBottom: 0 }}>New Post</p>
-                </button>
-              </ul>
+              <div className="col-lg-9 m-auto">
+                <div className="d-flex justify-content-center">
+                  <button onClick={handleCreateFormOpen} className="btn-site-blue d-flex align-items-center gap-2 mb-3">
+                    <i className="bi bi-plus-circle" style={{ fontSize: `1.3rem` }}></i>
+                    <p style={{ marginBottom: 0 }}>New Post</p>
+                  </button>
+                </div>
+                <div className="form-body all-posts-list-container box-shadow">
+                  <table className="table table-sm m-auto">
+                    <thead>
+                      <tr>
+                        <th scope="col">Post Title</th>
+                        <th scope="col">Type</th>
+                        <th scope="col">Actions</th>
+                      </tr>
+                    </thead>
+                    <tbody>
+                      {allPosts.map((p) => {
+                        let postType = "";
+                        if (p.isLesson === true) {
+                          postType = "Art Lesson"
+                        }
+                        else if (p.isUpdate === true) {
+                          postType = "News/Update"
+                        }
+                        return (
+                          <tr>
+                            <td>{p.postTitle}</td>
+                            <td>{postType}</td>
+                            <td>
+                              <div className="d-flex justify-content-center gap-1">
+                                <button className="btn-site-blue table-button-small" onClick={() => handleUpdateFormOpen(p._id)}>Edit</button>
+
+                                <button className="btn-site-cancel table-button-small" onClick={() => deletePost(p._id)}>Delete</button>
+                              </div>
+                            </td>
+                          </tr>
+                        )
+                      })}
+                    </tbody>
+                  </table>
+                </div>
+              </div>
             </div>
             <div className="left-side manage-products form-body box-shadow mt-4 mb-5">
               <h3 className="display-6">Manage Products</h3>
@@ -140,9 +206,13 @@ const AdminPage = () => {
               </button>
             </div>
             {createFormOpen && <CreatePostForm setCreateFormOpen={setCreateFormOpen} setPostTitleError={setPostTitleError} setPostTypeError={setPostTypeError}
-            formIsValid={formIsValid}
-            postTitleError={postTitleError}
-            postTypeError={postTypeError} />}
+              postTitleError={postTitleError}
+              postTypeError={postTypeError} />}
+            {updateFormOpen && <UpdatePostForm 
+            setUpdateFormOpen={setUpdateFormOpen} setPostTitleError={setPostTitleError} setPostTypeError={setPostTypeError}
+              postTitleError={postTitleError}
+              postTypeError={postTypeError}
+              onePost={onePost} />}
           </div>
         )}
 
