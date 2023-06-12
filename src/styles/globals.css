@@ -1,4 +1,5 @@
 @import url('https://fonts.cdnfonts.com/css/bressay-trial');
+@import url('https://fonts.cdnfonts.com/css/brigetha-signature');
 
 * {
   box-sizing: border-box;
@@ -88,15 +89,6 @@ textarea:focus {
 
 .site-font {
   font-family: 'Bressay Trial', sans-serif;
-}
-
-.animate-fade-in-slow {
-  opacity: 0;
-  transition: 3s;
-}
-
-.animate-fade-in-slow.show {
-  opacity: 1;
 }
 
 .box-shadow {
@@ -591,34 +583,6 @@ a:hover {
   animation-duration: 11s;
 }
 
-
-/* Lessons Posts */
-.lesson-post-list img {
-  width: 250px;
-  height: 100%;
-}
-
-.read-more-line {
-  width: 50%;
-  height: 1px;
-  background-color: rgba(0, 0, 0, .2);
-  transition: .2s;
-}
-
-.read-more:hover .read-more-line {
-  background-color: rgb(131, 180, 192);
-  width: 90%;
-}
-
-.read-more-flex {
-  justify-content: end;
-}
-
-.one-lesson-video {
-  width: 600px;
-  height: 345px;
-}
-
 @keyframes animate {
 
   0% {
@@ -634,6 +598,81 @@ a:hover {
   }
 
 }
+
+
+/* Lessons Posts */
+.lesson-post-list img {
+  width: 250px;
+  height: 100%;
+}
+
+.read-more {
+  width: 100px;
+}
+
+.read-more-flex {
+  justify-content: end;
+}
+
+.read-more-line {
+  width: 50%;
+  height: 1px;
+  background-color: rgba(0, 0, 0, .2);
+  transition: .2s;
+}
+
+.read-more:hover .read-more-line {
+  background-color: rgb(131, 180, 192);
+  width: 90%;
+}
+
+.one-lesson-video {
+  width: 600px;
+  height: 345px;
+}
+
+/* Update Posts */
+.update-post-list img {
+  width: 250px;
+  height: 200px;
+  object-fit: contain;
+}
+
+.header-container {
+  width: 100%;
+  height: 350px;
+  background-position: center;
+  background-size: 100%;
+}
+
+.header-background-filter {
+  width: 100%;
+  height: 350px;
+  position: absolute;
+  backdrop-filter: blur(5px);
+}
+
+.header-text-body {
+  background-color: rgba(255,255,255,.5);
+  backdrop-filter: blur(15px);
+  position: relative;
+  top: 50%;
+  left: 50%;
+  -ms-transform: translate(-50%, -50%);
+  transform: translate(-50%, -50%);
+  padding: 30px;
+  font-family: 'Brigetha Signature', sans-serif;
+  font-size: 1.3rem;
+}
+
+.header-text-body h1 {
+  font-size: 2.5rem;
+}
+
+.update-post-img {
+  width: 20%;
+}
+
 
 .table-button-small {
   padding: 4px 7px !important;
@@ -733,6 +772,15 @@ a:hover {
     max-height: 50vh;
   }
 
+  .header-container {
+    height: 50vh;
+    background-position: center;
+    background-size: 150%;
+  }
+  
+  .header-background-filter {
+    height: 50vh;
+  }
 }
 
 /* Tablet and Smaller Desktop */
