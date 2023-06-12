@@ -2,6 +2,7 @@ import Head from "next/head";
 import { useEffect, useRef, useState } from "react";
 import { useRouter } from "next/router";
 import axios from "axios";
+import CreatePostForm from "../components/CreatePostForm";
 
 const AdminPage = () => {
   const myRef = useRef();
@@ -11,37 +12,24 @@ const AdminPage = () => {
   const [postTitle, setPostTitle] = useState("");
   const [postContent, setPostContent] = useState("");
   const [videoURL, setVideoURL] = useState("");
-  const [isLesson, setIsLesson] = useState(false);
-  const [isUpdate, setIsUpdate] = useState(false);
-
-  useEffect(() => {
-    const observer = new IntersectionObserver((entries) => {
-      const entry = entries[0];
-      setContentIsVisible(entry.isIntersecting);
-    });
-    observer.observe(myRef.current);
-
-    if (contentIsVisible) {
-      document.querySelector(".page-content").style = "opacity: 1;";
-    } else {
-      document.querySelector(".page-content").style = "opacity: 0;";
-    }
-  }, [contentIsVisible]);
+  const [imageURL, setImageURL] = useState("");
+  const [postType, setPostType] = useState("");
+  const [createFormOpen, setCreateFormOpen] = useState(false)
 
   const handlePassword = () => {
     setLoggedIn(true);
     document.querySelector(".admin-page-dark").style = "opacity: 0";
     setTimeout(
       () =>
-        (document.querySelector(".admin-page-dark").style =
-          "opacity: 0; display: none"),
+      (document.querySelector(".admin-page-dark").style =
+        "opacity: 0; display: none"),
       600
     );
     document.querySelector(".admin-card").style = "opacity: 0";
     setTimeout(
       () =>
-        (document.querySelector(".admin-card").style =
-          "opacity: 0; display: none"),
+      (document.querySelector(".admin-card").style =
+        "opacity: 0; display: none"),
       600
     );
   };
@@ -50,26 +38,19 @@ const AdminPage = () => {
     router.push("/");
   };
 
-  const handleCreatePost = (e) => {
-    e.preventDefault();
-    console.log(postTitle);
-    axios.post('/api/create/post', {
-      postTitle,
-      postContent,
-      videoURL,
-      isLesson,
-      isUpdate
-    })
-    .then((res) => console.log(res))
-    .catch((err) => console.log(err))
-  };
+
+  const handleCreateFormOpen = () => {
+    document.querySelector(".admin-page-dark").style =
+      "opacity: 1; display: block"
+    setCreateFormOpen(true);
+  }
 
   return (
     <>
       <Head>
         <title>Admin Page | Art by Abby</title>
       </Head>
-      <main ref={myRef} className="page-content">
+      <main ref={myRef}>
         <div className="admin-page-dark"></div>
         <div className="admin-card box-shadow site-font">
           <div className="admin-card-header text-center p-3">
@@ -78,18 +59,18 @@ const AdminPage = () => {
           <div className="horizontal-line"></div>
           <div className="admin-card-body p-4">
             <p>To access this page, enter the password below:</p>
-            <div className="form-floating">
+            <div className="form-floating thin-floating">
               <input
                 type="password"
                 name="adminPassword"
                 id="adminPassword"
                 placeholder="p"
-                className="form-control"
+                className="form-control thin-control"
               />
               <label htmlFor="adminPassword">Password</label>
             </div>
             <button
-              className="view-cart mt-3"
+              className="btn-site-blue mt-3"
               style={{ width: `100%` }}
               onClick={handlePassword}
             >
@@ -114,7 +95,7 @@ const AdminPage = () => {
           </ul>
         </div>
         <button
-          className="view-cart mt-3 mb-4 site-font"
+          className="btn-site-blue mt-3 mb-4 site-font"
           style={{ position: `relative`, zIndex: `200`, marginLeft: `20px` }}
           onClick={backToHome}
         >
@@ -122,90 +103,46 @@ const AdminPage = () => {
         </button>
 
         {loggedIn && (
-          <div className="form-container box-shadow site-font p-3">
-            <div className="forms d-flex justify-content-around">
-              <div className="left-side manage-products form-body box-shadow">
-                <h3 className="display-6">Manage Products</h3>
-                <div className="horizontal-line"></div>
-                <ul>
-                  <li>View list of all products</li>
-                  <li>Change price of a product</li>
-                  <li>Add/remove a discount price for all products</li>
-                  <li>Delete a product</li>
-                  <li>Add a product</li>
-                  <li>Edit a product</li>
-                </ul>
-                <button className="view-cart mt-3" style={{ width: `100%` }}>
-                  Update Products
+          <div className="form-container box-shadow site-font p-3 m-auto col-lg-9">
+            <div className="right-side create-post form-body box-shadow">
+              <h3 className="display-6">Manage Posts</h3>
+              <div className="horizontal-line"></div>
+              <ul>
+                <li>View list of posts</li>
+                <li>
+                  Add a new post, indicate if it is a lesson, or update/news
+                </li>
+                <li>
+                  If lesson, allow for video embedding (likely from YouTube)
+                </li>
+                <li>Delete a post</li>
+                <li>Edit an existing post</li>
+                <br />
+                <button onClick={handleCreateFormOpen} className="btn-site-blue d-flex align-items-center gap-2" style={{ borderRadius: `10px` }}>
+                  <i class="bi bi-plus-circle" style={{ fontSize: `1.3rem` }}></i>
+                  <p style={{ marginBottom: 0 }}>New Post</p>
                 </button>
-              </div>
-              <div className="right-side create-post form-body box-shadow">
-                <h3 className="display-6">Manage Posts</h3>
-                <div className="horizontal-line"></div>
-                <ul>
-                  <li>View list of posts</li>
-                  <li>
-                    Add a new post, indicate if it is a lesson, or update/news
-                  </li>
-                  <li>
-                    If lesson, allow for video embedding (likely from YouTube)
-                  </li>
-                  <li>Delete a post</li>
-                  <li>Edit an existing post</li>
-                  <br />
-                  <form onSubmit={handleCreatePost} method="POST">
-                    <div className="form-floating">
-                      <input
-                        type="text"
-                        placeholder="p"
-                        className="form-control"
-                        value={postTitle}
-                        onChange={(e) => setPostTitle(e.target.value)}
-                      />
-                      <label>Post Title</label>
-                    </div>
-                    <div className="form-floating">
-                      <textarea
-                        type="text"
-                        rows="4"
-                        placeholder="p"
-                        className="form-control"
-                        value={postContent}
-                        onChange={(e) => setPostContent(e.target.value)}
-                      />
-                      <label>Post Content</label>
-                    </div>
-                    <div className="form-floating">
-                      <input
-                        type="text"
-                        placeholder="p"
-                        className="form-control"
-                        value={videoURL}
-                        onChange={(e) => setVideoURL(e.target.value)}
-                      />
-                      <label>Video URL (Optional)</label>
-                    </div>
-                    <label>
-                      <input type="radio" value={isLesson} onChange={(e) => setIsLesson(e.target.value)} />
-                      &nbsp; This is an art lesson
-                    </label>
-                    <br />
-                    <label>
-                      <input type="radio" value={isUpdate} onChange={(e) => setIsUpdate(e.target.value)} />
-                      &nbsp; This is news/update
-                    </label>
-                    <br />
-                    <button type="submit">Create Post</button>
-
-                  </form>
-                </ul>
-                <button className="view-cart mt-3" style={{ width: `100%` }}>
-                  Update Posts
-                </button>
-              </div>
+              </ul>
             </div>
+            <div className="left-side manage-products form-body box-shadow mt-4 mb-5">
+              <h3 className="display-6">Manage Products</h3>
+              <div className="horizontal-line"></div>
+              <ul>
+                <li>View list of all products</li>
+                <li>Change price of a product</li>
+                <li>Add/remove a discount price for all products</li>
+                <li>Delete a product</li>
+                <li>Add a product</li>
+                <li>Edit a product</li>
+              </ul>
+              <button className="btn-site-blue mt-3" style={{ width: `100%` }}>
+                Update Products
+              </button>
+            </div>
+            {createFormOpen && <CreatePostForm setCreateFormOpen={setCreateFormOpen} />}
           </div>
         )}
+
       </main>
     </>
   );

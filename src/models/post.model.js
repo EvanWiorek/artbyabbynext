@@ -12,6 +12,9 @@ const AbbyPostSchema = new mongoose.Schema(
     videoURL: {
       type: String,
     },
+    imageURL: {
+      type: String,
+    },
     isLesson: {
       type: Boolean,
       default: false,

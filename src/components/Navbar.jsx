@@ -123,7 +123,7 @@ const Navbar = ({ headerIsVisible }) => {
                 <button type="button"><span className="bi-search"></span></button>
               </div>
             </div>
-            <button type="button" className="position-relative cart-button mobile-hide" style={{ marginTop: `-17px`, backgroundColor: `rgba(255,255,255,.5)` }} onClick={handleOpenCartDesktop}>
+            <button type="button" className="position-relative cart-button mobile-hide" style={{ marginTop: `-17px` }} onClick={handleOpenCartDesktop}>
               <i className="bi bi-bag" style={{ fontSize: `1rem` }}></i>
               <span className="position-absolute translate-middle badge rounded-pill items-count">
                 12
@@ -159,7 +159,7 @@ const Navbar = ({ headerIsVisible }) => {
           </div>
           <div className="cart-menu-bottom d-flex flex-column">
             <p>Your subtotal today is $14.99. Shipping and taxes will calculated at checkout.</p>
-            <Link href="/cart" className='view-cart'>View Cart</Link>
+            <button className='btn-site-blue text-light'>View Cart</button>
           </div>
         </div>
       </div>
