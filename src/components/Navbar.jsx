@@ -90,15 +90,24 @@ const Navbar = ({ headerIsVisible }) => {
         <div className="navbar-content d-flex align-items-center justify-content-around col-lg-11 m-auto">
           <div className="left-side-desktop col-3 mobile-hide" >
             <div className="links d-flex custom-gap">
-              <p onClick={() => handleRoute("/updates")}>News</p>
+              <div className="d-flex flex-column align-items-center desktop-link">
+                <p onClick={() => handleRoute("/updates")}>News</p>
+                <div className="desktop-link-line"></div>
+              </div>
               <br />
-              <p onClick={() => handleRoute("/lessons")}>Art Lessons</p>
+              <div className="d-flex flex-column align-items-center desktop-link">
+                <p onClick={() => handleRoute("/lessons")}>Art Lessons</p>
+                <div className="desktop-link-line"></div>
+              </div>
               <br />
-              <p onClick={() => handleRoute("/allproducts")}>Browse All Products</p>
+              <div className="d-flex flex-column align-items-center desktop-link">
+                <p onClick={() => handleRoute("/allproducts")}>Browse All Products</p>
+                <div className="desktop-link-line"></div>
+              </div>
             </div>
           </div>
           <div className="left-side-mobile desktop-hide">
-            <button style={{ marginTop: `-17px` }} onClick={handleOpenMobileMenu}><i className="bi bi-list"></i></button>
+            <button style={{ marginTop: `-17px`, backgroundColor: `rgba(255,255,255,.5)` }} onClick={handleOpenMobileMenu}><i className="bi bi-list"></i></button>
           </div>
           <div className="middle site-logo text-center mobile-indent">
             <Link href="/" style={{ textDecoration: 'none' }}>
@@ -114,7 +123,7 @@ const Navbar = ({ headerIsVisible }) => {
                 <button type="button"><span className="bi-search"></span></button>
               </div>
             </div>
-            <button type="button" className="position-relative cart-button mobile-hide" style={{ marginTop: `-17px` }} onClick={handleOpenCartDesktop}>
+            <button type="button" className="position-relative cart-button mobile-hide" style={{ marginTop: `-17px`, backgroundColor: `rgba(255,255,255,.5)` }} onClick={handleOpenCartDesktop}>
               <i className="bi bi-bag" style={{ fontSize: `1rem` }}></i>
               <span className="position-absolute translate-middle badge rounded-pill items-count">
                 12
@@ -124,7 +133,7 @@ const Navbar = ({ headerIsVisible }) => {
           </div>
 
           <div className="right-side-mobile desktop-hide">
-            <button type="button" className="position-relative cart-button" style={{ marginTop: `-17px` }} onClick={handleOpenCartMobile}>
+            <button type="button" className="position-relative cart-button" style={{ marginTop: `-17px`, backgroundColor: `rgba(255,255,255,.5)` }} onClick={handleOpenCartMobile}>
               <i className="bi bi-bag" style={{ fontSize: `1rem` }}></i>
               <span className="position-absolute translate-middle badge rounded-pill items-count">
                 12

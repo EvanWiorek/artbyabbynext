@@ -4,11 +4,12 @@ import { useEffect, useRef, useState } from 'react'
 import axios from 'axios';
 import dayjs from 'dayjs';
 import Link from 'next/link';
+import { connectMongoDB } from "@/src/libs/MongoConnect";
+import AbbyPost from "@/src/models/post.model";
 
-const Lessons = () => {
+const Lessons = ({ allLessons }) => {
   const myRef = useRef();
   const [contentIsVisible, setContentIsVisible] = useState();
-  const [allLessons, setAllLessons] = useState([]);
 
   useEffect(() => {
     const observer = new IntersectionObserver((entries) => {
@@ -23,12 +24,6 @@ const Lessons = () => {
     else {
       document.querySelector(".page-content").style = "opacity: 0;"
     }
-
-    //get all posts
-    axios.get('/api/get/allposts').then((res) => {
-      setAllLessons(res.data);
-      console.log(res);
-    })
   }, [contentIsVisible])
 
   const getTrueURL = (videoURL) => {
@@ -70,7 +65,8 @@ const Lessons = () => {
                       <p>{lesson.postContent.slice(0, 200)}...</p>
                       <div className="d-flex read-more-flex">
                         <div className="d-flex flex-column align-items-center read-more">
-                          <Link href={`/lessons/${lesson._id}`} style={{ fontSize: `.8rem` }}>R E A D &nbsp; M O R E</Link>
+                          {/* <Link href={`/lessons/${lesson._id}`} style={{ fontSize: `.8rem` }}>R E A D &nbsp; M O R E</Link> */}
+                          <Link href={{ pathname: `/lessons/${lesson._id}`, query: { routeId: lesson._id } }} style={{ fontSize: `.8rem` }}>R E A D &nbsp; M O R E</Link>
                           <div className="read-more-line"></div>
                         </div>
                       </div>
@@ -91,3 +87,22 @@ const Lessons = () => {
 }
 
 export default Lessons;
+
+export const getServerSideProps = async () => {
+  try {
+    console.log('FROM lessons.jsx PAGE');
+    await connectMongoDB();
+    const allLessons = await AbbyPost.find({isLesson: true});
+    return {
+      props: {
+        allLessons: JSON.parse(JSON.stringify(allLessons))
+      }
+    }
+  }
+  catch (err) {
+    console.log(err);
+    return {
+      notFound: true
+    }
+  }
+}
