@@ -1,6 +1,62 @@
 import { useEffect, useState } from "react";
 import axios from "axios";
 import { useRouter } from "next/router";
+import dynamic from 'next/dynamic'
+
+const QuillComponent = dynamic(import('react-quill'), {
+  ssr: false,
+  loading: () => <p>Loading ...</p>,
+})
+
+const modules = {
+  toolbar: {
+    container: [
+      [{ header: '1' }, { header: '2' }],
+      [{ size: [] }],
+      ['bold', 'italic', 'underline', 'strike', 'blockquote'],
+      [
+        { list: 'ordered' },
+        { list: 'bullet' },
+        { indent: '-1' },
+        { indent: '+1' },
+        { align: [] },
+      ],
+      ['link', 'image'],
+      ['clean'],
+    ],
+    clipboard: {
+      matchVisual: false,
+    },
+    handlers: {
+      image: imageHandler
+    }
+  }
+}
+
+const formats = [
+  'header',
+  'font',
+  'size',
+  'bold',
+  'italic',
+  'underline',
+  'strike',
+  'blockquote',
+  'list',
+  'bullet',
+  'indent',
+  'link',
+  'image',
+  'align',
+]
+
+function imageHandler() {
+  var range = this.quill.getSelection();
+  var value = prompt('Please enter the image URL:');
+  if (value) {
+    this.quill.insertEmbed(range.index, 'image', value);
+  }
+}
 
 export default function CreatePostForm({ setUpdateFormOpen, setPostTitleError, setPostTypeError, postTitleError, onePost }) {
   const [postTitle, setPostTitle] = useState(onePost.postTitle);
@@ -109,14 +165,10 @@ export default function CreatePostForm({ setUpdateFormOpen, setPostTitleError, s
               ""
             )}
           </div>
-          <div className="form-floating mt-2">
-            <textarea
-              type="text"
-              placeholder="p"
-              className="form-control"
-              value={postContent}
-              onChange={(e) => setPostContent(e.target.value)} style={{ minHeight: `200px` }}/>
-            <label className="thin-label">Post Content</label>
+          <div className="mt-2 " style={{ backgroundColor: `white`, padding: `10px`, borderRadius: `5px` }}>
+            <label>Post Content</label>
+            <QuillComponent
+              modules={modules} formats={formats} theme="snow" value={postContent} onChange={setPostContent} style={{ backgroundColor: `white` }} />
           </div>
           <div className="form-floating mt-2">
             <input

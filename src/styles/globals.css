@@ -495,6 +495,10 @@ a:hover {
   padding: 5px !important;
 }
 
+.ql-editor {
+  min-height: 120px !important;
+}
+
 /* adminPage Background */
 .area {
   background: linear-gradient(#fff7f8, #ffdfe4);
