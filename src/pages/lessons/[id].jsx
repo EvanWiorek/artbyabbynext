@@ -89,7 +89,7 @@ const OneLesson = ({ isVisible, oneLesson }) => {
                 </iframe>
               </div>
               <div className='post-content m-auto'>
-                <p style={{ whiteSpace: `pre-wrap` }} className='mt-3 m-auto'>{oneLesson.postContent}</p>
+                <p style={{ whiteSpace: `pre-wrap` }} className='mt-3 m-auto roboto'>{oneLesson.postContent}</p>
               </div>
               <br />
             </div>

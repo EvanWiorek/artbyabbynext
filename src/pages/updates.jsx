@@ -53,7 +53,7 @@ const Lessons = ({ allUpdates }) => {
         <div className="body-color" style={{ paddingTop: `100px` }}>
           <h1 className='text-center mt-3 mb-0 site-font'>News & Updates</h1>
           <br />
-          <div className="update-post-list col-7 m-auto">
+          <div className="update-post-list col-lg-7 m-auto">
 
             {allUpdates.map((update) => (
               <div key={update._id} className='m-auto mt-3'>
@@ -62,14 +62,16 @@ const Lessons = ({ allUpdates }) => {
                 <div className="d-flex gap-3 card-body">
                   <img src={`${update.imageURL}`} alt="Thumbnail" className='mobile-hide' />
                   <div style={{ width: `100%` }}>
-                    <div style={{ minHeight: `180px` }}>
+                    <div className='update-card-body'>
                       <h5 className='site-font'>                          <Link href={`/updates/${update._id}`}>{update.postTitle}</Link></h5>
-                      <div className='d-flex gap-2 text-secondary site-font'>
+                      <div className='text-secondary site-font'>
                         <p>{dayjs(update.createdAt).format('MMMM D, YYYY')}</p>
-                        <p>•</p>
-                        <p>By Abby</p>
                       </div>
-                      <p>{update.postContent.slice(0, 200)}...</p>
+                      {update.postContent.length < 200 ?
+                        <p className='roboto'>{update.postContent}</p>
+                        :
+                        <p className='roboto'>{update.postContent.slice(0, 200)}...</p>
+                      }
                     </div>
                     <div className="d-flex read-more-flex">
                       <div className="d-flex flex-column align-items-center read-more">

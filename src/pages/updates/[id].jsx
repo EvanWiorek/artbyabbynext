@@ -84,7 +84,7 @@ const OneLesson = ({ isVisible, oneLesson }) => {
               </div>
             </div>
             <div className='post-content m-auto site-font'>
-              <h5 style={{ whiteSpace: `pre-wrap` }} className='mt-3 m-auto'>{oneLesson.postContent}</h5>
+              <h5 style={{ whiteSpace: `pre-wrap` }} className='mt-3 m-auto roboto'>{oneLesson.postContent}</h5>
             </div>
             <br />
           </div>

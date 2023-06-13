@@ -478,6 +478,17 @@ a:hover {
   background-color: rgba(255, 255, 255, .25);
 }
 
+.table-button-small {
+  padding: 4px 7px !important;
+}
+
+.all-posts-list-container {
+  max-height: 300px;
+  overflow-y: auto;
+  overflow-x: hidden;
+  padding: 5px !important;
+}
+
 /* adminPage Background */
 .area {
   background: linear-gradient(#fff7f8, #ffdfe4);
@@ -633,9 +644,13 @@ a:hover {
 
 /* Update Posts */
 .update-post-list img {
-  width: 250px;
+  width: 200px;
   height: 200px;
   object-fit: contain;
+}
+
+.update-card-body {
+  min-height: 180px;
 }
 
 .header-container {
@@ -667,22 +682,6 @@ a:hover {
 
 .header-text-body h1 {
   font-size: 2.5rem;
-}
-
-.update-post-img {
-  width: 20%;
-}
-
-
-.table-button-small {
-  padding: 4px 7px !important;
-}
-
-.all-posts-list-container {
-  max-height: 300px;
-  overflow-y: auto;
-  overflow-x: hidden;
-  padding: 5px !important;
 }
 
 /* Mobile */
@@ -781,6 +780,24 @@ a:hover {
   .header-background-filter {
     height: 50vh;
   }
+
+  .update-post-list {
+    width: 70vw;
+    text-align: center;
+  }
+
+  .lesson-post-list {
+    width: 75vw;
+    text-align: center;
+  }
+
+  .date-and-name {
+    justify-content: center;
+  }
+
+  .update-card-body {
+    min-height: 0;
+  }
   
 }
 
@@ -833,5 +850,23 @@ a:hover {
 
   .one-lesson-container {
     width: 90vw;
+  }
+
+  .update-post-list {
+    width: 50vw;
+    text-align: center;
+  }
+
+  .lesson-post-list {
+    width: 50vw;
+    text-align: center;
+  }
+
+  .date-and-name {
+    justify-content: center;
+  }
+
+  .update-card-body {
+    min-height: 0;
   }
 }
