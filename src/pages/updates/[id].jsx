@@ -9,13 +9,11 @@ import AbbyPost from "@/src/models/post.model";
 export const getServerSideProps = async (context) => {
   const routeId = context.params.id
   try {
-    // console.log(routeId, 'FROM [id].jsx PAGE');
     await connectMongoDB();
-    const oneLesson = await AbbyPost.findOne({ _id: routeId });
-    // console.log(oneLesson);
+    const oneUpdate = await AbbyPost.findOne({ _id: routeId });
     return {
       props: {
-        oneLesson: JSON.parse(JSON.stringify(oneLesson))
+        oneUpdate: JSON.parse(JSON.stringify(oneUpdate))
       }
     }
   }
@@ -26,7 +24,7 @@ export const getServerSideProps = async (context) => {
     }
   }
 }
-const OneLesson = ({ isVisible, oneLesson }) => {
+const OneUpdate = ({ isVisible, oneUpdate }) => {
   const myRef = useRef();
   const [contentIsVisible, setContentIsVisible] = useState();
   const [loaded, setLoaded] = useState(false);
@@ -67,7 +65,7 @@ const OneLesson = ({ isVisible, oneLesson }) => {
   return (
     <Layout home isVisible={isVisible}>
       <Head>
-        <title>All Products | Art by Abby</title>
+        <title>{oneUpdate.postTitle} | Art by Abby</title>
       </Head>
       <main ref={myRef} className='page-content'>
 
@@ -76,15 +74,15 @@ const OneLesson = ({ isVisible, oneLesson }) => {
             <div className="links mb-3" style={{ marginLeft: `10px` }} onClick={handleGoBack}>
               <p><i class="bi bi-arrow-left" style={{ fontSize: `.9rem` }}></i> Back to News & Updates</p>
             </div>
-            <div className="header-container" style={{ backgroundImage: `url(${oneLesson.imageURL})` }}>
+            <div className="header-container" style={{ backgroundImage: `url(${oneUpdate.imageURL})` }}>
               <div className="header-background-filter"></div>
               <div className="text-center header-text-body">
-                <h1 style={{ marginTop: `10px` }}>{oneLesson.postTitle}</h1>
-                <p style={{ marginBottom: 0 }}>{dayjs(oneLesson.createdAt).format('MMMM D, YYYY')}</p>
+                <h1 style={{ marginTop: `10px` }}>{oneUpdate.postTitle}</h1>
+                <p style={{ marginBottom: 0 }}>{dayjs(oneUpdate.createdAt).format('MMMM D, YYYY')}</p>
               </div>
             </div>
             <div className='post-content m-auto'>
-              <div className='mt-3 m-auto roboto details-content' dangerouslySetInnerHTML={{__html: oneLesson.postContent}} />
+              <div className='mt-3 m-auto roboto details-content' dangerouslySetInnerHTML={{__html: oneUpdate.postContent}} />
             </div>
             <br />
           </div>
@@ -95,5 +93,5 @@ const OneLesson = ({ isVisible, oneLesson }) => {
   )
 }
 
-export default OneLesson;
+export default OneUpdate;
 

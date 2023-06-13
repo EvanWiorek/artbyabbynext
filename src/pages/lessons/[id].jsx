@@ -65,7 +65,7 @@ const OneLesson = ({ isVisible, oneLesson }) => {
   return (
     <Layout home isVisible={isVisible}>
       <Head>
-        <title>All Products | Art by Abby</title>
+        <title>{oneLesson.postTitle} | Art by Abby</title>
       </Head>
       <main ref={myRef} className='page-content'>
 
