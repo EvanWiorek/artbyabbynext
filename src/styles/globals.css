@@ -499,6 +499,11 @@ a:hover {
   min-height: 120px !important;
 }
 
+.details-content {
+  /* max-width: 90vw; */
+  /* overflow: hidden; */
+}
+
 /* adminPage Background */
 .area {
   background: linear-gradient(#fff7f8, #ffdfe4);

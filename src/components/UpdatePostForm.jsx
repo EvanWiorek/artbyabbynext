@@ -3,10 +3,19 @@ import axios from "axios";
 import { useRouter } from "next/router";
 import dynamic from 'next/dynamic'
 
-const QuillComponent = dynamic(import('react-quill'), {
-  ssr: false,
-  loading: () => <p>Loading ...</p>,
-})
+const ReactQuill = dynamic(
+  async () => {
+    const { default: Quill } = await import("react-quill");
+    const { default: ImageResize } = await import('quill-image-resize-module');
+    Quill.Quill.register('modules/imageResize', ImageResize);
+    return function forwardRef({ forwardedRef, ...props }) {
+      return <Quill ref={forwardedRef} {...props} />;
+    };
+  },
+  {
+    ssr: false,
+  }
+)
 
 const modules = {
   toolbar: {
@@ -29,7 +38,17 @@ const modules = {
     },
     handlers: {
       image: imageHandler
-    }
+    },
+    imageResize: {
+      // parchment: QuillComponent.import('parchment'),
+      // modules: ['Resize', 'DisplaySize']
+      handleStyles: {
+        backgroundColor: 'black',
+        border: 'none',
+        color: 'white'
+        // other camelCase styles for size display
+      }
+    },
   }
 }
 
@@ -67,10 +86,11 @@ export default function CreatePostForm({ setUpdateFormOpen, setPostTitleError, s
   const [postId, setPostId] = useState("");
   const router = useRouter();
 
+
   useEffect(() => {
     setPostTitleError(null)
     setPostId(onePost._id);
-    if(onePost.isLesson === true) {
+    if (onePost.isLesson === true) {
       setPostType("isLesson")
     } else if (onePost.isUpdate === true) {
       setPostType("isUpdate")
@@ -167,7 +187,7 @@ export default function CreatePostForm({ setUpdateFormOpen, setPostTitleError, s
           </div>
           <div className="mt-2 " style={{ backgroundColor: `white`, padding: `10px`, borderRadius: `5px` }}>
             <label>Post Content</label>
-            <QuillComponent
+            <ReactQuill
               modules={modules} formats={formats} theme="snow" value={postContent} onChange={setPostContent} style={{ backgroundColor: `white` }} />
           </div>
           <div className="form-floating mt-2">
@@ -192,7 +212,7 @@ export default function CreatePostForm({ setUpdateFormOpen, setPostTitleError, s
           </div>
           <div className="radio-options mt-3">
             <h5>What kind of post is this?</h5>
-            {postType === 'isLesson'? <input type="radio" name="isOption" value="isLesson" id="isLesson" onChange={handlePostType} checked /> : <input type="radio" name="isOption" value="isLesson" id="isLesson" onChange={handlePostType} />}
+            {postType === 'isLesson' ? <input type="radio" name="isOption" value="isLesson" id="isLesson" onChange={handlePostType} checked /> : <input type="radio" name="isOption" value="isLesson" id="isLesson" onChange={handlePostType} />}
             <label htmlFor="isLesson">&nbsp; This is an art lesson</label>
             <br />
             {postType === 'isUpdate' ? <input type="radio" name="isOption" value="isUpdate" id="isUpdate" onChange={handlePostType} checked /> : <input type="radio" name="isOption" value="isUpdate" id="isUpdate" onChange={handlePostType} />}

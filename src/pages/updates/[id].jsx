@@ -84,7 +84,7 @@ const OneLesson = ({ isVisible, oneLesson }) => {
               </div>
             </div>
             <div className='post-content m-auto site-font'>
-              <div className='mt-3 m-auto roboto' dangerouslySetInnerHTML={{__html: oneLesson.postContent}} />
+              <div className='mt-3 m-auto roboto details-content' dangerouslySetInnerHTML={{__html: oneLesson.postContent}} />
             </div>
             <br />
           </div>
