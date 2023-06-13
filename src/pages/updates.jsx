@@ -80,8 +80,6 @@ const Lessons = ({ allUpdates }) => {
                     </div>
                   </div>
                 </div>
-
-                <div className="horizontal-line-dark"></div>
               </div>
             ))}
             <br />
