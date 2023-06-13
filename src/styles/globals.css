@@ -499,9 +499,14 @@ a:hover {
   min-height: 120px !important;
 }
 
-.details-content {
-  /* max-width: 90vw; */
-  /* overflow: hidden; */
+.ql-align-center {
+  text-align: center !important;
+}
+
+.details-content {}
+
+.details-content img {
+  width: 50%;
 }
 
 /* adminPage Background */
@@ -627,6 +632,10 @@ a:hover {
 
 
 /* Lessons Posts */
+.post-content a {
+  text-decoration: underline !important;
+}
+
 .lesson-post-list img {
   width: 250px;
   height: 100%;
@@ -816,6 +825,10 @@ a:hover {
 
   .update-card-body {
     min-height: 0;
+  }
+
+  .details-content img {
+    width: 100%;
   }
   
 }

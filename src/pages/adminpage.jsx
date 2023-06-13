@@ -149,7 +149,7 @@ const AdminPage = ({ allPosts }) => {
         </button>
 
         {loggedIn && (
-          <div className="form-container box-shadow p-3 m-auto col-lg-9 roboto">
+          <div className="form-container box-shadow p-3 m-auto col-lg-7 roboto">
             <div className="right-side create-post form-body box-shadow">
               <h3 className="text-center">Manage Posts</h3>
               <div className="horizontal-line-gray"></div>

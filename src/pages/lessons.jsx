@@ -65,22 +65,26 @@ const Lessons = ({ allLessons }) => {
 
         <div className="body-color" style={{ paddingTop: `100px` }}>
           <h1 className='text-center mt-3 mb-0 site-font'>Virtual Art Lessons</h1>
-          <br />
           <div className="lesson-post-list col-lg-7 m-auto">
+          <div className="horizontal-line-gray"></div>
 
             {allLessons.map((lesson) => (
               <div key={lesson._id} className='m-auto mt-3'>
-                <div className="d-flex justify-content-center mb-2"><img src={`http://img.youtube.com/vi/${getTrueURL(lesson.videoURL)}/0.jpg`} alt="Thumbnail" className='desktop-hide' /></div>
+                <div className="d-flex justify-content-center mb-2"><img src={`http://img.youtube.com/vi/${getTrueURL(lesson.videoURL)}/0.jpg`} alt="Thumbnail" className='desktop-hide box-shadow' /></div>
                 <div className="d-flex gap-3 card-body">
-                  <img src={`http://img.youtube.com/vi/${getTrueURL(lesson.videoURL)}/0.jpg`} alt="Thumbnail" className='mobile-hide' />
+                  <img src={`http://img.youtube.com/vi/${getTrueURL(lesson.videoURL)}/0.jpg`} alt="Thumbnail" className='mobile-hide box-shadow' />
                   <div>
-                    <h5 className='site-font'>                          <Link href={`/lessons/${lesson._id}`}>{lesson.postTitle}</Link></h5>
-                    <div className='d-flex gap-2 text-secondary site-font date-and-name'>
+                    <h5 className='roboto'>                          <Link href={`/lessons/${lesson._id}`}>{lesson.postTitle}</Link></h5>
+                    <div className='d-flex gap-2 text-secondary roboto date-and-name'>
                       <p>{dayjs(lesson.createdAt).format('MMMM D, YYYY')}</p>
                       <p>•</p>
                       <p>By Abby</p>
                     </div>
-                    <p className='roboto'>{lesson.postContent.length < 200 ? lesson.postContent : lesson.postContent.slice(0, 200)}...</p>
+                    {lesson.postContent.length < 200 ?
+                      <p className='roboto'>{lesson.postContent.replace(/(<([^>]+)>)/gi, "")}</p>
+                      :
+                      <p className='roboto'>{lesson.postContent.replace(/(<([^>]+)>)/gi, "").slice(0,200)}...</p>
+                    }
                     <div className="d-flex read-more-flex">
                       <div className="d-flex flex-column align-items-center read-more">
                         <Link href={`/lessons/${lesson._id}`} style={{ fontSize: `.8rem` }}>R E A D &nbsp; M O R E</Link>

@@ -3,17 +3,24 @@ import axios from "axios";
 import { useRouter } from "next/router";
 import dynamic from 'next/dynamic'
 
-const QuillComponent = dynamic(import('react-quill'), {
-  ssr: false,
-  loading: () => <p>Loading ...</p>,
-})
+const ReactQuill = dynamic(
+  async () => {
+    const { default: Quill } = await import("react-quill");
+    return function forwardRef({ forwardedRef, ...props }) {
+      return <Quill ref={forwardedRef} {...props} />;
+    };
+  },
+  {
+    ssr: false,
+  }
+)
 
 const modules = {
   toolbar: {
     container: [
-      [{ header: '1' }, { header: '2' }, { font: [] }],
+      [{ header: '1' }, { header: '2' }],
       [{ size: [] }],
-      ['bold', 'italic', 'underline', 'strike', 'blockquote'],
+      [{ 'color': [] }, 'bold', 'italic', 'underline', 'strike', 'blockquote'],
       [
         { list: 'ordered' },
         { list: 'bullet' },
@@ -21,21 +28,21 @@ const modules = {
         { indent: '+1' },
         { align: [] },
       ],
-      ['link', 'image'],
-      ['clean'],
+      ['link', 'image', 'clean'],
     ],
     clipboard: {
       matchVisual: false,
     },
     handlers: {
       image: imageHandler
-    }
+    },
   }
 }
 
 const formats = [
   'header',
   'font',
+  'color',
   'size',
   'bold',
   'italic',
@@ -165,7 +172,7 @@ export default function CreatePostForm({ setCreateFormOpen, setPostTitleError, s
           </div>
           <div className="mt-2 " style={{ backgroundColor: `white`, padding: `10px`, borderRadius: `5px` }}>
             <label>Post Content</label>
-            <QuillComponent
+            <ReactQuill
               modules={modules} formats={formats} theme="snow" value={postContent} onChange={setPostContent} style={{ backgroundColor: `white` }} />
           </div>
           <div className="form-floating mt-2">

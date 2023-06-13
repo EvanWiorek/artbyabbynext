@@ -9,10 +9,8 @@ import AbbyPost from "@/src/models/post.model";
 export const getServerSideProps = async (context) => {
   const routeId = context.params.id
   try {
-    // console.log(routeId, 'FROM [id].jsx PAGE');
     await connectMongoDB();
     const oneLesson = await AbbyPost.findOne({_id: routeId});
-    // console.log(oneLesson);
     return {
       props: {
         oneLesson: JSON.parse(JSON.stringify(oneLesson))
@@ -89,7 +87,7 @@ const OneLesson = ({ isVisible, oneLesson }) => {
                 </iframe>
               </div>
               <div className='post-content m-auto'>
-                <p style={{ whiteSpace: `pre-wrap` }} className='mt-3 m-auto roboto'>{oneLesson.postContent}</p>
+                <div className='mt-3 m-auto roboto details-content' dangerouslySetInnerHTML={{__html: oneLesson.postContent}} />
               </div>
               <br />
             </div>

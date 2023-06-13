@@ -83,7 +83,7 @@ const OneLesson = ({ isVisible, oneLesson }) => {
                 <p style={{ marginBottom: 0 }}>{dayjs(oneLesson.createdAt).format('MMMM D, YYYY')}</p>
               </div>
             </div>
-            <div className='post-content m-auto site-font'>
+            <div className='post-content m-auto'>
               <div className='mt-3 m-auto roboto details-content' dangerouslySetInnerHTML={{__html: oneLesson.postContent}} />
             </div>
             <br />

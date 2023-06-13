@@ -6,8 +6,6 @@ import dynamic from 'next/dynamic'
 const ReactQuill = dynamic(
   async () => {
     const { default: Quill } = await import("react-quill");
-    const { default: ImageResize } = await import('quill-image-resize-module');
-    Quill.Quill.register('modules/imageResize', ImageResize);
     return function forwardRef({ forwardedRef, ...props }) {
       return <Quill ref={forwardedRef} {...props} />;
     };
@@ -22,7 +20,7 @@ const modules = {
     container: [
       [{ header: '1' }, { header: '2' }],
       [{ size: [] }],
-      ['bold', 'italic', 'underline', 'strike', 'blockquote'],
+      [{ 'color': [] }, 'bold', 'italic', 'underline', 'strike', 'blockquote'],
       [
         { list: 'ordered' },
         { list: 'bullet' },
@@ -30,8 +28,7 @@ const modules = {
         { indent: '+1' },
         { align: [] },
       ],
-      ['link', 'image'],
-      ['clean'],
+      ['link', 'image', 'clean'],
     ],
     clipboard: {
       matchVisual: false,
@@ -39,22 +36,13 @@ const modules = {
     handlers: {
       image: imageHandler
     },
-    imageResize: {
-      // parchment: QuillComponent.import('parchment'),
-      // modules: ['Resize', 'DisplaySize']
-      handleStyles: {
-        backgroundColor: 'black',
-        border: 'none',
-        color: 'white'
-        // other camelCase styles for size display
-      }
-    },
   }
 }
 
 const formats = [
   'header',
   'font',
+  'color',
   'size',
   'bold',
   'italic',

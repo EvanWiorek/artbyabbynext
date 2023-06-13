@@ -46,31 +46,30 @@ const Lessons = ({ allUpdates }) => {
   return (
     <Layout home>
       <Head>
-        <title>Virtual Art Lessons | Art by Abby</title>
+        <title>News & Updates | Art by Abby</title>
       </Head>
       <main ref={myRef} className='page-content'>
 
         <div className="body-color" style={{ paddingTop: `100px` }}>
           <h1 className='text-center mt-3 mb-0 site-font'>News & Updates</h1>
-          <br />
           <div className="update-post-list col-lg-7 m-auto">
 
             {allUpdates.map((update) => (
               <div key={update._id} className='m-auto mt-3'>
-
-                <div className="d-flex justify-content-center mb-2"><img src={`${update.imageURL}`} alt="Thumbnail" className='desktop-hide' /></div>
+                <div className="horizontal-line-gray"></div>
+                <div className="d-flex justify-content-center mb-2"><img src={`${update.imageURL}`} alt="Thumbnail" className='desktop-hide box-shadow' /></div>
                 <div className="d-flex gap-3 card-body">
-                  <img src={`${update.imageURL}`} alt="Thumbnail" className='mobile-hide' />
+                  <img src={`${update.imageURL}`} alt="Thumbnail" className='mobile-hide box-shadow' />
                   <div style={{ width: `100%` }}>
                     <div className='update-card-body'>
-                      <h5 className='site-font'>                          <Link href={`/updates/${update._id}`}>{update.postTitle}</Link></h5>
-                      <div className='text-secondary site-font'>
+                      <Link href={`/updates/${update._id}`}><h4 className='roboto'>{update.postTitle}</h4></Link>
+                      <div className='text-secondary roboto'>
                         <p>{dayjs(update.createdAt).format('MMMM D, YYYY')}</p>
                       </div>
                       {update.postContent.length < 200 ?
-                        <p className='roboto'>{update.postContent}</p>
+                        <p className='roboto'>{update.postContent.replace(/(<([^>]+)>)/gi, "")}</p>
                         :
-                        <p className='roboto'>{update.postContent.slice(0, 200)}...</p>
+                        <p className='roboto'>{update.postContent.replace(/(<([^>]+)>)/gi, "").slice(0, 200)}...</p>
                       }
                     </div>
                     <div className="d-flex read-more-flex">
