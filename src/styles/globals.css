@@ -459,7 +459,9 @@ a:hover {
 
 .admin-card {
   position: fixed;
-  width: 500px;
+  width: 800px;
+  max-height: 95vh;
+  overflow: auto;
   top: 50%;
   left: 50%;
   -ms-transform: translate(-50%, -50%);
@@ -468,6 +470,10 @@ a:hover {
   border-radius: 10px;
   background-color: rgba(255,255,255,.4);
   border: 1px solid rgba(255, 255, 255, .3);
+}
+
+.small-card {
+  width: 400px !important;
 }
 
 .form-body {
@@ -737,6 +743,10 @@ a:hover {
     width: 90vw;
   }
 
+  .small-card {
+    width: 90vw !important;
+  }
+
   .right-side-desktop {
     display: none !important;
   }
@@ -860,6 +870,10 @@ a:hover {
   .lesson-post-list {
     width: 50vw;
     text-align: center;
+  }
+
+  .admin-card {
+    width: 90vw;
   }
 
   .date-and-name {

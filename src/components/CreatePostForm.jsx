@@ -76,7 +76,7 @@ export default function CreatePostForm({ setCreateFormOpen, setPostTitleError, s
   }
 
   return (
-    <div className="admin-card box-shadow site-font">
+    <div className="admin-card box-shadow roboto">
       <div className="admin-card-header text-center p-3 d-flex justify-content-between align-items-center">
         <div className="empty-div"><i className="bi bi-x-lg close-cart-menu" style={{ color: `rgba(124, 126, 128,0)` }}></i></div>
         <h3 style={{ marginBottom: 0 }}>Create New Post</h3>
@@ -113,7 +113,8 @@ export default function CreatePostForm({ setCreateFormOpen, setPostTitleError, s
               placeholder="p"
               className="form-control"
               value={postContent}
-              onChange={(e) => setPostContent(e.target.value)} />
+              onChange={(e) => setPostContent(e.target.value)}
+              style={{ minHeight: `200px` }} />
             <label className="thin-label">Post Content</label>
           </div>
           <div className="form-floating mt-2">
@@ -153,8 +154,8 @@ export default function CreatePostForm({ setCreateFormOpen, setPostTitleError, s
           </div>
           <br />
           <div className="d-flex gap-3 justify-content-end">
-            <button className="btn-site-cancel" onClick={handleFormClose}>Cancel</button>
-            <button type="submit" className={`btn-site-blue ${formIsValid ? "" : "disabled"}`}>Create Post</button>
+            <button className="btn-site-cancel roboto" onClick={handleFormClose}>Cancel</button>
+            <button type="submit" className={`roboto btn-site-blue ${formIsValid ? "" : "disabled"}`}>Create Post</button>
           </div>
         </form>
       </div>

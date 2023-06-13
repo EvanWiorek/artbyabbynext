@@ -98,7 +98,7 @@ const AdminPage = ({ allPosts }) => {
       </Head>
       <main ref={myRef}>
         <div className="admin-page-dark"></div>
-        <div className="admin-card box-shadow site-font">
+        <div className="admin-card box-shadow roboto small-card">
           <div className="admin-card-header text-center p-3">
             <h3>Admin Page</h3>
           </div>
