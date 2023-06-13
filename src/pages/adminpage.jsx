@@ -33,7 +33,14 @@ const AdminPage = ({ allPosts }) => {
   const [postTitleError, setPostTitleError] = useState("");
   // const adminPassword = ""
   const [postTypeError, setPostTypeError] = useState("");
+  const [allLessons, setAllLessons] = useState([]);
+  const [allUpdates, setAllUpdates] = useState([]);
   const [onePost, setOnePost] = useState();
+
+  useEffect(() => {
+    setAllLessons(allPosts.filter((p) => p.isLesson === true))
+    setAllUpdates(allPosts.filter((p) => p.isUpdate === true))
+  }, [])
 
   const handlePassword = () => {
     setLoggedIn(true);
@@ -80,7 +87,7 @@ const AdminPage = ({ allPosts }) => {
     console.log(data);
     setOnePost(data)
     document.querySelector(".admin-page-dark").style =
-    "opacity: 1; display: block"
+      "opacity: 1; display: block"
     setUpdateFormOpen(true)
   }
 
@@ -109,7 +116,7 @@ const AdminPage = ({ allPosts }) => {
               <label htmlFor="adminPassword">Password</label>
             </div>
             <button
-              className="btn-site-blue mt-3"
+              className="btn-site-blue roboto mt-3"
               style={{ width: `100%` }}
               onClick={handlePassword}
             >
@@ -134,7 +141,7 @@ const AdminPage = ({ allPosts }) => {
           </ul>
         </div>
         <button
-          className="btn-site-blue mt-3 mb-4 site-font"
+          className="btn-site-blue roboto mt-3 mb-4"
           style={{ position: `relative`, zIndex: `200`, marginLeft: `20px` }}
           onClick={backToHome}
         >
@@ -142,28 +149,29 @@ const AdminPage = ({ allPosts }) => {
         </button>
 
         {loggedIn && (
-          <div className="form-container box-shadow p-3 m-auto col-lg-9">
+          <div className="form-container box-shadow p-3 m-auto col-lg-9 roboto">
             <div className="right-side create-post form-body box-shadow">
-              <h3 className="display-6">Manage Posts</h3>
-              <div className="horizontal-line"></div>
+              <h3 className="text-center">Manage Posts</h3>
+              <div className="horizontal-line-gray"></div>
               <div className="col-lg-9 m-auto">
                 <div className="d-flex justify-content-center">
-                  <button onClick={handleCreateFormOpen} className="btn-site-blue d-flex align-items-center gap-2 mb-3">
+                  <button onClick={handleCreateFormOpen} className="btn-site-blue roboto d-flex align-items-center gap-2 mb-3">
                     <i className="bi bi-plus-circle" style={{ fontSize: `1.3rem` }}></i>
                     <p style={{ marginBottom: 0 }}>New Post</p>
                   </button>
                 </div>
                 <div className="form-body all-posts-list-container box-shadow">
+                  <h4 className="text-center mt-2">Art Lessons</h4>
+                  <div className="horizontal-line-gray"></div>
                   <table className="table table-sm m-auto">
                     <thead>
                       <tr>
                         <th scope="col">Post Title</th>
-                        <th scope="col">Type</th>
                         <th scope="col">Actions</th>
                       </tr>
                     </thead>
                     <tbody>
-                      {allPosts.map((p) => {
+                      {allLessons.map((p) => {
                         let postType = "";
                         if (p.isLesson === true) {
                           postType = "Art Lesson"
@@ -174,12 +182,11 @@ const AdminPage = ({ allPosts }) => {
                         return (
                           <tr>
                             <td>{p.postTitle}</td>
-                            <td>{postType}</td>
                             <td>
                               <div className="d-flex justify-content-center gap-1">
-                                <button className="btn-site-blue table-button-small" onClick={() => handleUpdateFormOpen(p._id)}>Edit</button>
+                                <button className="btn-site-blue roboto table-button-small" onClick={() => handleUpdateFormOpen(p._id)}>Edit</button>
 
-                                <button className="btn-site-cancel table-button-small" onClick={() => deletePost(p._id)}>Delete</button>
+                                <button className="btn-site-cancel roboto table-button-small" onClick={() => deletePost(p._id)}>Delete</button>
                               </div>
                             </td>
                           </tr>
@@ -188,11 +195,48 @@ const AdminPage = ({ allPosts }) => {
                     </tbody>
                   </table>
                 </div>
+
+                <div className="form-body all-posts-list-container box-shadow mt-3">
+                  <h4 className="text-center mt-2">News & Updates</h4>
+                  <div className="horizontal-line-gray"></div>
+                  <table className="table table-sm m-auto">
+                    <thead>
+                      <tr>
+                        <th scope="col">Post Title</th>
+                        <th scope="col">Actions</th>
+                      </tr>
+                    </thead>
+                    <tbody>
+                      {allUpdates.map((p) => {
+                        let postType = "";
+                        if (p.isLesson === true) {
+                          postType = "Art Lesson"
+                        }
+                        else if (p.isUpdate === true) {
+                          postType = "News/Update"
+                        }
+                        return (
+                          <tr>
+                            <td>{p.postTitle}</td>
+                            <td>
+                              <div className="d-flex justify-content-center gap-1">
+                                <button className="btn-site-blue roboto table-button-small" onClick={() => handleUpdateFormOpen(p._id)}>Edit</button>
+                                <button className="btn-site-cancel roboto table-button-small" onClick={() => deletePost(p._id)}>Delete</button>
+                              </div>
+                            </td>
+                          </tr>
+                        )
+                      })}
+                    </tbody>
+                  </table>
+                </div>
+
+
               </div>
             </div>
             <div className="left-side manage-products form-body box-shadow mt-4 mb-5">
-              <h3 className="display-6">Manage Products</h3>
-              <div className="horizontal-line"></div>
+              <h3 className="text-center">Manage Products</h3>
+              <div className="horizontal-line-gray"></div>
               <ul>
                 <li>View list of all products</li>
                 <li>Change price of a product</li>
@@ -201,15 +245,15 @@ const AdminPage = ({ allPosts }) => {
                 <li>Add a product</li>
                 <li>Edit a product</li>
               </ul>
-              <button className="btn-site-blue mt-3" style={{ width: `100%` }}>
+              <button className="btn-site-blue roboto mt-3" style={{ width: `100%` }}>
                 Update Products
               </button>
             </div>
             {createFormOpen && <CreatePostForm setCreateFormOpen={setCreateFormOpen} setPostTitleError={setPostTitleError} setPostTypeError={setPostTypeError}
               postTitleError={postTitleError}
               postTypeError={postTypeError} />}
-            {updateFormOpen && <UpdatePostForm 
-            setUpdateFormOpen={setUpdateFormOpen} setPostTitleError={setPostTitleError} setPostTypeError={setPostTypeError}
+            {updateFormOpen && <UpdatePostForm
+              setUpdateFormOpen={setUpdateFormOpen} setPostTitleError={setPostTitleError} setPostTypeError={setPostTypeError}
               postTitleError={postTitleError}
               postTypeError={postTypeError}
               onePost={onePost} />}

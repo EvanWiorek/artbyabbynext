@@ -88,11 +88,11 @@ export default function CreatePostForm({ setCreateFormOpen, setPostTitleError, s
       <div className="admin-card-body p-4">
 
         <form onSubmit={handleCreatePost} method="POST" className="col-lg-11 m-auto">
-          <div className="form-floating thin-floating">
+          <div className="form-floating">
             <input
               type="text"
               placeholder="p"
-              className="form-control thin-control"
+              className="form-control"
               value={postTitle}
               onChange={handlePostTitle}
             />
@@ -105,32 +105,32 @@ export default function CreatePostForm({ setCreateFormOpen, setPostTitleError, s
               ""
             )}
           </div>
-          <div className="form-floating thin-floating mt-2">
+          <div className="form-floating mt-2">
             <textarea
               type="text"
               rows="4"
+              cols="10"
               placeholder="p"
               className="form-control"
               value={postContent}
-              onChange={(e) => setPostContent(e.target.value)}
-              style={{ fontSize: `.8rem` }} />
+              onChange={(e) => setPostContent(e.target.value)} />
             <label className="thin-label">Post Content</label>
           </div>
-          <div className="form-floating thin-floating mt-2">
+          <div className="form-floating mt-2">
             <input
               type="text"
               placeholder="p"
-              className="form-control thin-control"
+              className="form-control"
               value={videoURL}
               onChange={(e) => setVideoURL(e.target.value)}
             />
             <label className="thin-label">Video URL (Optional)</label>
           </div>
-          <div className="form-floating thin-floating">
+          <div className="form-floating">
             <input
               type="text"
               placeholder="p"
-              className="form-control thin-control mt-2"
+              className="form-control mt-2"
               value={imageURL}
               onChange={(e) => setImageURL(e.target.value)}
             />

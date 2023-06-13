@@ -1,5 +1,6 @@
 @import url('https://fonts.cdnfonts.com/css/bressay-trial');
 @import url('https://fonts.cdnfonts.com/css/brigetha-signature');
+@import url('https://fonts.googleapis.com/css2?family=Roboto:wght@300;400&display=swap');
 
 * {
   box-sizing: border-box;
@@ -47,19 +48,6 @@ html {
   display: flex;
 }
 
-.thin-floating {
-  font-size: .9rem !important;
-}
-
-.thin-control {
-  font-size: .8rem !important;
-  min-height: 40px !important;
-  max-height: 40px !important;
-}
-
-.thin-label {
-  margin-top: -5px !important;
-}
 
 input {
   caret-color: rgba(0, 0, 0, .5);
@@ -89,6 +77,11 @@ textarea:focus {
 
 .site-font {
   font-family: 'Bressay Trial', sans-serif;
+}
+
+.roboto {
+  font-family: 'Roboto', sans-serif;
+  font-weight: 300;
 }
 
 .box-shadow {
@@ -403,6 +396,14 @@ a:hover {
   margin-bottom: 15px;
 }
 
+.horizontal-line-gray {
+  height: .5px;
+  width: 100%;
+  background-color: rgba(0, 0, 0, .1);
+  margin-top: 15px;
+  margin-bottom: 15px;
+}
+
 .screen-darken {
   width: 100vw;
   height: 100vh;
@@ -445,7 +446,6 @@ a:hover {
 }
 
 /* adminPage */
-
 .admin-page-dark {
   width: 100vw;
   height: 100vh;
@@ -453,7 +453,7 @@ a:hover {
   position: absolute;
   z-index: 300;
   transition: .3s;
-  backdrop-filter: blur(5px);
+  backdrop-filter: blur(15px);
   position: fixed;
 }
 
@@ -466,12 +466,12 @@ a:hover {
   transform: translate(-50%, -50%);
   z-index: 350;
   border-radius: 10px;
-  backdrop-filter: blur(25px) brightness(120%);
+  background-color: rgba(255,255,255,.4);
   border: 1px solid rgba(255, 255, 255, .3);
 }
 
 .form-body {
-  padding: 20px;
+  padding: 10px;
   border-radius: 10px;
   border: 1px solid rgba(255, 255, 255, .3);
   backdrop-filter: blur(25px);
@@ -680,7 +680,7 @@ a:hover {
 
 .all-posts-list-container {
   max-height: 300px;
-  overflow-y: scroll;
+  overflow-y: auto;
   overflow-x: hidden;
   padding: 5px !important;
 }
@@ -764,7 +764,7 @@ a:hover {
   }
 
   .table-button-small {
-    font-size: .6rem !important;
+    font-size: .8rem !important;
     padding: 3px 5px !important;
   }
 
@@ -781,6 +781,7 @@ a:hover {
   .header-background-filter {
     height: 50vh;
   }
+  
 }
 
 /* Tablet and Smaller Desktop */
