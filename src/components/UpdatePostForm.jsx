@@ -12,6 +12,7 @@ export default function CreatePostForm({ setUpdateFormOpen, setPostTitleError, s
   const router = useRouter();
 
   useEffect(() => {
+    setPostTitleError(null)
     setPostId(onePost._id);
     if(onePost.isLesson === true) {
       setPostType("isLesson")
