@@ -57,7 +57,7 @@ const Lessons = ({ allLessons }) => {
   }
 
   return (
-    <Layout home>
+    <Layout>
       <Head>
         <title>Virtual Art Lessons | Art by Abby</title>
       </Head>

@@ -9,6 +9,7 @@ const data = {
         Medium: 20,
         Large: 25
       },
+      countInStock: 20,
       options: ['Red', 'Blue', 'Pink', 'Yellow'],
       description: 'This is a handmade tie blanket! It comes in three sizes (small, medium, and large) and from a choice of four colors(red, blue, pink, and yellow).'
     },
@@ -19,6 +20,7 @@ const data = {
       price: {
         price: 120
       },
+      countInStock: 20,
       options: [],
       description: 'This is a handmade painting made by me!'
     },

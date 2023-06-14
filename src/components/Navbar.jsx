@@ -1,9 +1,15 @@
 
 import Link from 'next/link';
-import { useEffect, useState } from 'react';
+import { useContext, useEffect, useState } from 'react';
 import { useRouter } from 'next/router';
+import { Store } from '../utils/Store';
 
 const Navbar = ({ headerIsVisible }) => {
+  const { state, dispatch } = useContext(Store);
+  const {
+    cart: { cartItems },
+  } = state;
+  const { cart } = state;
   const router = useRouter();
 
   useEffect(() => {
@@ -83,6 +89,10 @@ const Navbar = ({ headerIsVisible }) => {
     setTimeout(() => router.push(href), 500)
   }
 
+  const handleRemoveItem = (item) => {
+    
+  }
+
   return <>
     <div>
       <div className="navbar-body pt-3 border-on-bottom" id='navbarBody'>
@@ -125,7 +135,10 @@ const Navbar = ({ headerIsVisible }) => {
             <button type="button" className="position-relative cart-button mobile-hide" style={{ marginTop: `-17px` }} onClick={handleOpenCartDesktop}>
               <i className="bi bi-bag" style={{ fontSize: `1rem` }}></i>
               <span className="position-absolute translate-middle badge rounded-pill items-count">
-                12
+                {cart.cartItems.length > 0 ? cart.cartItems.length > 0 && (
+                  cart.cartItems.reduce((a, c) => a + c.quantity, 0)
+                ) :
+                  0}
                 <span className="visually-hidden">Number of Items in Cart</span>
               </span>
             </button>
@@ -135,7 +148,10 @@ const Navbar = ({ headerIsVisible }) => {
             <button type="button" className="position-relative cart-button" style={{ marginTop: `-17px`, backgroundColor: `rgba(255,255,255,.5)` }} onClick={handleOpenCartMobile}>
               <i className="bi bi-bag" style={{ fontSize: `1rem` }}></i>
               <span className="position-absolute translate-middle badge rounded-pill items-count">
-                12
+                {cart.cartItems.length > 0 ? cart.cartItems.length > 0 && (
+                  cart.cartItems.reduce((a, c) => a + c.quantity, 0)
+                ) :
+                  0}
                 <span className="visually-hidden">Number of Items in Cart</span>
               </span>
             </button>
@@ -154,7 +170,17 @@ const Navbar = ({ headerIsVisible }) => {
             </div>
           </div>
           <div className="cart-menu-middle">
-            <p>Your cart is currently empty.</p>
+            {
+              cartItems.length === 0 ? (<p>Your cart is currently empty.</p>) : (
+                cartItems.map((item) => (
+                  <div key={item.slug} className='d-flex justify-content-between'>
+                    <Link href={`/product/${item.slug}`}>{item.name}</Link>
+                    <i class="bi bi-trash" onClick={() => handleRemoveItem(item)}></i>
+                  </div>
+                ))
+              )
+            }
+            
           </div>
           <div className="cart-menu-bottom d-flex flex-column">
             <p>Your subtotal today is $14.99. Shipping and taxes will calculated at checkout.</p>
