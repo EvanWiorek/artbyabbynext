@@ -88,6 +88,10 @@ textarea:focus {
   box-shadow: 0px 0px 3px rgba(0, 0, 0, .2);
 }
 
+.box-shadow-2 {
+  box-shadow: 0px 1px 2px rgba(0, 0, 0, .2);
+}
+
 .border-on-top {
   border-top: 1px solid rgba(255, 255, 255, .2);
   box-shadow: 2px 0px 3px rgba(0, 0, 0, .2);
@@ -108,6 +112,21 @@ textarea:focus {
   padding: 15px 0px;
 }
 
+.fade-scroll {
+  background-color: rgb(255,249,254);
+  animation: fade-scroll .1s linear infinite;
+  animation-play-state: paused;
+  animation-delay: calc(var(--scroll) * -.3s);
+  animation-iteration-count: 1;
+  animation-fill-mode: both;
+}
+
+@keyframes fade-scroll {
+  to {
+    background-color: rgba(255, 172, 236, 0.07);
+  }
+}
+
 .white-bg {
   width: 100%;
   height: 125px;
@@ -117,7 +136,7 @@ textarea:focus {
 .site-logo,
 .links {
   font-family: 'Bressay Trial', sans-serif;
-  filter: drop-shadow(0px 0px 20px rgba(255, 255, 255, 1)) drop-shadow(0px 0px 10px rgba(255, 255, 255, 1));
+  /* filter: drop-shadow(0px 0px 20px rgba(255, 255, 255, 1)) drop-shadow(0px 0px 10px rgba(255, 255, 255, 1)); */
   transition: .2s;
 }
 
@@ -229,7 +248,7 @@ a:hover {
 }
 
 .parallax-container {
-  height: 75vh !important;
+  height: 90vh !important;
 }
 
 .parallax-container video {
@@ -706,6 +725,32 @@ a:hover {
 
 .header-text-body h1 {
   font-size: 2.5rem;
+}
+
+/* Product Cards */
+
+.products-container-body {
+  width: 100%;
+  background-color: rgba(255, 172, 236, 0.15);
+  padding: 15px 0px;
+}
+
+.product-card {
+  /* border-radius: 5px; */
+  background-color: rgba(255,255,255,1);
+  padding: 10px;
+  border: 1px solid rgba(255, 255, 255, .3);
+}
+
+.product-card-content {
+  padding: 10px;
+}
+
+.product-card img {
+  width: 200px;
+  height: 250px;
+  object-fit: cover;
+  transition: .1s;
 }
 
 /* Mobile */

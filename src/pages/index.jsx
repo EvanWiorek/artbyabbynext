@@ -1,11 +1,15 @@
 import Head from 'next/head'
 import Layout from '../components/Layout'
 import { useState, useRef, useEffect } from 'react';
+import data from '../utils/data'
+import ProductItem from '../components/ProductItem';
 
 
 export default function Home() {
   const myRef = useRef();
   const [headerIsVisible, setHeaderIsVisible] = useState();
+
+
 
   useEffect(() => {
     const observer = new IntersectionObserver((entries) => {
@@ -14,12 +18,22 @@ export default function Home() {
     })
     observer.observe(myRef.current)
 
-    if(headerIsVisible) {
-      document.querySelector(".page-content").style = "opacity: 1;"
+    document.getElementById("navbarBody").classList.add("fade-scroll")
+
+    const showArrow = () => {
+      document.querySelector(".fade-scroll").style.display = "block";
     }
-    else {
-      document.querySelector(".page-content").style = "opacity: 0;"
-    }
+  
+    window.addEventListener(
+      "scroll",
+      () => {
+        document.body.style.setProperty(
+          "--scroll",
+          window.pageYOffset / (document.body.offsetHeight - window.innerHeight)
+        );
+      },
+      false
+    );
   }, [headerIsVisible])
 
 
@@ -29,8 +43,8 @@ export default function Home() {
       <Head>
         <title>Home | Art by Abby</title>
       </Head>
-      <main className='page-content'>
-        <div className="navbar-white"></div>
+      <main>
+        {/* <div className="navbar-white"></div> */}
 
         <div className="parallax-container" ref={myRef}>
           <video src="/static/videos/header-one.mp4" autoPlay muted loop></video>
@@ -41,6 +55,14 @@ export default function Home() {
           <br />
           <br />
           <br />
+          <div className="products-container-body">
+            <div className="products-container-content m-auto d-flex gap-3 align-items-center col-lg-9">
+              <h1 className='site-font'>All Products</h1>
+              {data.products.map((product) => (
+                <ProductItem product={product} key={product.slug} />
+              ))}
+            </div>
+          </div>
           <br />
           <br />
           <br />

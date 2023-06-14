@@ -69,7 +69,6 @@ const Navbar = ({ headerIsVisible }) => {
 
   const handleRoute = (href) => {
     if (router.asPath == "/") {
-      document.querySelector(".navbar-white").style = "height: 0;"
       document.querySelector(".logo-img").style = "width: 130px;"
       document.querySelector(".abby-name").style = "font-size: .6rem;"
       setTimeout(() => router.push(href), 200)
@@ -86,7 +85,7 @@ const Navbar = ({ headerIsVisible }) => {
 
   return <>
     <div>
-      <div className="navbar-body pt-3 border-on-bottom">
+      <div className="navbar-body pt-3 border-on-bottom" id='navbarBody'>
         <div className="navbar-content d-flex align-items-center justify-content-around col-lg-11 m-auto">
           <div className="left-side-desktop col-3 mobile-hide" >
             <div className="links d-flex custom-gap">
