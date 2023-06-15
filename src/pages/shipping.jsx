@@ -6,6 +6,8 @@ import Head from "next/head";
 import { Store } from "../utils/Store";
 import Cookies from "js-cookie";
 import dynamic from "next/dynamic";
+import SiteHeader from "../components/SiteHeader";
+import { toast } from "react-toastify";
 
 function ShippingScreen() {
   const myRef = useRef();
@@ -34,7 +36,6 @@ function ShippingScreen() {
   const [userStateError, setUserStateError] = useState();
   const [postalCode, setPostalCode] = useState();
   const [postalCodeError, setPostalCodeError] = useState();
-  // let [formIsValid, setFormIsValid] = useState();
 
   let formIsValid = false;
   formIsValid =
@@ -81,7 +82,7 @@ function ShippingScreen() {
   }, [contentIsVisible]);
 
   const handleGoBack = () => {
-    router.back();
+    router.push('/');
   };
 
 
@@ -168,6 +169,9 @@ function ShippingScreen() {
 
   const handleSubmit = (e) => {
     e.preventDefault();
+    if(formIsValid !== true) {
+      return toast('Please fix the errors listed on screen.', { position: 'top-right', className: 'roboto' })
+    }
     if (formIsValid === true) {
       dispatch({
         type: "SAVE_CUSTOMER_INFO",
@@ -208,7 +212,7 @@ function ShippingScreen() {
         <title>Shipping | Art by Abby</title>
       </Head>
       <div>
-        <Navbar />
+        <SiteHeader />
         <div className="page-content roboto" ref={myRef}>
           <main style={{ paddingTop: `100px` }}>
             {cartItems.length === 0 ? (
@@ -217,31 +221,31 @@ function ShippingScreen() {
                 <br />
                 <div
                   className="links desktop-link d-flex flex-column align-items-end m-auto"
-                  style={{ marginLeft: `10px`, width: `280px` }}
+                  style={{ marginLeft: `10px`, width: `300px` }}
                   onClick={handleGoBack}
                 >
                   <p className="roboto" style={{ fontSize: `1.7rem` }}>
                     <i class="bi bi-arrow-left" style={{ fontSize: `1.5rem` }}></i>{" "}
-                    Click here to go Back
+                    Click Here to go Home
                   </p>
                   <div className="desktop-link-line"></div>
                 </div>
               </div>
             )
               :
-              <div className="d-flex flex-column-small">
+              <div className="d-flex col-lg-8 m-auto flex-column-small">
                 <div
-                  className="links desktop-link d-flex flex-column align-items-end"
-                  style={{ marginLeft: `10px`, width: `60px` }}
+                  className="links desktop-link d-flex flex-column align-items-end prev-page"
+                  style={{ marginLeft: `10px`, width: `119px`, marginTop: `10px`, height: `30px` }}
                   onClick={handleGoBack}
                 >
                   <p className="roboto">
                     <i class="bi bi-arrow-left" style={{ fontSize: `.9rem` }}></i>{" "}
-                    Back
+                    Previous Page
                   </p>
                   <div className="desktop-link-line"></div>
                 </div>
-                <div className="col-lg-6 m-auto">
+                <div className="col-lg-8 m-auto">
                   <CheckoutWizard activeStep={0} />
                   <div className="">
                     <form onSubmit={(e) => handleSubmit(e)} className="shipping-submit-form m-auto" style={{ paddingBottom: `20px` }}>
@@ -691,11 +695,13 @@ function ShippingScreen() {
                             : ""}
                         </div>
                       </div>
-                      <input type="submit" value="Next" style={{ width: `100%` }} className={`btn-site-pink roboto ${formIsValid ? "" : "disabled"
+                      <input type="submit" value="Next" style={{ width: `100%` }} className={`btn-site-pink roboto ${formIsValid ? "" : "disabled-toast"
                         }`} />
                     </form>
                   </div>
                 </div>
+
+                <div style={{ width: `119px` }}></div>
               </div>
             }
           </main>

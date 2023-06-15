@@ -48,6 +48,20 @@ html {
   display: flex;
 }
 
+.Toastify__toast-theme--light {
+  background-color: transparent !important;
+  backdrop-filter: blur(3px) !important;
+  color: rgba(0,0,0);
+}
+
+.Toastify__toast-body> div {
+  font-family: 'Roboto', sans-serif !important;
+  background-color: transparent;
+}
+
+.Toastify__progress-bar {
+  --toastify-color-progress-light: rgb(206, 139, 139) !important;
+}
 
 input {
   caret-color: rgba(0, 0, 0, .5);
@@ -69,6 +83,12 @@ textarea:focus {
   pointer-events: none;
   filter: saturate(0);
   opacity: .7;
+}
+
+.disabled-toast {
+  filter: saturate(0);
+  opacity: .7;
+  cursor: default !important;
 }
 
 .page-content {
@@ -1034,6 +1054,11 @@ a:hover {
     width: 90vw;
   }
   
+  .prev-page {
+    margin-top: 0 !important;
+    margin-bottom: 10px;
+    margin-left: 20px !important;
+  }
 }
 
 /* Tablet and Smaller Desktop */
