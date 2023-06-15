@@ -5,6 +5,7 @@ import Link from 'next/link';
 import { useRouter } from 'next/router';
 import data from '@/src/utils/data';
 import { Store } from '@/src/utils/Store';
+
 // import { connectMongoDB } from "@/src/libs/MongoConnect";
 // import AbbyPost from "@/src/models/post.model";
 
@@ -34,9 +35,12 @@ const ProductDetails = () => {
   const {query} = useRouter();
   const {slug} = query;
   const product = data.products.find(p => p.slug === slug);
+  const [productLoaded, setProductLoaded] = useState();
   // if(!product) {
   //   return <div>Product Not Found</div>
   // }
+
+
 
   useEffect(() => {
     const observer = new IntersectionObserver((entries) => {
@@ -50,6 +54,14 @@ const ProductDetails = () => {
     }
     else {
       document.querySelector(".page-content").style = "opacity: 0;"
+    }
+
+    if(product) {
+      setProductLoaded(true)
+    }
+
+    if(!product) {
+      setProductLoaded(false)
     }
   }, [contentIsVisible])
 
@@ -69,15 +81,15 @@ const ProductDetails = () => {
   return (
     <Layout>
       <Head>
-        <title>{product.name} | Art by Abby</title>
+        {/* <title>{product.name} | Art by Abby</title> */}
       </Head>
       <main ref={myRef} className='page-content'>
 
-        <div className="body-color" style={{ paddingTop: `100px` }}>
+        {productLoaded && <div className="body-color" style={{ paddingTop: `100px` }}>
           <h1 className='text-center mt-3 mb-0 roboto' style={{ fontWeight: `100` }}>{product.name}</h1>
           <button className='btn-site-blue roboto' onClick={handleAddToCart}>Add to Cart</button>
 
-        </div>
+        </div>}
 
       </main>
     </Layout >
