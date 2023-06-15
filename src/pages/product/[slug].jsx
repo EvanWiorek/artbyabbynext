@@ -74,7 +74,7 @@ const ProductDetails = () => {
       <main ref={myRef} className='page-content'>
 
         <div className="body-color" style={{ paddingTop: `100px` }}>
-          <h1 className='text-center mt-3 mb-0 site-font'>{product.name}</h1>
+          <h1 className='text-center mt-3 mb-0 roboto' style={{ fontWeight: `100` }}>{product.name}</h1>
           <button className='btn-site-blue roboto' onClick={handleAddToCart}>Add to Cart</button>
 
         </div>
