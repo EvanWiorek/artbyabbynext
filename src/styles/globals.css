@@ -68,6 +68,7 @@ textarea:focus {
 .disabled {
   pointer-events: none;
   filter: saturate(0);
+  opacity: .7;
 }
 
 .page-content {
@@ -839,14 +840,14 @@ a:hover {
 
 .checkout-tab {
   color: rgba(0,0,0,.5);
-  padding: 10px 0px;
+  padding: 5px 0px 10px;
   width: 100%;
   user-select: none;
 }
 
 .active-checkout-tab {
   color: rgb(206, 139, 139);
-  padding: 10px 0px;
+  padding: 5px 0px 10px;
   width: 100%;
   user-select: none;
 }

@@ -1,7 +1,7 @@
 function CheckoutWizard({ activeStep = 0 }) {
 
   return (
-    <div className="col-lg-6 m-auto checkout-wizard-container">
+    <div className="checkout-wizard-container">
       <div className="d-flex justify-content-between align-items-center">
         {
           ['Shipping Address', 'Payment Method', 'Place Order'].map((step, idx) => (
