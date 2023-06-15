@@ -57,6 +57,10 @@ input:focus {
   box-shadow: 0px 0px 5px rgb(131, 180, 192) !important;
 }
 
+select:focus {
+  box-shadow: 0px 0px 5px rgb(131, 180, 192) !important;
+}
+
 textarea:focus {
   box-shadow: 0px 0px 5px rgb(131, 180, 192) !important;
 }
@@ -168,6 +172,14 @@ a {
   transition: .2s;
   cursor: pointer;
   margin-bottom: 0;
+}
+
+.font-color-red {
+  color: red !important;
+}
+
+.font-color-black {
+  color: black !important;
 }
 
 a:hover {

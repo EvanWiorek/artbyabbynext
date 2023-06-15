@@ -71,8 +71,9 @@ const OneUpdate = ({ isVisible, oneUpdate }) => {
 
         <div className="body-white" style={{ paddingTop: `100px` }}>
           <div className='col-lg-8 m-auto mt-3 one-lesson-container'>
-            <div className="links mb-3" style={{ marginLeft: `10px` }} onClick={handleGoBack}>
+            <div className="links mb-3 desktop-link d-flex flex-column align-items-end" style={{ marginLeft: `10px`, width: `197px` }} onClick={handleGoBack}>
               <p><i class="bi bi-arrow-left" style={{ fontSize: `.9rem` }}></i> Back to News & Updates</p>
+              <div className="desktop-link-line"></div>
             </div>
             <div className="header-container" style={{ backgroundImage: `url(${oneUpdate.imageURL})` }}>
               <div className="header-background-filter"></div>
@@ -82,7 +83,7 @@ const OneUpdate = ({ isVisible, oneUpdate }) => {
               </div>
             </div>
             <div className='post-content m-auto'>
-              <div className='mt-3 m-auto roboto details-content' dangerouslySetInnerHTML={{__html: oneUpdate.postContent}} />
+              <div className='mt-3 m-auto roboto details-content' dangerouslySetInnerHTML={{ __html: oneUpdate.postContent }} />
             </div>
             <br />
           </div>

@@ -10,7 +10,7 @@ export const getServerSideProps = async (context) => {
   const routeId = context.params.id
   try {
     await connectMongoDB();
-    const oneLesson = await AbbyPost.findOne({_id: routeId});
+    const oneLesson = await AbbyPost.findOne({ _id: routeId });
     return {
       props: {
         oneLesson: JSON.parse(JSON.stringify(oneLesson))
@@ -72,25 +72,26 @@ const OneLesson = ({ isVisible, oneLesson }) => {
 
 
         <div className="body-white" style={{ paddingTop: `100px` }}>
-        <div className='col-lg-5 m-auto mt-3 one-lesson-container'>
-              <div className="links mb-3" style={{ marginLeft: `10px` }} onClick={handleGoBack}>
-                <p><i class="bi bi-arrow-left" style={{ fontSize: `.9rem` }}></i> Back to Lessons</p>
-              </div>
-              <h2 className='site-font text-center'>{oneLesson.postTitle}</h2>
-              <div className='d-flex gap-3 justify-content-center text-secondary site-font'>
-                <p>By Abby</p>
-                <p>|</p>
-                <p>{dayjs(oneLesson.createdAt).format('MMMM D, YYYY')}</p>
-              </div>
-              <div className="d-flex justify-content-center">
-                <iframe src={`https://www.youtube.com/embed/${getTrueURL(oneLesson.videoURL)}`} className='one-lesson-video'>
-                </iframe>
-              </div>
-              <div className='post-content m-auto'>
-                <div className='mt-3 m-auto roboto details-content' dangerouslySetInnerHTML={{__html: oneLesson.postContent}} />
-              </div>
-              <br />
+          <div className='col-lg-5 m-auto mt-3 one-lesson-container'>
+            <div className="links mb-3 desktop-link d-flex flex-column align-items-end" style={{ marginLeft: `10px`, width: `135px` }} onClick={handleGoBack}>
+              <p><i class="bi bi-arrow-left" style={{ fontSize: `.9rem` }}></i> Back to Lessons</p>
+              <div className="desktop-link-line"></div>
             </div>
+            <h2 className='site-font text-center'>{oneLesson.postTitle}</h2>
+            <div className='d-flex gap-3 justify-content-center text-secondary site-font'>
+              <p>By Abby</p>
+              <p>|</p>
+              <p>{dayjs(oneLesson.createdAt).format('MMMM D, YYYY')}</p>
+            </div>
+            <div className="d-flex justify-content-center">
+              <iframe src={`https://www.youtube.com/embed/${getTrueURL(oneLesson.videoURL)}`} className='one-lesson-video'>
+              </iframe>
+            </div>
+            <div className='post-content m-auto'>
+              <div className='mt-3 m-auto roboto details-content' dangerouslySetInnerHTML={{ __html: oneLesson.postContent }} />
+            </div>
+            <br />
+          </div>
         </div>
 
       </main>
