@@ -160,65 +160,65 @@ function ShippingScreen() {
       <div className="page-content roboto" ref={myRef}>
         <main style={{ paddingTop: `100px` }}>
           <div
-            className="links mb-3 desktop-link d-flex flex-column align-items-end"
-            style={{ marginLeft: `10px`, width: `178px` }}
+            className="links desktop-link d-flex flex-column align-items-end"
+            style={{ marginLeft: `10px`, width: `60px` }}
             onClick={handleGoBack}
           >
-            <p>
+            <p className="roboto">
               <i class="bi bi-arrow-left" style={{ fontSize: `.9rem` }}></i>{" "}
-              Back to Previous Page
+              Back
             </p>
             <div className="desktop-link-line"></div>
           </div>
           <CheckoutWizard activeStep={0} />
-          <div className="col-lg-6 m-auto mt-3">
-            <form onSubmit={(e) => handleSubmit(e)}>
-              <h3 className="mb-3">Contact</h3>
+          <div className="col-lg-6 m-auto">
+            <form onSubmit={(e) => handleSubmit(e)} className="shipping-submit-form m-auto" style={{ paddingBottom: `20px` }}>
+              <h3 className="mb-2 roboto">Contact</h3>
 
-              <div className="form-floating">
+              <div className="form-floating thin-floating">
                 <input
                   type="text"
                   id="email"
                   placeholder="p"
-                  className="form-control"
+                  className="form-control thin-control"
                   value={email}
                   onChange={handleEmail}
                 />
                 <label htmlFor="email">Email</label>
                 {emailError
                   ? (
-                    <p style={{ color: "tomato" }} className="mt-1">
+                    <p style={{ color: "tomato", marginBottom: `0` }} className="mt-1">
                       {emailError}
                     </p>
                   )
                   : ""}
               </div>
 
-              <div className="form-floating mt-3">
+              <div className="form-floating thin-floating mt-2">
                 <input
                   type="text"
                   id="phoneNumber"
                   placeholder="p"
-                  className="form-control"
+                  className="form-control thin-control"
                   value={phoneNumber}
                   onChange={handlePhoneNumber}
                 />
                 <label htmlFor="phoneNumber">Phone Number (Optional)</label>
                 {phoneNumberError
                   ? (
-                    <p style={{ color: "tomato" }} className="mt-1">
+                    <p style={{ color: "tomato", marginBottom: `0` }} className="mt-1">
                       {phoneNumberError}
                     </p>
                   )
                   : ""}
               </div>
 
-              <h3 className="mb-3 mt-3">Shipping Address</h3>
+              <h3 className="mb-3 mt-4 roboto">Shipping Address</h3>
 
-              <div className="form-floating">
+              <div className="form-floating thin-floating">
                 <select
                   id="country"
-                  className="form-select"
+                  className="form-select thin-select"
                   value={country}
                   onChange={handleCountry}
                 >
@@ -467,76 +467,76 @@ function ShippingScreen() {
                 <label htmlFor="country">Country/Region</label>
                 {countryError
                   ? (
-                    <p style={{ color: "tomato" }} className="mt-1">
+                    <p style={{ color: "tomato", marginBottom: `0` }} className="mt-1">
                       {countryError}
                     </p>
                   )
                   : ""}
               </div>
 
-              <div className="form-floating mt-3">
+              <div className="form-floating thin-floating mt-2">
                 <input
                   type="text"
                   id="fullName"
                   placeholder="p"
-                  className="form-control"
+                  className="form-control thin-control"
                   value={fullName}
                   onChange={handleFullName}
                 />
                 <label htmlFor="fullName">Full Name</label>
                 {fullNameError
                   ? (
-                    <p style={{ color: "tomato" }} className="mt-1">
+                    <p style={{ color: "tomato", marginBottom: `0` }} className="mt-1">
                       {fullNameError}
                     </p>
                   )
                   : ""}
               </div>
 
-              <div className="form-floating mt-3">
+              <div className="form-floating thin-floating mt-2">
                 <input
                   type="text"
                   id="address"
                   placeholder="p"
-                  className="form-control"
+                  className="form-control thin-control"
                   value={address}
                   onChange={handleAddress}
                 />
                 <label htmlFor="address">Address</label>
                 {addressError
                   ? (
-                    <p style={{ color: "tomato" }} className="mt-1">
+                    <p style={{ color: "tomato", marginBottom: `0` }} className="mt-1">
                       {addressError}
                     </p>
                   )
                   : ""}
               </div>
 
-              <div className="d-flex justify-content-between">
+              <div className="d-flex justify-content-between flex-column-small desktop-gap mb-3">
 
-                <div className="form-floating mt-3">
+                <div className="form-floating thin-floating mt-2">
                   <input
                     type="text"
                     id="city"
                     placeholder="p"
-                    className="form-control"
+                    className="form-control thin-control"
                     value={city}
                     onChange={handleCity}
                   />
                   <label htmlFor="city">City</label>
                   {cityError
                     ? (
-                      <p style={{ color: "tomato" }} className="mt-1">
+                      <p style={{ color: "tomato", marginBottom: `0` }} className="mt-1">
                         {cityError}
                       </p>
                     )
                     : ""}
                 </div>
 
-                <div className="form-floating mt-3">
+                <div className="form-floating thin-floating mt-2">
                   <select
                     id="state"
-                    className="form-select"
+                    className="form-select thin-select"
                     value={state}
                     onChange={handleState}
                   >
@@ -603,26 +603,26 @@ function ShippingScreen() {
                   <label htmlFor="state">State</label>
                   {stateError
                     ? (
-                      <p style={{ color: "tomato" }} className="mt-1">
+                      <p style={{ color: "tomato", marginBottom: `0` }} className="mt-1">
                         {stateError}
                       </p>
                     )
                     : ""}
                 </div>
 
-                <div className="form-floating mt-3">
+                <div className="form-floating thin-floating mt-2">
                   <input
                     type="text"
                     id="postalCode"
                     placeholder="p"
-                    className="form-control"
+                    className="form-control thin-control"
                     value={postalCode}
                     onChange={handlePostalCode}
                   />
                   <label htmlFor="postalCode">Zip Code</label>
                   {postalCodeError
                     ? (
-                      <p style={{ color: "tomato" }} className="mt-1">
+                      <p style={{ color: "tomato", marginBottom: `0` }} className="mt-1">
                         {postalCodeError}
                       </p>
                     )
@@ -630,6 +630,7 @@ function ShippingScreen() {
                 </div>
 
               </div>
+              <button className="btn-site-pink roboto" style={{ width: `100%` }}>Next</button>
 
             </form>
           </div>

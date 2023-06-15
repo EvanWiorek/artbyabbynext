@@ -174,14 +174,6 @@ a {
   margin-bottom: 0;
 }
 
-.font-color-red {
-  color: red !important;
-}
-
-.font-color-black {
-  color: black !important;
-}
-
 a:hover {
   color: rgb(131, 180, 192) !important;
 }
@@ -372,6 +364,20 @@ a:hover {
 
 .btn-site-blue:hover {
   background-color: rgb(125, 169, 181);
+}
+
+.btn-site-pink {
+  background-color: rgb(206, 139, 139);
+  color: rgb(255, 255, 255);
+  padding: 9px;
+  border: none;
+  text-decoration: none;
+  text-align: center;
+  transition: .2s;
+}
+
+.btn-site-pink:hover {
+  background-color: rgb(189, 127, 127);
 }
 
 .btn-site-cancel {
@@ -801,12 +807,85 @@ a:hover {
   transition: .1s;
 }
 
+/* Shipping Page */
+.shipping-submit-form h3 {
+  font-weight: 300 !important;
+  color: rgb(206, 139, 139);
+}
+
+.shipping-submit-form {
+  transform: scale(1);
+}
+
+.desktop-gap {
+  gap: 1rem;
+}
+
+.thin-floating {
+  font-size: .8rem !important; 
+}
+
+.thin-select {
+  font-size: .8rem !important; 
+  height: 50px !important;
+  min-height: 50px !important;
+}
+
+.thin-control {
+  height: 50px !important;
+  min-height: 50px !important;
+  font-size: .8rem !important;
+}
+
+.checkout-tab {
+  color: rgba(0,0,0,.5);
+  padding: 10px 0px;
+  width: 100%;
+  user-select: none;
+}
+
+.active-checkout-tab {
+  color: rgb(206, 139, 139);
+  padding: 10px 0px;
+  width: 100%;
+  user-select: none;
+}
+
+.step-circle {
+  border: .5px solid rgba(0,0,0,.2);
+  padding: 7px 15px;
+  border-radius: 50%;
+}
+
+.horizontal-line-checkout {
+  height: .5px;
+  width: 100%;
+  background-color: rgba(0,0,0,.2);
+}
+
+.active-checkout-tab>.d-flex>.horizontal-line-checkout {
+  background-color: rgb(206, 139, 139);
+}
+
+.active-checkout-tab>.d-flex>.step-circle {
+  border: .5px solid rgb(206, 139, 139);
+}
+
+
 /* Mobile */
 @media only screen and (min-width: 240px) and (max-width: 767px) {
   .mobile-hide {
     display: none !important;
     width: 0 !important;
     gap: 0 !important;
+  }
+
+  .shipping-submit-form {
+    width: 90vw !important;
+  }
+
+  .flex-column-small {
+    flex-direction: column !important;
   }
 
   .navbar-content {
@@ -926,6 +1005,32 @@ a:hover {
 
   .details-content img {
     width: 100%;
+  }
+
+  .shipping-submit-form {
+    transform: scale(1);
+  }
+
+  .desktop-gap {
+    gap: 0;
+  }
+
+  .checkout-tab {
+    font-size: .85rem;
+  }
+  
+  .active-checkout-tab {
+    font-size: .85rem;
+  }
+  
+  .step-circle {
+    border: .5px solid rgba(0,0,0,.2);
+    padding: 5px 12px;
+    border-radius: 50%;
+  }
+
+  .checkout-wizard-container {
+    width: 90vw;
   }
   
 }

@@ -1,14 +1,22 @@
-function CheckoutWizard({ activeStep=0 }) {
+function CheckoutWizard({ activeStep = 0 }) {
 
   return (
-    <div className="d-flex justify-content-between col-lg-9 m-auto">
-      {
-        ['Shipping Address', 'Payment Method', 'Place Order'].map((step, idx) => (
-          <div key={idx} className={`text-center roboto ${idx <= activeStep ? 'font-color-red' : 'font-color-black'}`}>
-            {step}
-          </div>
-        ))
-      }
+    <div className="col-lg-6 m-auto checkout-wizard-container">
+      <div className="d-flex justify-content-between align-items-center">
+        {
+          ['Shipping Address', 'Payment Method', 'Place Order'].map((step, idx) => (
+            <div key={idx} className={`text-center roboto ${idx <= activeStep ? 'active-checkout-tab' : 'checkout-tab'}`}>
+              <div className="d-flex align-items-center">
+                <div className="horizontal-line-checkout"></div>
+                <div className="step-circle">{idx + 1}</div>
+                <div className="horizontal-line-checkout"></div>
+              </div>
+              <div>{step}</div>
+            </div>
+          ))
+        }
+      </div>
+      <div className="horizontal-line-gray" style={{ marginTop: 0 }}></div>
     </div>
   )
 }
