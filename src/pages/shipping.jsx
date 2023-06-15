@@ -5,6 +5,7 @@ import CheckoutWizard from "../components/CheckoutWizard";
 import Head from "next/head";
 import { Store } from "../utils/Store";
 import Cookies from "js-cookie";
+import dynamic from "next/dynamic";
 
 function ShippingScreen() {
   const myRef = useRef();
@@ -33,7 +34,18 @@ function ShippingScreen() {
   const [userStateError, setUserStateError] = useState();
   const [postalCode, setPostalCode] = useState();
   const [postalCodeError, setPostalCodeError] = useState();
+  // let [formIsValid, setFormIsValid] = useState();
 
+  let formIsValid = false;
+  formIsValid =
+    countryError === null &&
+    fullNameError === null &&
+    emailError === null &&
+    addressError === null &&
+    cityError === null &&
+    userStateError === null &&
+    postalCodeError === null;
+  
   useEffect(() => {
     const observer = new IntersectionObserver((entries) => {
       const entry = entries[0];
@@ -47,7 +59,7 @@ function ShippingScreen() {
       document.querySelector(".page-content").style = "opacity: 0;";
     }
 
-    if (customerInfo) {
+    if (customerInfo.email) {
       setEmail(customerInfo.email)
       setCountry(customerInfo.country)
       setFullName(customerInfo.fullName)
@@ -56,6 +68,15 @@ function ShippingScreen() {
       setCity(customerInfo.city)
       setUserState(customerInfo.userState)
       setPostalCode(customerInfo.postalCode)
+
+      setEmailError(null);
+      setCountryError(null);
+      setFullNameError(null);
+      setPhoneNumberError(null);
+      setAddressError(null);
+      setCityError(null);
+      setPostalCodeError(null);
+      setUserStateError(null);
     }
   }, [contentIsVisible]);
 
@@ -63,15 +84,6 @@ function ShippingScreen() {
     router.back();
   };
 
-  let formIsValid = false;
-  formIsValid =
-    countryError === null &&
-    fullNameError === null &&
-    emailError === null &&
-    addressError === null &&
-    cityError === null &&
-    userStateError === null &&
-    postalCodeError === null;
 
   const handleEmail = (e) => {
     const emailFormat = /^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/;
@@ -186,7 +198,7 @@ function ShippingScreen() {
           },
         })
       )
-      //need to do more here, follow video
+      router.push('/payment')
     }
   };
 
@@ -693,4 +705,4 @@ function ShippingScreen() {
   );
 }
 
-export default ShippingScreen;
+export default dynamic(() => Promise.resolve(ShippingScreen), { ssr: false });
