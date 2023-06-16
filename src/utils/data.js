@@ -59,7 +59,10 @@ const data = {
       images: ['/static/images/product-images/painting1.jpg', '/static/images/product-images/painting2.jpg'],
       slug: 'fireflies-painting',
       priceOptions: [
-
+        {
+          optionName: 'ONE_OPTION',
+          price: 120,
+        }
       ],
       countInStock: 20,
       additionalOptions: [],

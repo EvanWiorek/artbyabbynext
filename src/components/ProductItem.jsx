@@ -1,7 +1,5 @@
 import Link from "next/link"
 
-
-
 export default function ProductItem({ product }) {
 
   const imageMouseOver = (productId) => {
