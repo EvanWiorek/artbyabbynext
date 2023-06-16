@@ -803,7 +803,6 @@ a:hover {
 }
 
 /* Product Cards */
-
 .products-container-body {
   width: 100%;
   background-color: rgba(255, 172, 236, 0.15);
@@ -811,7 +810,6 @@ a:hover {
 }
 
 .product-card {
-  /* border-radius: 5px; */
   background-color: rgba(255,255,255,1);
   padding: 10px;
   border: 1px solid rgba(255, 255, 255, .3);
@@ -826,6 +824,27 @@ a:hover {
   height: 250px;
   object-fit: cover;
   transition: .1s;
+}
+
+/* Product Pages */
+.side-images img {
+  width: 70px;
+  height: 70px;
+  object-fit:cover;
+  transition: .2s;
+}
+
+.side-images img:hover {
+  transform: scale(1.1);
+  /* box-shadow: 0px 2px 1px rgba(0,0,0,.5); */
+  /* outline: 5px solid white; */
+}
+
+.main-image img {
+  width: 550px;
+  height: 550px;
+  object-fit:cover;
+
 }
 
 /* Shipping Page */

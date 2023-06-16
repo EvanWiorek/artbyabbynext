@@ -55,8 +55,8 @@ function CartView() {
                     <img src={item.images[0]} alt={item.name} style={{ width: `110px`, height: `110px` }} />
                     <div className='cart-item-info'>
                       <Link href={`/product/${item.slug}`}>{item.name}</Link>
-                      <p>${item.price}.00 {item.quantity > 1 ? `x ${item.quantity}` : ''}</p>
-                      <p>Color: {item.options[0]}</p>
+                      <p>${item.priceOptions[0].price}.00 {item.quantity > 1 ? `x ${item.quantity}` : ''}</p>
+                      <p>{item.additionalOptions[0]}</p>
                       <div className="d-flex align-items-center gap-1 remove-items" onClick={() => handleRemoveItem(item)} style={{ cursor: `pointer`, marginTop: `20px` }}>
                         <p style={{ fontSize: `1.3rem`, color: `rgba(0,0,0,.5)`, marginTop: `-2px` }}>×</p>
                         <p style={{ textDecoration: `underline`, fontSize: `.8rem` }} className='remove-items-text'>{item.quantity > 1 ? 'Remove Items' : 'Remove Item'}</p>
@@ -78,7 +78,7 @@ function CartView() {
           cartItems.length === 0 ? ""
             :
             <div className="cart-menu-bottom d-flex flex-column">
-              <p>Your subtotal today is ${cartItems.reduce((a, c) => a + c.quantity * c.price, 0)}.00. Shipping and taxes will calculated at checkout.</p>
+              <p>Your subtotal today is ${cartItems.reduce((a, c) => a + c.quantity * c.priceOptions[0].price, 0)}.00. Shipping and taxes will calculated at checkout.</p>
 
               <button className='btn-site-blue text-light roboto' onClick={() => router.push('/shipping')}>Checkout</button>
             </div>

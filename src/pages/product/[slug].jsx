@@ -5,6 +5,7 @@ import Link from 'next/link';
 import { useRouter } from 'next/router';
 import data from '@/src/utils/data';
 import { Store } from '@/src/utils/Store';
+import { toast } from 'react-toastify';
 
 // import { connectMongoDB } from "@/src/libs/MongoConnect";
 // import AbbyPost from "@/src/models/post.model";
@@ -32,14 +33,16 @@ const ProductDetails = () => {
   const { state, dispatch } = useContext(Store);
   const myRef = useRef();
   const [contentIsVisible, setContentIsVisible] = useState();
-  const {query} = useRouter();
-  const {slug} = query;
-  const product = data.products.find(p => p.slug === slug);
-  const [productLoaded, setProductLoaded] = useState();
-  // if(!product) {
-  //   return <div>Product Not Found</div>
-  // }
-
+  const { query } = useRouter();
+  const { slug } = query;
+  const productData = data.products.find(p => p.slug === slug);
+  const [productDataLoaded, setProductDataLoaded] = useState();
+  const [productName, setProductName] = useState();
+  const [productPrice, setProductPrice] = useState();
+  //this lines up with the product price, the priceOption.name
+  const [productOptionOne, setProductOptionOne] = useState();
+  const [productOptionTwo, setProductOptionTwo] = useState();
+  const [productImage, setProductImage] = useState();
 
 
   useEffect(() => {
@@ -56,26 +59,27 @@ const ProductDetails = () => {
       document.querySelector(".page-content").style = "opacity: 0;"
     }
 
-    if(product) {
-      setProductLoaded(true)
+    if (productData) {
+      setProductDataLoaded(true)
     }
 
-    if(!product) {
-      setProductLoaded(false)
+    if (!productData) {
+      setProductDataLoaded(false)
     }
   }, [contentIsVisible])
 
   const handleAddToCart = () => {
-    const existItem = state.cart.cartItems.find((p) => p.slug === product.slug);
+    //need to change the 'productData' below to createdProduct or something
+    const existItem = state.cart.cartItems.find((p) => p.slug === productData.slug);
     const quantity = existItem ? existItem.quantity + 1 : 1;
 
     //if there is a stock number associated with each product
-    if (product.countInStock < quantity) {
-      alert('Sorry, item is now out of stock.')
+    if (productData.countInStock < quantity) {
+      toast('Sorry, item is out of stock.')
       return;
     }
 
-    dispatch({ type: 'CART_ADD_ITEM', payload: { ...product, quantity } })
+    dispatch({ type: 'CART_ADD_ITEM', payload: { ...productData, quantity } })
   }
 
   return (
@@ -85,9 +89,35 @@ const ProductDetails = () => {
       </Head>
       <main ref={myRef} className='page-content'>
 
-        {productLoaded && <div className="body-color" style={{ paddingTop: `100px` }}>
-          <h1 className='text-center mt-3 mb-0 roboto' style={{ fontWeight: `100` }}>{product.name}</h1>
-          <button className='btn-site-blue roboto' onClick={handleAddToCart}>Add to Cart</button>
+        {productDataLoaded && <div className="body-color" style={{ paddingTop: `100px` }}>
+          <div className="product-details-container mt-3 pb-5 col-lg-9 m-auto">
+            <div className="d-flex gap-4">
+              <div className="images-viewer d-flex">
+                <div className="side-images d-flex flex-column gap-2 mobile-hide" style={{ marginRight: `10px` }}>
+                  {productData.images.map((image, idx) => (
+                    <img src={image} alt={productData} key={idx} />
+                  ))}
+                  {productData.priceOptions.map((option) => (
+                    option.images.map((image, idx) => (
+                      <img key={idx} src={image} alt={option.name} />
+                    ))
+                  ))}
+                </div>
+                <div className="main-image">
+                  <img src={productData.images[0]} alt={productData.name} />
+                </div>
+              </div>
+              <div>
+                <h1 className='roboto' style={{ fontWeight: `100` }}>{productData.name}</h1>
+                <h4 className='roboto' style={{ fontWeight: `300` }}>{productData.description}</h4>
+                <br />
+                <br />
+                <br />
+                <button className='btn-site-blue roboto' onClick={handleAddToCart}>Add to Cart</button>
+              </div>
+            </div>
+
+          </div>
 
         </div>}
 
