@@ -68,7 +68,7 @@ const ProductDetails = () => {
 
     if (productData) {
       setProductDataLoaded(true);
-      // setProductName(productData.name);
+      setProductName(productData.name);
       setProductPrice(productData.priceOptions[0].price);
       setProductImage(productData.images[0])
       setMainImage(productData.images[0])
@@ -217,7 +217,7 @@ const ProductDetails = () => {
                       style={{ marginRight: `5px` }}
                     >
                       {productData.images.map((image, idx) => (
-                        <img src={image} alt={productData.name} key={idx} id={image} onMouseOver={() => changeMainPicture(image)} className="side-images-img" />
+                        <img src={image} alt={productName} key={idx} id={image} onMouseOver={() => changeMainPicture(image)} className="side-images-img" />
                       ))}
                       {productData.priceOptions.length > 1
                         ? productData.priceOptions.map((option) =>
@@ -266,7 +266,7 @@ const ProductDetails = () => {
                   </div>
                   <div className="product-page-middle">
                     <h1 className="roboto" style={{ fontWeight: `100`, marginBottom: 0 }}>
-                      {productData.name}
+                      {productName}
                     </h1>
 
                     <br />
