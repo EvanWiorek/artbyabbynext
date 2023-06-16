@@ -41,14 +41,14 @@ const ProductDetails = () => {
   const myRef = useRef();
   const [contentIsVisible, setContentIsVisible] = useState();
   const [productDataLoaded, setProductDataLoaded] = useState();
-  const [productName, setProductName] = useState();
-  const [productPrice, setProductPrice] = useState();
+  const [productName, setProductName] = useState(productData.name);
+  const [productPrice, setProductPrice] = useState(productData.priceOptions[0].price);
   const [productPriceOption, setProductPriceOption] = useState('');
   const [additionalOption, setAdditionalOption] = useState('');
   const [productPriceOptionError, setProductPriceOptionError] = useState('');
   const [additionalOptionError, setAdditionalOptionError] = useState('');
-  const [productImage, setProductImage] = useState();
-  const [mainImage, setMainImage] = useState();
+  const [productImage, setProductImage] = useState(productData.images[0]);
+  const [mainImage, setMainImage] = useState(productData.images[0]);
 
   let formIsValid = false;
   formIsValid = productPriceOptionError === null && additionalOptionError === null;
@@ -68,10 +68,6 @@ const ProductDetails = () => {
 
     if (productData) {
       setProductDataLoaded(true);
-      setProductName(productData.name);
-      setProductPrice(productData.priceOptions[0].price);
-      setProductImage(productData.images[0])
-      setMainImage(productData.images[0])
       const imagesArray = document.querySelectorAll(".side-images-img");
       for (let i = 1; i < imagesArray.length; i++) {
         document.getElementById(`${imagesArray[0].id}`).classList.add('img-active')
