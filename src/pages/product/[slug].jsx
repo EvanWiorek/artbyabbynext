@@ -126,73 +126,68 @@ const ProductDetails = () => {
         {productDataLoaded && (
           <div className="body-color" style={{ paddingTop: `100px` }}>
             <div className="product-details-container mt-3 pb-5 col-lg-9 m-auto">
-              <div className="d-flex gap-4">
-                <div className="images-viewer d-flex">
-                  <div
-                    className="side-images d-flex flex-column gap-2 mobile-hide"
-                    style={{ marginRight: `10px` }}
-                  >
-                    {productData.images.map((image, idx) => (
-                      <img src={image} alt={productData.name} key={idx} id={image} onMouseOver={() => changeMainPicture(image)} className="side-images-img" />
-                    ))}
-                    {productData.priceOptions.length > 1
-                      ? productData.priceOptions.map((option) =>
-                        option.images.map((image, idx) => (
-                          <img
-                            key={idx}
-                            src={image}
-                            alt={option.optionName}
-                            id={image}
-                            onMouseOver={() => changeMainPicture(image)}
-                            className="side-images-img"
-                          />
-                        ))
-                      )
-                      : ""}
+              <form onSubmit={(e) => handleAddToCart(e)} className="roboto">
+                <div className="d-flex gap-4">
+                  <div className="images-viewer d-flex">
+                    <div
+                      className="side-images d-flex flex-column gap-2 mobile-hide"
+                      style={{ marginRight: `10px` }}
+                    >
+                      {productData.images.map((image, idx) => (
+                        <img src={image} alt={productData.name} key={idx} id={image} onMouseOver={() => changeMainPicture(image)} className="side-images-img" />
+                      ))}
+                      {productData.priceOptions.length > 1
+                        ? productData.priceOptions.map((option) =>
+                          option.images.map((image, idx) => (
+                            <img
+                              key={idx}
+                              src={image}
+                              alt={option.optionName}
+                              id={image}
+                              onMouseOver={() => changeMainPicture(image)}
+                              className="side-images-img"
+                            />
+                          ))
+                        )
+                        : ""}
 
-                    {productData.priceOptions.length > 1
-                      ? productData.additionalOptions.map((option) =>
-                        option.images.map((image, idx) => (
-                          <img
-                            key={idx}
-                            src={image}
-                            alt={option.optionName}
-                            id={image}
-                            onMouseOver={() => changeMainPicture(image)}
-                            className="side-images-img"
-                          />
-                        ))
-                      )
-                      : ""}
+                      {productData.priceOptions.length > 1
+                        ? productData.additionalOptions.map((option) =>
+                          option.images.map((image, idx) => (
+                            <img
+                              key={idx}
+                              src={image}
+                              alt={option.optionName}
+                              id={image}
+                              onMouseOver={() => changeMainPicture(image)}
+                              className="side-images-img"
+                            />
+                          ))
+                        )
+                        : ""}
+                    </div>
+                    <div className="main-image">
+                      {/* <img src={productData.images[0]} alt={productData.name} id={productData.slug} /> */}
+                      <ReactImageMagnify {...{
+                        smallImage: {
+                          alt: productData.slug,
+                          isFluidWidth: true,
+                          src: mainImage
+                        },
+                        largeImage: {
+                          src: mainImage,
+                          width: 850,
+                          height: 1000
+                        }
+                      }} />
+                    </div>
                   </div>
-                  <div className="main-image">
-                    {/* <img src={productData.images[0]} alt={productData.name} id={productData.slug} /> */}
-                    <ReactImageMagnify {...{
-                      smallImage: {
-                        alt: productData.slug,
-                        isFluidWidth: true,
-                        src: mainImage
-                      },
-                      largeImage: {
-                        src: mainImage,
-                        width: 850,
-                        height: 1000
-                      }
-                    }} />
-                  </div>
-                </div>
-                <div>
-                  <h1 className="roboto" style={{ fontWeight: `100` }}>
-                    {productData.name}
-                  </h1>
-                  <h2 className="roboto" style={{ fontWeight: `100` }}>
-                    ${productPrice}.00
-                  </h2>
-                  <h4 className="roboto" style={{ fontWeight: `300` }}>
-                    {productData.description}
-                  </h4>
-                  <br />
-                  <form onSubmit={(e) => handleAddToCart(e)} className="roboto">
+                  <div className="middle">
+                    <h1 className="roboto" style={{ fontWeight: `100`, marginBottom: 0 }}>
+                      {productData.name}
+                    </h1>
+
+                    <br />
                     {productData.priceOptions.length > 1
                       ? (
                         <div className="form-group">
@@ -252,17 +247,34 @@ const ProductDetails = () => {
                       )
                       : ("")
                     }
-                    <br />
-                    <br />
+                    <div className="horizontal-line-gray mt-5"></div>
+                    <h5 className="roboto" style={{ fontWeight: `300` }}>
+                      Details
+                    </h5>
+                    <p className="roboto" style={{ fontWeight: `300` }}>
+                      {productData.description}
+                    </p>
+                    {/* <input
+                      type="submit"
+                      className="btn-site-blue roboto"
+                      value="Add to Cart"
+                      style={{ width: `100%` }}
+                    /> */}
+
+                  </div>
+                  <div className="right add-to-cart-container col-lg-2">
+                    <h2 className="roboto" style={{ fontWeight: `100` }}>
+                      ${productPrice}.00
+                    </h2>
                     <input
                       type="submit"
                       className="btn-site-blue roboto"
                       value="Add to Cart"
+                      style={{ width: `100%` }}
                     />
-                  </form>
-
+                  </div>
                 </div>
-              </div>
+              </form>
             </div>
           </div>
         )}
