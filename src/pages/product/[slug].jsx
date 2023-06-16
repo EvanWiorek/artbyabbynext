@@ -68,7 +68,7 @@ const ProductDetails = () => {
 
     if (productData) {
       setProductDataLoaded(true);
-      setProductName(productData.name);
+      // setProductName(productData.name);
       setProductPrice(productData.priceOptions[0].price);
       setProductImage(productData.images[0])
       setMainImage(productData.images[0])
