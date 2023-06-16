@@ -335,6 +335,8 @@ a:hover {
 
 .cart-menu-middle {
   padding: 20px;
+  max-height: 77.7vh;
+  overflow-y: scroll;
 }
 
 .cart-item-info p {
