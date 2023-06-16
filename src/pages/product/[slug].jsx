@@ -125,7 +125,7 @@ const ProductDetails = () => {
       <main ref={myRef} className="page-content">
         {productDataLoaded && (
           <div className="body-color" style={{ paddingTop: `100px` }}>
-            <div className="product-details-container mt-3 pb-5 col-lg-9 m-auto">
+            <div className="product-details-container mt-3 pb-5 m-auto">
               <form onSubmit={(e) => handleAddToCart(e)} className="roboto">
                 <div className="d-flex gap-4">
                   <div className="images-viewer d-flex">
@@ -182,7 +182,7 @@ const ProductDetails = () => {
                       }} />
                     </div>
                   </div>
-                  <div className="middle">
+                  <div className="product-page-middle">
                     <h1 className="roboto" style={{ fontWeight: `100`, marginBottom: 0 }}>
                       {productData.name}
                     </h1>
@@ -247,20 +247,16 @@ const ProductDetails = () => {
                       )
                       : ("")
                     }
-                    <div className="horizontal-line-gray mt-5"></div>
-                    <h5 className="roboto" style={{ fontWeight: `300` }}>
-                      Details
-                    </h5>
-                    <p className="roboto" style={{ fontWeight: `300` }}>
-                      {productData.description}
-                    </p>
-                    {/* <input
-                      type="submit"
-                      className="btn-site-blue roboto"
-                      value="Add to Cart"
-                      style={{ width: `100%` }}
-                    /> */}
-
+                    <div className="horizontal-line-gray"></div>
+                    <div className="description-container">
+                      <h5 className="roboto" style={{ fontWeight: `300` }}>
+                        Details
+                      </h5>
+                      <p className="roboto" style={{ fontWeight: `300` }}>
+                        {/* {productData.description} */}
+                        Lorem ipsum dolor sit amet consectetur adipisicing elit. Natus excepturi sequi necessitatibus, fuga eum illo commodi quisquam saepe delectus molestias ipsa quas voluptates, facere consequuntur! Incidunt delectus sed minus itaque! Lorem ipsum dolor sit amet consectetur, adipisicing elit. Ipsam non autem harum est voluptatem dolores voluptates, consectetur dignissimos excepturi minus dolor ad deserunt temporibus, rerum dicta facere. Vitae natus sunt quasi, a ab cum aut doloribus voluptatum. Sit hic, explicabo voluptatibus impedit et aliquid dolores cupiditate. Iusto, dicta laborum deleniti facilis aliquam fuga odit enim molestiae illo ut modi voluptatibus nemo voluptas accusantium! Eum recusandae obcaecati asperiores repellat consequatur modi itaque consectetur dolores tenetur nam. Natus deserunt ullam magni. Ratione soluta facilis sit dolore accusamus ducimus molestias assumenda voluptate laboriosam. Sint provident nostrum aut nesciunt accusamus. Minima voluptas incidunt corporis.
+                      </p>
+                    </div>
                   </div>
                   <div className="right add-to-cart-container col-lg-2">
                     <h2 className="roboto" style={{ fontWeight: `100` }}>
