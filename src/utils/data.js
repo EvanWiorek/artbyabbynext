@@ -6,29 +6,49 @@ const data = {
       description: 'This is a handmade tie blanket! It comes in three sizes (small, medium, and large) and from a choice of four colors(red, blue, pink, and yellow).',
       slug: 'tie-blanket',
       category: 'Blankets',
-      //need to remove below, this was for toast testing
       countInStock: 5,
-      additionalOptions: ['Red', 'Green', 'Blue', 'Yellow'],
+      additionalOptions: [
+        {
+          optionName: 'Red',
+          optionType: 'Color',
+          images: ['/static/images/product-images/red.png'],
+        },
+        {
+          optionName: 'Blue',
+          optionType: 'Color',
+          images: ['/static/images/product-images/blue.png'],
+        },
+        {
+          optionName: 'Pink',
+          optionType: 'Color',
+          images: ['/static/images/product-images/pink.png'],
+        },
+        {
+          optionName: 'Yellow',
+          optionType: 'Color',
+          images: ['/static/images/product-images/yellow.png'],
+        },
+      ],
       priceOptions: [
         {
           optionName: 'Small',
+          optionType: 'Size',
           images: ['/static/images/product-images/small.png'],
           price: 15,
-          countInStock: 20,
           description: 'This is a small size tie blanket.'
         },
         {
           optionName: 'Medium',
+          optionType: 'Size',
           images: ['/static/images/product-images/medium.png'],
           price: 20,
-          countInStock: 20,
           description: 'This is a medium size tie blanket.'
         },
         {
           optionName: 'Large',
+          optionType: 'Size',
           images: ['/static/images/product-images/large.png'],
           price: 25,
-          countInStock: 20,
           description: 'This is a large size tie blanket.'
         },
       ]

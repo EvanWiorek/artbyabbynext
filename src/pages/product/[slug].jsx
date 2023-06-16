@@ -40,7 +40,7 @@ const ProductDetails = () => {
   const [productName, setProductName] = useState();
   const [productPrice, setProductPrice] = useState();
   //this lines up with the product price, the priceOption.name
-  const [productOptionOne, setProductOptionOne] = useState();
+  const [productPriceOption, setProductPriceOption] = useState();
   const [productOptionTwo, setProductOptionTwo] = useState();
   const [productImage, setProductImage] = useState();
 
@@ -67,6 +67,14 @@ const ProductDetails = () => {
       setProductDataLoaded(false)
     }
   }, [contentIsVisible])
+
+  const handlePriceOptions = () => {
+
+  }
+
+  const changeMainPicture = (optionName) => {
+
+  }
 
   const handleAddToCart = () => {
     //need to change the 'productData' below to createdProduct or something
@@ -99,7 +107,7 @@ const ProductDetails = () => {
                   ))}
                   {productData.priceOptions.map((option) => (
                     option.images.map((image, idx) => (
-                      <img key={idx} src={image} alt={option.name} />
+                      <img key={idx} src={image} alt={option.name} id={option.name} />
                     ))
                   ))}
                 </div>
@@ -111,6 +119,14 @@ const ProductDetails = () => {
                 <h1 className='roboto' style={{ fontWeight: `100` }}>{productData.name}</h1>
                 <h4 className='roboto' style={{ fontWeight: `300` }}>{productData.description}</h4>
                 <br />
+                <div className='form-floating thin-floating'>
+                  <select className='form-select thin-select' id="priceOptions" onChange={handlePriceOptions} value={productPriceOption}>
+                    {productData.priceOptions.map((po) => (
+                      <option value={po.optionName} onClick={() => changeMainPicture(po.optionName)}>{po.optionName}</option>
+                    ))}
+                  </select>
+                  <label htmlFor="productPriceOption"></label>
+                </div>
                 <br />
                 <br />
                 <button className='btn-site-blue roboto' onClick={handleAddToCart}>Add to Cart</button>
