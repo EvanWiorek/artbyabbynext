@@ -39,9 +39,9 @@ const ProductDetails = () => {
   const productData = data.products.find((p) => p.slug === slug);
   const [productDataLoaded, setProductDataLoaded] = useState();
   const [productName, setProductName] = useState();
-  const [productPrice, setProductPrice] = useState();
+  const [productPrice, setProductPrice] = useState(productData.priceOptions[0].price);
   const [productPriceOption, setProductPriceOption] = useState();
-  const [productOptionTwo, setProductOptionTwo] = useState();
+  const [additionalOption, setAdditionalOption] = useState();
   const [productImage, setProductImage] = useState();
   const [mainImage, setMainImage] = useState(productData.images[0]);
 
@@ -78,9 +78,19 @@ const ProductDetails = () => {
     const priceOptionName = e.target.value;
     const selectedPriceOption = productData.priceOptions.filter((po) => po.optionName === priceOptionName)[0]
     setProductPriceOption(selectedPriceOption);
+    setProductPrice(selectedPriceOption.price)
     const optionImg = selectedPriceOption.images[0]
     changeMainPicture(optionImg)
   };
+
+  const handleAdditionalOption = (e) => {
+    const optionTwoName = e.target.value;
+    const selectedAdditionalOption = productData.additionalOptions.filter((ao) => ao.optionName === optionTwoName)[0]
+    setAdditionalOption(selectedAdditionalOption)
+    console.log(selectedAdditionalOption);
+    const optionImg = selectedAdditionalOption.images[0]
+    changeMainPicture(optionImg)
+  }
 
   const changeMainPicture = (imgUrl) => {
     setMainImage(imgUrl)
@@ -90,7 +100,6 @@ const ProductDetails = () => {
       document.getElementById(`${imagesArray[i].id}`).style = "opacity: .5"
     }
     document.getElementById(`${imgUrl}`).classList.add('img-active')
-    // document.getElementById(`${productData.slug}`).src = imgUrl
   };
 
   const handleAddToCart = (e) => {
@@ -140,6 +149,21 @@ const ProductDetails = () => {
                         ))
                       )
                       : ""}
+
+                    {productData.priceOptions.length > 1
+                      ? productData.additionalOptions.map((option) =>
+                        option.images.map((image, idx) => (
+                          <img
+                            key={idx}
+                            src={image}
+                            alt={option.optionName}
+                            id={image}
+                            onMouseOver={() => changeMainPicture(image)}
+                            className="side-images-img"
+                          />
+                        ))
+                      )
+                      : ""}
                   </div>
                   <div className="main-image">
                     {/* <img src={productData.images[0]} alt={productData.name} id={productData.slug} /> */}
@@ -161,6 +185,9 @@ const ProductDetails = () => {
                   <h1 className="roboto" style={{ fontWeight: `100` }}>
                     {productData.name}
                   </h1>
+                  <h2 className="roboto" style={{ fontWeight: `100` }}>
+                    ${productPrice}.00
+                  </h2>
                   <h4 className="roboto" style={{ fontWeight: `300` }}>
                     {productData.description}
                   </h4>
@@ -182,6 +209,36 @@ const ProductDetails = () => {
                               Select an option
                             </option>
                             {productData.priceOptions.map((po, idx) => (
+                              <option
+                                value={po.optionName}
+                                key={idx}
+                                style={{ fontWeight: 300 }}
+                              >
+                                {po.optionName}
+                              </option>
+                            ))}
+                          </select>
+                        </div>
+                      )
+                      : ("")
+                    }
+
+                    {productData.priceOptions.length > 1
+                      ? (
+                        <div className="form-group mt-3">
+                          <label htmlFor="productPriceOption">
+                            {productData.additionalOptions[0].optionType} <span style={{ color: `rgb(206, 139, 139)` }}>*</span>
+                          </label>
+                          <select
+                            className="form-select"
+                            id="additionalOption"
+                            onChange={handleAdditionalOption}
+                            style={{ fontWeight: 300 }}
+                          >
+                            <option hidden disabled selected value="">
+                              Select an option
+                            </option>
+                            {productData.additionalOptions.map((po, idx) => (
                               <option
                                 value={po.optionName}
                                 key={idx}

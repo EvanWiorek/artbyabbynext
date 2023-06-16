@@ -827,16 +827,20 @@ a:hover {
 }
 
 /* Product Page */
+.side-images {
+  height: 450px;
+  overflow-y: auto;
+}
+
+.side-images::-webkit-scrollbar {
+  display: none;
+}
+
 .side-images img {
   width: 70px;
   height: 70px;
   object-fit:cover;
   transition: .2s;
-}
-
-.side-images img:hover {
-  /* transform: scale(1.1); */
-  /* outline: 5px solid white; */
 }
 
 .main-image {
