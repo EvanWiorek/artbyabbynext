@@ -6,7 +6,7 @@ import { useRouter } from "next/router";
 import data from "@/src/utils/data";
 import { Store } from "@/src/utils/Store";
 import { Flip, toast } from "react-toastify";
-import ReactImageMagnify from "react-image-magnify";
+// import ReactImageMagnify from "react-image-magnify";
 
 // import { connectMongoDB } from "@/src/libs/MongoConnect";
 // import AbbyPost from "@/src/models/post.model";
@@ -68,7 +68,7 @@ const ProductDetails = () => {
 
     if (productData) {
       setProductDataLoaded(true);
-      // setProductName(productData.name);
+      setProductName(productData.name);
       setProductPrice(productData.priceOptions[0].price);
       setProductImage(productData.images[0])
       setMainImage(productData.images[0])
@@ -217,7 +217,7 @@ const ProductDetails = () => {
                       style={{ marginRight: `5px` }}
                     >
                       {productData.images.map((image, idx) => (
-                        <img src={image} alt={productName} key={idx} id={image} onMouseOver={() => changeMainPicture(image)} className="side-images-img" />
+                        <img src={image} alt={productData.name} key={idx} id={image} onMouseOver={() => changeMainPicture(image)} className="side-images-img" />
                       ))}
                       {productData.priceOptions.length > 1
                         ? productData.priceOptions.map((option) =>
@@ -250,7 +250,7 @@ const ProductDetails = () => {
                         : ""}
                     </div>
                     <div className="main-image mobile-hide">
-                      <ReactImageMagnify {...{
+                      {/* <ReactImageMagnify {...{
                         smallImage: {
                           alt: productData.slug,
                           isFluidWidth: true,
@@ -261,12 +261,12 @@ const ProductDetails = () => {
                           width: 850,
                           height: 1000
                         }
-                      }} />
+                      }} /> */}
                     </div>
                   </div>
                   <div className="product-page-middle">
                     <h1 className="roboto" style={{ fontWeight: `100`, marginBottom: 0 }}>
-                      {productName}
+                      {productData.name}
                     </h1>
 
                     <br />
