@@ -203,10 +203,13 @@ const ProductDetails = () => {
           <div className="body-color" style={{ paddingTop: `100px` }}>
             <div className="product-details-container mt-3 pb-5 m-auto">
               <form onSubmit={(e) => handleAddToCart(e)} className="roboto">
-                <div className="d-flex gap-4">
-                  <div className="images-viewer d-flex">
+                <div className="d-flex gap-3 flex-column-small">
+
+                  <img src={mainImage} alt={productData.slug} className="desktop-hide mobile-main-image"/>
+
+                  <div className="images-viewer d-flex-alt">
                     <div
-                      className="side-images d-flex flex-column gap-2 mobile-hide"
+                      className="side-images d-flex flex-column-large gap-2"
                       style={{ marginRight: `5px` }}
                     >
                       {productData.images.map((image, idx) => (
@@ -242,8 +245,7 @@ const ProductDetails = () => {
                         )
                         : ""}
                     </div>
-                    <div className="main-image">
-                      {/* <img src={productData.images[0]} alt={productData.name} id={productData.slug} /> */}
+                    <div className="main-image mobile-hide">
                       <ReactImageMagnify {...{
                         smallImage: {
                           alt: productData.slug,
@@ -333,7 +335,7 @@ const ProductDetails = () => {
                       </p>
                     </div>
                   </div>
-                  <div className="right add-to-cart-container col-lg-2">
+                  <div className="right add-to-cart-container col-lg-2 mobile-hide">
                     <h2 className="roboto" style={{ fontWeight: `100` }}>
                       ${productPrice}.00
                     </h2>
@@ -343,6 +345,15 @@ const ProductDetails = () => {
                       onClick={(e) => handleAddToCart(e, 'desktop')}
                     >Add to Cart</button>
                   </div>
+                  
+                  <div className="add-to-cart-container desktop-hide">
+                    <button
+                      className="btn-site-blue roboto"
+                      style={{ width: `100%`, fontSize: `1.4rem`, fontWeight: `100` }}
+                      onClick={(e) => handleAddToCart(e, 'mobile')}
+                    >Add to Cart - ${productPrice}.00</button>
+                  </div>
+                
                 </div>
               </form>
             </div>
