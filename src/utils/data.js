@@ -64,7 +64,7 @@ const data = {
           price: 120,
         }
       ],
-      countInStock: 20,
+      countInStock: 1,
       additionalOptions: [],
       description: 'This is a handmade painting made by me!'
     },

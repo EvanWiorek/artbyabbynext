@@ -31,18 +31,21 @@ import ReactImageMagnify from "react-image-magnify";
 // }
 
 const ProductDetails = () => {
-  const { state, dispatch } = useContext(Store);
-  const myRef = useRef();
-  const [contentIsVisible, setContentIsVisible] = useState();
   const { query } = useRouter();
   const { slug } = query;
   const productData = data.products.find((p) => p.slug === slug);
+  if(!productData) {
+    return <div></div>
+  }
+  const { state, dispatch } = useContext(Store);
+  const myRef = useRef();
+  const [contentIsVisible, setContentIsVisible] = useState();
   const [productDataLoaded, setProductDataLoaded] = useState();
-  const [productName, setProductName] = useState();
+  const [productName, setProductName] = useState(productData.name);
   const [productPrice, setProductPrice] = useState(productData.priceOptions[0].price);
-  const [productPriceOption, setProductPriceOption] = useState();
-  const [additionalOption, setAdditionalOption] = useState();
-  const [productImage, setProductImage] = useState();
+  const [productPriceOption, setProductPriceOption] = useState('');
+  const [additionalOption, setAdditionalOption] = useState('');
+  const [productImage, setProductImage] = useState(productData.images[0]);
   const [mainImage, setMainImage] = useState(productData.images[0]);
 
   useEffect(() => {
@@ -104,19 +107,32 @@ const ProductDetails = () => {
 
   const handleAddToCart = (e) => {
     e.preventDefault();
-    //need to change the 'productData' below to createdProduct or something
-    const existItem = state.cart.cartItems.find(
-      (p) => p.slug === productData.slug
-    );
-    const quantity = existItem ? existItem.quantity + 1 : 1;
-
-    //if there is a stock number associated with each product
-    if (productData.countInStock < quantity) {
-      toast("Sorry, item is out of stock.");
-      return;
+    const compiledProduct = {
+      productName: productName,
+      productImage: productImage,
+      slug: productData.slug,
+      productPriceOption: productPriceOption,
+      additionalOption: additionalOption,
+      productPrice: productPrice
     }
 
-    dispatch({ type: "CART_ADD_ITEM", payload: { ...productData, quantity } });
+    if (productData.additionalOptions.length > 1) {
+      toast(`Please select the item ${productData.additionalOptions[0].optionType.toLowerCase()}`)
+    }
+
+    console.log(compiledProduct);
+    // const existItem = state.cart.cartItems.find(
+    //   (p) => p.slug === compiledProduct.slug
+    // );
+    // const quantity = existItem ? existItem.quantity + 1 : 1;
+
+    // //if there is a stock number associated with each product
+    // if (productData.countInStock < quantity) {
+    //   toast("Sorry, item is out of stock.");
+    //   return;
+    // }
+
+    // dispatch({ type: "CART_ADD_ITEM", payload: { ...compiledProduct, quantity } });
   };
 
   return (
@@ -131,7 +147,7 @@ const ProductDetails = () => {
                   <div className="images-viewer d-flex">
                     <div
                       className="side-images d-flex flex-column gap-2 mobile-hide"
-                      style={{ marginRight: `10px` }}
+                      style={{ marginRight: `5px` }}
                     >
                       {productData.images.map((image, idx) => (
                         <img src={image} alt={productData.name} key={idx} id={image} onMouseOver={() => changeMainPicture(image)} className="side-images-img" />
@@ -253,8 +269,7 @@ const ProductDetails = () => {
                         Details
                       </h5>
                       <p className="roboto" style={{ fontWeight: `300` }}>
-                        {/* {productData.description} */}
-                        Lorem ipsum dolor sit amet consectetur adipisicing elit. Natus excepturi sequi necessitatibus, fuga eum illo commodi quisquam saepe delectus molestias ipsa quas voluptates, facere consequuntur! Incidunt delectus sed minus itaque! Lorem ipsum dolor sit amet consectetur, adipisicing elit. Ipsam non autem harum est voluptatem dolores voluptates, consectetur dignissimos excepturi minus dolor ad deserunt temporibus, rerum dicta facere. Vitae natus sunt quasi, a ab cum aut doloribus voluptatum. Sit hic, explicabo voluptatibus impedit et aliquid dolores cupiditate. Iusto, dicta laborum deleniti facilis aliquam fuga odit enim molestiae illo ut modi voluptatibus nemo voluptas accusantium! Eum recusandae obcaecati asperiores repellat consequatur modi itaque consectetur dolores tenetur nam. Natus deserunt ullam magni. Ratione soluta facilis sit dolore accusamus ducimus molestias assumenda voluptate laboriosam. Sint provident nostrum aut nesciunt accusamus. Minima voluptas incidunt corporis.
+                        {productData.description}
                       </p>
                     </div>
                   </div>

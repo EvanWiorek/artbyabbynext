@@ -834,6 +834,7 @@ a:hover {
 .side-images {
 
   width: 4.5vw;
+  padding-right: 5px;
 
   max-height: 450px;
   overflow-y: auto;
@@ -844,8 +845,33 @@ a:hover {
 
 }
 
-.side-images::-webkit-scrollbar {
+/* .side-images::-webkit-scrollbar {
   display: none;
+} */
+
+.side-images::-webkit-scrollbar {
+  width: 5px;
+  transition: .2s;
+}
+
+.side-images::-webkit-scrollbar-track {
+  background: rgb(255, 255, 255);
+  transition: .2s;
+}
+
+.side-images::-webkit-scrollbar-thumb {
+  background-color: rgb(255, 255, 255);
+  border-radius: 20px;
+  border: 0px;
+  transition: .2s;
+}
+
+.side-images:hover::-webkit-scrollbar-track {
+  background: rgb(255, 251, 254);
+}
+
+.side-images:hover::-webkit-scrollbar-thumb {
+  background-color: rgb(237, 224, 234);
 }
 
 .side-images img {
@@ -887,16 +913,27 @@ a:hover {
 
 .product-page-middle::-webkit-scrollbar {
   width: 5px;
+  transition: .2s;
 }
 
 .product-page-middle::-webkit-scrollbar-track {
-  background: rgb(255, 251, 254);
+  background: rgb(255, 255, 255);
+  transition: .2s;
 }
 
 .product-page-middle::-webkit-scrollbar-thumb {
-  background-color: rgb(237, 224, 234);
+  background-color: rgb(255, 255, 255);
   border-radius: 20px;
   border: 0px;
+  transition: .2s;
+}
+
+.product-page-middle:hover::-webkit-scrollbar-track {
+  background: rgb(255, 251, 254);
+}
+
+.product-page-middle:hover::-webkit-scrollbar-thumb {
+  background-color: rgb(237, 224, 234);
 }
 
 .description-container {
