@@ -6,7 +6,7 @@ import { useRouter } from "next/router";
 import data from "@/src/utils/data";
 import { Store } from "@/src/utils/Store";
 import { Flip, toast } from "react-toastify";
-// import ReactImageMagnify from "react-image-magnify";
+import ReactImageMagnify from "react-image-magnify";
 
 // import { connectMongoDB } from "@/src/libs/MongoConnect";
 // import AbbyPost from "@/src/models/post.model";
@@ -250,7 +250,7 @@ const ProductDetails = () => {
                         : ""}
                     </div>
                     <div className="main-image mobile-hide">
-                      {/* <ReactImageMagnify {...{
+                      <ReactImageMagnify {...{
                         smallImage: {
                           alt: productData.slug,
                           isFluidWidth: true,
@@ -261,7 +261,7 @@ const ProductDetails = () => {
                           width: 850,
                           height: 1000
                         }
-                      }} /> */}
+                      }} />
                     </div>
                   </div>
                   <div className="product-page-middle">
