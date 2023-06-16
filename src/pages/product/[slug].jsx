@@ -6,6 +6,7 @@ import { useRouter } from "next/router";
 import data from "@/src/utils/data";
 import { Store } from "@/src/utils/Store";
 import { toast } from "react-toastify";
+import ReactImageMagnify from "react-image-magnify";
 
 // import { connectMongoDB } from "@/src/libs/MongoConnect";
 // import AbbyPost from "@/src/models/post.model";
@@ -42,7 +43,7 @@ const ProductDetails = () => {
   const [productPriceOption, setProductPriceOption] = useState();
   const [productOptionTwo, setProductOptionTwo] = useState();
   const [productImage, setProductImage] = useState();
-  const [mainImage, setMainImage] = useState();
+  const [mainImage, setMainImage] = useState(productData.images[0]);
 
   useEffect(() => {
     const observer = new IntersectionObserver((entries) => {
@@ -60,7 +61,7 @@ const ProductDetails = () => {
     if (productData) {
       setProductDataLoaded(true);
       const imagesArray = document.querySelectorAll(".side-images-img");
-      for(let i = 1; i<imagesArray.length; i++) {
+      for (let i = 1; i < imagesArray.length; i++) {
         document.getElementById(`${imagesArray[0].id}`).classList.add('img-active')
         document.getElementById(`${imagesArray[i].id}`).style = "opacity: .5"
       }
@@ -69,9 +70,9 @@ const ProductDetails = () => {
     if (!productData) {
       setProductDataLoaded(false);
     }
-    
+
   }, [contentIsVisible]);
-  
+
 
   const handlePriceOptions = (e) => {
     const priceOptionName = e.target.value;
@@ -84,12 +85,12 @@ const ProductDetails = () => {
   const changeMainPicture = (imgUrl) => {
     setMainImage(imgUrl)
     const imagesArray = document.querySelectorAll(".side-images-img");
-    for(let i = 0; i<imagesArray.length; i++) {
+    for (let i = 0; i < imagesArray.length; i++) {
       document.getElementById(`${imagesArray[i].id}`).classList.remove('img-active')
       document.getElementById(`${imagesArray[i].id}`).style = "opacity: .5"
     }
     document.getElementById(`${imgUrl}`).classList.add('img-active')
-    document.getElementById(`${productData.slug}`).src = imgUrl
+    // document.getElementById(`${productData.slug}`).src = imgUrl
   };
 
   const handleAddToCart = (e) => {
@@ -141,7 +142,19 @@ const ProductDetails = () => {
                       : ""}
                   </div>
                   <div className="main-image">
-                    <img src={productData.images[0]} alt={productData.name} id={productData.slug} />
+                    {/* <img src={productData.images[0]} alt={productData.name} id={productData.slug} /> */}
+                    <ReactImageMagnify {...{
+                      smallImage: {
+                        alt: productData.slug,
+                        isFluidWidth: true,
+                        src: mainImage
+                      },
+                      largeImage: {
+                        src: mainImage,
+                        width: 850,
+                        height: 1000
+                      }
+                    }} />
                   </div>
                 </div>
                 <div>
