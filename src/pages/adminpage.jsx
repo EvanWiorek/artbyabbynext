@@ -255,7 +255,6 @@ const AdminPage = ({ allPosts, allProducts }) => {
               </div>
             </div>
             <div className="left-side manage-products form-body box-shadow mt-4 mb-5">
-              <img src="/static/images/product-images/BNCX8577.PNG" alt="" />
               <h3 className="text-center">Manage Products</h3>
               <div className="horizontal-line-gray"></div>
               <ul>

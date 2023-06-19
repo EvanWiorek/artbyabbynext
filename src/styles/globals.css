@@ -553,6 +553,7 @@ a:hover {
   transition: .3s;
   backdrop-filter: blur(15px);
   position: fixed;
+  touch-action: none;
 }
 
 .admin-card {
@@ -606,6 +607,42 @@ a:hover {
 .details-content img {
   width: 50%;
 }
+
+/* Manage Products */
+.new-product-images-container {
+  
+}
+
+.new-product-images {
+  transition: .2s;
+}
+
+.new-product-images span {
+  /* display: none; */
+  cursor: pointer;
+  position: relative;
+  left: -14px;
+  top: -13px;
+  /* background-color: white; */
+  color: rgba(255,255,255,.9);
+  font-size: 1.3rem;
+  opacity: 0;
+  transition: .2s;
+  margin-left: -10px;
+}
+
+.new-product-images:hover span {
+  opacity: 1;
+}
+
+.new-product-images:hover {
+  opacity: .8;
+}
+
+.create-product-form {
+  /* width: 80vw; */
+}
+
 
 /* adminPage Background */
 .area {
