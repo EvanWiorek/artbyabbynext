@@ -80,7 +80,9 @@ export default function CreateProductForm({
   productCountInStockError }) {
   const [productName, setProductName] = useState();
   const [productImages, setProductImages] = useState([]);
-  const [imageExampleArray, setImageExampleArray] = useState();
+  const [displayedImages, setDisplayedImages] = useState([]);
+  const [imagesToUpload, setImagesToUpload] = useState([]);
+  const [createObjectURL, setCreateObjectURL] = useState();
   const [productSlug, setProductSlug] = useState();
   const [productCategory, setProductCategory] = useState();
   const [productCountInStock, setProductCountInStock] = useState();
@@ -125,16 +127,19 @@ export default function CreateProductForm({
 
   const handleProductImages = (e) => {
     let tempImagesArray = []
+    let displayedImgArray = []
 
     for(let i = 0; i < e.target.files.length; i++) {
-      let pathString = `/static/images/product-images/${e.target.files[i].name}`
-      tempImagesArray = [...tempImagesArray, pathString]
+      tempImagesArray = [...tempImagesArray, e.target.files[i]]
+      displayedImgArray = [...displayedImgArray, URL.createObjectURL(e.target.files[i])]
     }
 
-    const newImageArray = productImages.concat(tempImagesArray)
+    const newTempImageArray = displayedImages.concat(tempImagesArray)
+    const newDisplayedImgArray = displayedImages.concat(displayedImgArray)
 
-    if(newImageArray.length <= 11) {
-      setProductImages(newImageArray)
+    if(newTempImageArray.length <= 11) {
+      setDisplayedImages(newDisplayedImgArray)
+      setImagesToUpload(newTempImageArray)
     }
     else {
       toast('Only up to 11 images allowed per product.')
@@ -213,10 +218,20 @@ export default function CreateProductForm({
     }
   }
 
-  const handleCreateProduct = (e) => {
+  const handleCreateProduct = async (e) => {
     e.preventDefault();
 
-    console.log(productImages);
+    // console.log(imagesToUpload);
+
+    for(let i = 0; i < imagesToUpload.length; i++) {
+      let body = new FormData();
+      body.append("file", imagesToUpload[i]);
+
+      // console.log(imagesToUpload[i]);
+
+      axios.post("/api/upload", body).then((res) => console.log(res.data)).catch((err) => console.log(err))
+    }
+
 
     // if (formIsValid === true) {
     //   axios.post('/api/posts/create', {
@@ -287,34 +302,25 @@ export default function CreateProductForm({
             )}
           </div>
 
-          <div className="form-floating">
+          <div className="form-group mt-2" style={{ backgroundColor: `white`, padding: `10px`, borderRadius: `5px` }}>
+            <label className="thin-label mb-1">Product Images</label>
             <input
               type="file"
               placeholder="p"
               className="form-control"
-              // value={productImages}
               onChange={handleProductImages}
               multiple="multiple"
             />
-            <label className="thin-label">Product Images</label>
-            {productImagesError ? (
-              <p style={{ color: "tomato" }} className="mt-1">
-                {productImagesError}
-              </p>
-            ) : (
-              ""
-            )}
-
-            <div className="d-flex gap-2 mt-2">
-              {productImages.map((img, idx) => (
-                <img src={img} alt="" key={idx} style={{ width: `60px`, height: `60px` }}/>
+            <div className="d-flex gap-2 mt-2" style={{ minHeight: `50px` }}>
+              {displayedImages.map((img, idx) => (
+                <img src={img} alt="" key={idx} style={{ width: `50px`, height: `50px` }}/>
               ))}
             </div>
           </div>
 
 
 
-          <div className="d-flex gap-3 justify-content-end">
+          <div className="d-flex gap-3 justify-content-end mt-2">
             <button className="btn-site-cancel roboto" onClick={handleFormClose}>Cancel</button>
             {/* <button type="submit" className={`roboto btn-site-blue ${formIsValid ? "" : "disabled"}`}>Create Post</button> */}
             <button type="submit" className={`roboto btn-site-blue`}>Create Post</button>
