@@ -130,6 +130,7 @@ textarea:focus {
 .navbar-body {
   background-color: transparent;
   position: fixed;
+  background-color: rgba(255, 235, 252, 0.4);
   backdrop-filter: blur(15px) brightness(110%);
   width: 100%;
   z-index: 99;
@@ -147,7 +148,7 @@ textarea:focus {
 
 @keyframes fade-scroll {
   to {
-    background-color: rgba(255,249,254, .4);
+    background-color: rgba(255, 235, 252, 0.4);
   }
 }
 

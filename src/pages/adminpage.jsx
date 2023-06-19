@@ -5,6 +5,7 @@ import CreatePostForm from "../components/CreatePostForm";
 import UpdatePostForm from "../components/UpdatePostForm";
 import { connectMongoDB } from "../libs/MongoConnect";
 import AbbyPost from "../models/post.model";
+import CreateProductForm from "../components/CreateProductForm";
 
 export const getServerSideProps = async () => {
   try {
@@ -24,18 +25,30 @@ export const getServerSideProps = async () => {
   }
 }
 
-const AdminPage = ({ allPosts }) => {
+const AdminPage = ({ allPosts, allProducts }) => {
   const myRef = useRef();
   const router = useRouter();
   const [loggedIn, setLoggedIn] = useState("");
-  const [createFormOpen, setCreateFormOpen] = useState(false)
+  const [createPostFormOpen, setCreatePostFormOpen] = useState(false)
+  const [createProductFormOpen, setCreateProductFormOpen] = useState(false)
   const [updateFormOpen, setUpdateFormOpen] = useState(false)
+
+  //AbbyPost
   const [postTitleError, setPostTitleError] = useState("");
   // const adminPassword = ""
   const [postTypeError, setPostTypeError] = useState("");
   const [allLessons, setAllLessons] = useState([]);
   const [allUpdates, setAllUpdates] = useState([]);
   const [onePost, setOnePost] = useState();
+
+  //Products
+  const [productNameError, setProductNameError] = useState();
+  const [productImagesError, setProductImagesError] = useState();
+  const [productSlugError, setProductSlugError] = useState();
+  const [productCategoryError, setProductCategoryError] = useState();
+  const [productCountInStockError, setProductCountInStockError] = useState();
+  const [productPriceOptionsError, setProductPriceOtionsError] = useState();
+
   const [changesMade, setChangesMade] = useState(false);
 
   useEffect(() => {
@@ -65,10 +78,16 @@ const AdminPage = ({ allPosts }) => {
     router.push("/");
   };
 
-  const handleCreateFormOpen = () => {
+  const handleCreatePostFormOpen = () => {
     document.querySelector(".admin-page-dark").style =
       "opacity: 1; display: block"
-    setCreateFormOpen(true);
+    setCreatePostFormOpen(true);
+  }
+
+  const handleCreateProductFormOpen = () => {
+    document.querySelector(".admin-page-dark").style =
+      "opacity: 1; display: block"
+    setCreateProductFormOpen(true);
   }
 
   const deletePost = async (postId) => {
@@ -156,7 +175,7 @@ const AdminPage = ({ allPosts }) => {
               <div className="horizontal-line-gray"></div>
               <div className="col-lg-9 m-auto">
                 <div className="d-flex justify-content-center">
-                  <button onClick={handleCreateFormOpen} className="btn-site-blue roboto d-flex align-items-center justify-content-center gap-2 mb-3" style={{ width: `100%` }}>
+                  <button onClick={handleCreatePostFormOpen} className="btn-site-blue roboto d-flex align-items-center justify-content-center gap-2 mb-3" style={{ width: `100%` }}>
                     <i className="bi bi-plus-circle" style={{ fontSize: `1.3rem` }}></i>
                     <p style={{ marginBottom: 0 }}>New Post</p>
                   </button>
@@ -246,13 +265,35 @@ const AdminPage = ({ allPosts }) => {
                 <li>Add a product</li>
                 <li>Edit a product</li>
               </ul>
-              <button className="btn-site-blue roboto mt-3" style={{ width: `100%` }}>
-                Update Products
-              </button>
+
+              <div className="d-flex justify-content-center">
+                <button onClick={handleCreateProductFormOpen} className="btn-site-blue roboto d-flex align-items-center justify-content-center gap-2 mb-3" style={{ width: `100%` }}>
+                  <i className="bi bi-plus-circle" style={{ fontSize: `1.3rem` }}></i>
+                  <p style={{ marginBottom: 0 }}>New Product</p>
+                </button>
+              </div>
             </div>
-            {createFormOpen && <CreatePostForm setCreateFormOpen={setCreateFormOpen} setPostTitleError={setPostTitleError} setPostTypeError={setPostTypeError}
+            {createPostFormOpen && <CreatePostForm setCreatePostFormOpen={setCreatePostFormOpen} setPostTitleError={setPostTitleError} setPostTypeError={setPostTypeError}
               postTitleError={postTitleError}
               postTypeError={postTypeError} />}
+
+            {createProductFormOpen && <CreateProductForm
+              setCreateProductFormOpen={setCreateProductFormOpen}
+
+              productNameError={productNameError}
+              productImagesError={productImagesError}
+              productSlugError={productSlugError}
+              productCategoryError={productCategoryError}
+              productCountInStockError={productCountInStockError}
+
+              setProductNameError={setProductNameError}
+              setProductImagesError={setProductImagesError}
+              setProductSlugError={setProductSlugError}
+              setProductCategoryError={setProductCategoryError}
+              setProductCountInStockError={setProductCountInStockError}
+              setProductPriceOtionsError={setProductPriceOtionsError}
+            />}
+
             {updateFormOpen && <UpdatePostForm
               setUpdateFormOpen={setUpdateFormOpen} setPostTitleError={setPostTitleError} setPostTypeError={setPostTypeError}
               postTitleError={postTitleError}

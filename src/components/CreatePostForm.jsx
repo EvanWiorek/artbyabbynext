@@ -65,7 +65,7 @@ function imageHandler() {
   }
 }
 
-export default function CreatePostForm({ setCreateFormOpen, setPostTitleError, setPostTypeError, postTitleError, postTypeError }) {
+export default function CreatePostForm({ setCreatePostFormOpen, setPostTitleError, setPostTypeError, postTitleError, postTypeError }) {
   const [postTitle, setPostTitle] = useState("");
   const [postContent, setPostContent] = useState("");
   const [videoURL, setVideoURL] = useState("");
@@ -123,7 +123,7 @@ export default function CreatePostForm({ setCreateFormOpen, setPostTitleError, s
   };
 
   const handleFormClose = () => {
-    setCreateFormOpen(false);
+    setCreatePostFormOpen(false);
     document.querySelector(".admin-page-dark").style = "opacity: 0";
     setTimeout(
       () =>
