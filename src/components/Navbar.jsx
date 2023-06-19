@@ -142,7 +142,7 @@ const Navbar = ({ headerIsVisible }) => {
             <br />
             <p onClick={() => handleRouteMobile("/allproducts")}>Browse All Products</p>
             <br />
-            <div className="horizontal-line m-auto"></div>
+            <div className="horizontal-line-gray m-auto"></div>
             <br />
             <div className="input-group mb-3 mobile-nav-search">
               <input type="text" className="form-control" placeholder="Search" aria-label="Search" aria-describedby="basic-addon2" />

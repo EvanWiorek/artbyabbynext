@@ -24,9 +24,22 @@ export default function ProductItem({ product }) {
         <Link href={`/product/${product.slug}`}>
           <img src={product.images[0]} alt={product.name} id={product.slug} onMouseOver={() => imageMouseOver(product.slug)} onMouseOut={() => imageMouseOut(product.slug)} />
         </Link>
-        <Link href={`/product/${product.slug}`}>
-          {product.name}
-        </Link>
+        <div className="d-flex align-items-center justify-content-between">
+          <Link href={`/product/${product.slug}`}>
+            {product.name}
+          </Link>
+
+          <p style={{ fontSize: `1.3rem`, margin: 0, fontWeight: `300` }}>
+            {
+              Number.isInteger(product.priceOptions[0].price)
+              ? `$${product.priceOptions[0].price}` : `$${product.priceOptions[0].price.toFixed(2)}`
+            }
+          </p>
+
+        </div>
+        <p>{
+          product.description.length > 50 ? `${product.description.slice(0,50)}...` : product.description.slice(0,50)
+          }</p>
       </div>
     </div>
   )

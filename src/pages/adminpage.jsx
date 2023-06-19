@@ -36,11 +36,12 @@ const AdminPage = ({ allPosts }) => {
   const [allLessons, setAllLessons] = useState([]);
   const [allUpdates, setAllUpdates] = useState([]);
   const [onePost, setOnePost] = useState();
+  const [changesMade, setChangesMade] = useState(false);
 
   useEffect(() => {
     setAllLessons(allPosts.filter((p) => p.isLesson === true))
     setAllUpdates(allPosts.filter((p) => p.isUpdate === true))
-  }, [])
+  }, [changesMade])
 
   const handlePassword = () => {
     setLoggedIn(true);
@@ -155,7 +156,7 @@ const AdminPage = ({ allPosts }) => {
               <div className="horizontal-line-gray"></div>
               <div className="col-lg-9 m-auto">
                 <div className="d-flex justify-content-center">
-                  <button onClick={handleCreateFormOpen} className="btn-site-blue roboto d-flex align-items-center gap-2 mb-3">
+                  <button onClick={handleCreateFormOpen} className="btn-site-blue roboto d-flex align-items-center justify-content-center gap-2 mb-3" style={{ width: `100%` }}>
                     <i className="bi bi-plus-circle" style={{ fontSize: `1.3rem` }}></i>
                     <p style={{ marginBottom: 0 }}>New Post</p>
                   </button>
@@ -256,7 +257,7 @@ const AdminPage = ({ allPosts }) => {
               setUpdateFormOpen={setUpdateFormOpen} setPostTitleError={setPostTitleError} setPostTypeError={setPostTypeError}
               postTitleError={postTitleError}
               postTypeError={postTypeError}
-              onePost={onePost} />}
+              onePost={onePost} setChangesMade={setChangesMade} />}
           </div>
         )}
 

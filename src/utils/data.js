@@ -68,6 +68,86 @@ const data = {
       additionalOptions: [],
       description: 'This is a handmade painting made by me!'
     },
+    {
+      name: 'Chain Necklace',
+      images: ['/static/images/product-images/necklace1.webp', '/static/images/product-images/necklace2.webp', '/static/images/product-images/necklace3.webp'],
+      description: 'Beautiful chain necklace that comes in various sizes.',
+      slug: 'chain-necklace',
+      category: 'Jewelry',
+      countInStock: 5,
+      additionalOptions: [],
+      priceOptions: [
+        {
+          optionName: '20"',
+          optionType: 'Length',
+          images: [],
+          price: 104,
+          description: ''
+        },
+        {
+          optionName: '22"',
+          optionType: 'Length',
+          images: [],
+          price: 109,
+          description: ''
+        },
+        {
+          optionName: '24"',
+          optionType: 'Length',
+          images: [],
+          price: 114,
+          description: ''
+        },
+        {
+          optionName: '26"',
+          optionType: 'Length',
+          images: [],
+          price: 119,
+          description: ''
+        },
+      ]
+    },
+    {
+      name: 'Chain Necklace',
+      images: ['/static/images/product-images/stickers.jpg', '/static/images/product-images/stickers2.png'],
+      description: 'Select from a variety of stickers!',
+      slug: 'stickers',
+      category: 'Stickers',
+      countInStock: 100,
+      additionalOptions: [
+        {
+          optionName: 'Blue',
+          optionType: 'Option',
+          images: ['/static/images/product-images/stickers.jpg'],
+        },
+        {
+          optionName: 'Purple',
+          optionType: 'Option',
+          images: ['/static/images/product-images/stickers3.jpg'],
+        },
+        {
+          optionName: 'Pink',
+          optionType: 'Option',
+          images: ['/static/images/product-images/stickers4.jpg'],
+        },
+        {
+          optionName: 'White',
+          optionType: 'Option',
+          images: ['/static/images/product-images/stickers5.jpg'],
+        },
+        {
+          optionName: 'Rose',
+          optionType: 'Option',
+          images: ['/static/images/product-images/stickers6.jpg'],
+        },
+      ],
+      priceOptions: [
+        {
+          optionName: 'ONE_OPTION',
+          price: 2.50,
+        }
+      ]
+    },
   ],
 }
 

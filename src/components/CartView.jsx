@@ -1,5 +1,5 @@
 import Link from 'next/link';
-import { useContext } from 'react';
+import { useContext, useState } from 'react';
 import { Store } from '../utils/Store';
 import dynamic from 'next/dynamic';
 import { useRouter } from 'next/router';
@@ -50,14 +50,25 @@ function CartView() {
           {
             cartItems.length === 0 ? (<p>Your cart is currently empty.</p>) : (
               cartItems.map((item) => (
+
                 <div key={item.tempId}>
                   <div className="horizontal-line-gray"></div>
                   <div className='d-flex gap-3'>
                     <img src={item.productImage} alt={item.productName} style={{ width: `110px`, height: `110px` }} />
-                    <div className='cart-item-info'>
+                    <div className='cart-item-info' style={{ minHeight: `110px` }}>
                       <Link href={`/product/${item.slug}`}>{item.productName}</Link>
-                      <p>${item.productPrice}.00 {item.quantity > 1 ? `x ${item.quantity}` : ''}</p>
-                      <p>{item.productPriceOption.optionName}, {item.additionalOption.optionName}</p>
+                      <p>
+                        {
+                          Number.isInteger(item.productPrice)
+                            ? `$${item.productPrice}` : `$${item.productPrice.toFixed(2)}`
+                        } {item.quantity > 1 ? `x ${item.quantity}` : ''}</p>
+
+                      {item.productPriceOption.optionName && item.additionalOption.optionName
+                        ? <p>{item.productPriceOption.optionName}, {item.additionalOption.optionName} </p>
+                        : !item.productPriceOption.optionName && !item.additionalOption.optionName
+                          ? <br />
+                          : <p>{item.productPriceOption.optionName} {item.additionalOption.optionName}</p>}
+
                       <div className="d-flex align-items-center gap-1 remove-items" onClick={() => handleRemoveItem(item)} style={{ cursor: `pointer`, marginTop: `20px` }}>
                         <p style={{ fontSize: `1.3rem`, color: `rgba(0,0,0,.5)`, marginTop: `-2px` }}>×</p>
                         <p style={{ textDecoration: `underline`, fontSize: `.8rem` }} className='remove-items-text'>{item.quantity > 1 ? 'Remove Items' : 'Remove Item'}</p>
@@ -77,10 +88,10 @@ function CartView() {
         </div>
         {
           cartItems.length === 0 ? ""
-          :
-          <div className="cart-menu-bottom d-flex flex-column">
+            :
+            <div className="cart-menu-bottom d-flex flex-column">
               <div className="horizontal-line-gray" style={{ marginBottom: `5px` }}></div>
-              <p>Your subtotal today is ${cartItems.reduce((a, c) => a + c.quantity * c.productPrice, 0)}.00. Shipping and taxes will calculated at checkout.</p>
+              <p>Your subtotal today is ${cartItems.reduce((a, c) => a + c.quantity * c.productPrice, 0).toFixed(2)}. Shipping and taxes will calculated at checkout.</p>
 
               <button className='btn-site-blue text-light roboto' onClick={() => router.push('/shipping')}>Checkout</button>
             </div>

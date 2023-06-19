@@ -65,32 +65,40 @@ function imageHandler() {
   }
 }
 
-export default function CreatePostForm({ setUpdateFormOpen, setPostTitleError, setPostTypeError, postTitleError, onePost }) {
+export default function UpdatePostForm({ setUpdateFormOpen, setPostTitleError, setPostTypeError, postTitleError, onePost, setChangesMade }) {
   const [postTitle, setPostTitle] = useState(onePost.postTitle);
   const [postContent, setPostContent] = useState(onePost.postContent);
   const [videoURL, setVideoURL] = useState(onePost.videoURL);
   const [imageURL, setImageURL] = useState(onePost.imageURL);
   const [postType, setPostType] = useState("");
   const [postId, setPostId] = useState("");
+  const [isLesson, setIsLesson] = useState(onePost.isLesson);
+  const [isUpdate, setIsUpdate] = useState(onePost.isUpdate);
   const router = useRouter();
 
 
   useEffect(() => {
     setPostTitleError(null)
     setPostId(onePost._id);
-    if (onePost.isLesson === true) {
-      setPostType("isLesson")
-    } else if (onePost.isUpdate === true) {
-      setPostType("isUpdate")
-    }
   })
 
   let formIsValid = false;
   formIsValid = postTitleError === null;
 
-  const handlePostType = (e) => {
-    setPostType(e.target.value)
-    setPostTypeError(null)
+  const handleIsLesson = (e) => {
+    setIsLesson(true)
+    setIsUpdate(false)
+    console.log('HANDLE LESSON TEST');
+    console.log('isLesson', isLesson);
+    console.log('isUpdate', isUpdate);
+  }
+  
+  const handleIsUpdate = (e) => {
+    setIsLesson(false)
+    setIsUpdate(true)
+    console.log('HANDLE UPDATE TEST');
+    console.log('isLesson', isLesson);
+    console.log('isUpdate', isUpdate);
   }
 
   const handlePostTitle = (e) => {
@@ -105,29 +113,21 @@ export default function CreatePostForm({ setUpdateFormOpen, setPostTitleError, s
 
   const handleUpdatePost = (e) => {
     e.preventDefault();
-    let isLessonCheck = false;
-    let isUpdateCheck = false;
-    if (postType == "isLesson") {
-      isLessonCheck = true;
-      isUpdateCheck = false;
-    }
-    else if (postType == "isUpdate") {
-      isUpdateCheck = true;
-      isLessonCheck = false;
-    }
     if (formIsValid === true) {
       axios.post(`/api/posts/update/${postId}`, {
         postTitle,
         postContent,
         videoURL,
         imageURL,
-        isLesson: isLessonCheck,
-        isUpdate: isUpdateCheck
+        isLesson: isLesson,
+        isUpdate: isUpdate
       })
         .then((res) => console.log(res))
         .catch((err) => console.log(err))
 
-      router.replace(router.asPath);
+      setChangesMade(true)
+      // router.replace(router.asPath);
+      router.reload(window.location.pathname)
       handleFormClose();
     }
   };
@@ -200,10 +200,11 @@ export default function CreatePostForm({ setUpdateFormOpen, setPostTitleError, s
           </div>
           <div className="radio-options mt-3">
             <h5>What kind of post is this?</h5>
-            {postType === 'isLesson' ? <input type="radio" name="isOption" value="isLesson" id="isLesson" onChange={handlePostType} checked /> : <input type="radio" name="isOption" value="isLesson" id="isLesson" onChange={handlePostType} />}
+            {isLesson === true ? <input type="radio" value={isLesson} name="isOption" id="isLesson" onChange={handleIsLesson} checked /> : <input type="radio" value={isLesson} name="isOption" id="isLesson" onChange={handleIsLesson} /> }
             <label htmlFor="isLesson">&nbsp; This is an art lesson</label>
             <br />
-            {postType === 'isUpdate' ? <input type="radio" name="isOption" value="isUpdate" id="isUpdate" onChange={handlePostType} checked /> : <input type="radio" name="isOption" value="isUpdate" id="isUpdate" onChange={handlePostType} />}
+            {isUpdate === true ? <input type="radio" value={isUpdate} name="isOption" id="isUpdate" onChange={handleIsUpdate} checked /> :
+            <input type="radio" value={isUpdate} name="isOption" id="isUpdate" onChange={handleIsUpdate} />}
             <label htmlFor="isUpdate">&nbsp; This is news/an update</label>
           </div>
           <br />

@@ -67,6 +67,27 @@ const ProductDetails = () => {
     }
 
     if (productData) {
+      const hasPriceOptions = productData.priceOptions.length > 1
+      const hasAdditionalOptions = productData.additionalOptions.length > 0
+
+      if(hasPriceOptions && hasAdditionalOptions) {
+        setProductPriceOptionError("Select a price")
+        setAdditionalOptionError("Select an option")
+      }
+      if(hasPriceOptions && !hasAdditionalOptions) {
+        setProductPriceOptionError("Select a price")
+        setAdditionalOptionError(null)
+      }
+      if(!hasPriceOptions && hasAdditionalOptions) {
+        setProductPriceOptionError(null)
+        setAdditionalOptionError("Select an option")
+      }
+      if(!hasPriceOptions && !hasAdditionalOptions) {
+        setProductPriceOptionError(null)
+        setAdditionalOptionError(null)
+      }
+
+      
       setProductDataLoaded(true);
       const imagesArray = document.querySelectorAll(".side-images-img");
       for (let i = 1; i < imagesArray.length; i++) {
@@ -88,7 +109,9 @@ const ProductDetails = () => {
     setProductPriceOption(selectedPriceOption);
     setProductPrice(selectedPriceOption.price)
     const optionImg = selectedPriceOption.images[0]
-    changeMainPicture(optionImg)
+    if(productData.priceOptions[0].images.length > 0) {
+      changeMainPicture(optionImg)
+    }
     setProductPriceOptionError(null)
   };
 
@@ -98,7 +121,9 @@ const ProductDetails = () => {
     setAdditionalOption(selectedAdditionalOption)
     // console.log(selectedAdditionalOption);
     const optionImg = selectedAdditionalOption.images[0]
-    changeMainPicture(optionImg)
+    if(productData.additionalOptions[0].images.length > 0) {
+      changeMainPicture(optionImg)
+    }
     setAdditionalOptionError(null)
   }
 
@@ -141,43 +166,12 @@ const ProductDetails = () => {
       productPrice: productPrice
     }
 
-    console.log(compiledProduct);
-
-    if (productData.additionalOptions.length > 1 || productData.priceOptions.length > 1) {
-      if (formIsValid !== true) {
-        toast(`Please select the required options.`)
-      }
-      if (formIsValid === true) {
-        const existItem = state.cart.cartItems.find(
-          (product) => product.tempId === compiledProduct.tempId
-        );
-        const quantity = existItem ? existItem.quantity + 1 : 1;
-
-        //if there is a stock number associated with each product
-        if (productData.countInStock < quantity) {
-          toast("Sorry, item is out of stock.");
-          return;
-        }
-
-        dispatch({ type: "CART_ADD_ITEM", payload: { ...compiledProduct, quantity } });
-
-        if(mediaType === 'desktop') {
-          handleOpenCartDesktop();
-        }
-        else if (mediaType === 'mobile'){
-          handleOpenCartMobile();
-        }
-
-        // toast.success(`${compiledProduct.productName} - Added to Cart`, {autoClose: 1000, hideProgressBar: true, transition: Flip})
-      }
-    }
-    if (productData.additionalOptions.length === 0 || productData.priceOptions.length < 1) {
+    if(formIsValid === true) {
       const existItem = state.cart.cartItems.find(
         (product) => product.tempId === compiledProduct.tempId
       );
       const quantity = existItem ? existItem.quantity + 1 : 1;
 
-      //if there is a stock number associated with each product
       if (productData.countInStock < quantity) {
         toast("Sorry, item is out of stock.");
         return;
@@ -190,6 +184,12 @@ const ProductDetails = () => {
       }
       else if (mediaType === 'mobile'){
         handleOpenCartMobile();
+      }
+    }
+
+    else if (formIsValid !== true) {
+      if (formIsValid !== true) {
+        toast(`Please select the required options.`)
       }
     }
 
@@ -230,7 +230,7 @@ const ProductDetails = () => {
                         )
                         : ""}
 
-                      {productData.priceOptions.length > 1
+                      {productData.additionalOptions.length > 1
                         ? productData.additionalOptions.map((option) =>
                           option.images.map((image, idx) => (
                             <img
@@ -296,7 +296,7 @@ const ProductDetails = () => {
                       : ("")
                     }
 
-                    {productData.priceOptions.length > 1
+                    {productData.additionalOptions.length > 1
                       ? (
                         <div className="form-group mt-3">
                           <label htmlFor="productPriceOption">
@@ -337,7 +337,9 @@ const ProductDetails = () => {
                   </div>
                   <div className="right add-to-cart-container col-lg-2 mobile-hide">
                     <h2 className="roboto" style={{ fontWeight: `100` }}>
-                      ${productPrice}.00
+                      {
+                        isNaN(productPrice) ? `$${productPrice}.00` : `$${productPrice.toFixed(2)}`
+                      }
                     </h2>
                     <button
                       className="btn-site-blue roboto"

@@ -130,7 +130,6 @@ textarea:focus {
 .navbar-body {
   background-color: transparent;
   position: fixed;
-  background-color: rgba(255, 172, 236, 0.07);
   backdrop-filter: blur(15px) brightness(110%);
   width: 100%;
   z-index: 99;
@@ -148,7 +147,7 @@ textarea:focus {
 
 @keyframes fade-scroll {
   to {
-    background-color: rgba(255, 172, 236, 0.07);
+    background-color: rgba(255,249,254, .4);
   }
 }
 
@@ -313,7 +312,7 @@ a:hover {
 .cart-menu-body {
   width: 0px;
   height: 100dvh;
-  background-color: rgba(255, 255, 255, 1);
+  background-color: rgba(255, 255, 255, .4) !important;
   backdrop-filter: blur(25px) brightness(125%);
   position: fixed;
   right: 0;
@@ -425,10 +424,12 @@ a:hover {
   color: rgb(131, 180, 192) !important;
 }
 
+
+
 .mobile-menu-body {
   width: 0px;
   height: 100vh;
-  background-color: rgba(255, 255, 255, 1);
+  background-color: rgba(255,249,254, .4) !important;
   backdrop-filter: blur(25px) brightness(125%);
   position: fixed;
   left: 0;
@@ -1033,6 +1034,7 @@ a:hover {
 
   .remove-items-text {
     font-size: .7rem !important;
+    
   }
 
   .left-side-mobile button {
