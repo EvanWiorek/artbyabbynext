@@ -1,70 +1,6 @@
 import { useState } from "react";
 import axios from "axios";
-import { useRouter } from "next/router";
-import dynamic from 'next/dynamic'
 import { toast } from "react-toastify";
-
-const ReactQuill = dynamic(
-  async () => {
-    const { default: Quill } = await import("react-quill");
-    return function forwardRef({ forwardedRef, ...props }) {
-      return <Quill ref={forwardedRef} {...props} />;
-    };
-  },
-  {
-    ssr: false,
-  }
-)
-
-const modules = {
-  toolbar: {
-    container: [
-      [{ header: '1' }, { header: '2' }],
-      [{ size: [] }],
-      [{ 'color': [] }, 'bold', 'italic', 'underline', 'strike', 'blockquote'],
-      [
-        { list: 'ordered' },
-        { list: 'bullet' },
-        { indent: '-1' },
-        { indent: '+1' },
-        { align: [] },
-      ],
-      ['link', 'image', 'clean'],
-    ],
-    clipboard: {
-      matchVisual: false,
-    },
-    handlers: {
-      image: imageHandler
-    },
-  }
-}
-
-const formats = [
-  'header',
-  'font',
-  'color',
-  'size',
-  'bold',
-  'italic',
-  'underline',
-  'strike',
-  'blockquote',
-  'list',
-  'bullet',
-  'indent',
-  'link',
-  'image',
-  'align',
-]
-
-function imageHandler() {
-  var range = this.quill.getSelection();
-  var value = prompt('Please enter the image URL:');
-  if (value) {
-    this.quill.insertEmbed(range.index, 'image', value);
-  }
-}
 
 export default function CreateProductForm({
   setCreateProductFormOpen,
@@ -89,6 +25,8 @@ export default function CreateProductForm({
   const [productCategory, setProductCategory] = useState("");
   const [productCountInStock, setProductCountInStock] = useState("");
   const [productDescription, setProductDescription] = useState("");
+  const [singlePrice, setSinglePrice] = useState("");
+  const [singlePriceError, setSinglePriceError] = useState("");
   const [onePrice, setOnePrice] = useState();
   const [multiplePrices, setMultiplePrices] = useState();
   const [yesAdditional, setYesAdditional] = useState();
@@ -263,10 +201,20 @@ export default function CreateProductForm({
     setPriceOptionImages(filteredImages)
   }
 
+  const handleSinglePrice = (e) => {
+    setSinglePrice(e.target.value)
+    if (e.target.value.length < 1) {
+      setSinglePriceError("A price is required.")
+    }
+    else {
+      setSinglePriceError(null)
+    }
+  }
+
   const handleOptionPrice = (e) => {
     setOptionPrice(e.target.value)
     if (e.target.value.length < 1) {
-      setOptionPriceError("Price is required for eahc price option.")
+      setOptionPriceError("Price is required for each price option.")
     }
     else {
       setOptionPriceError(null)
@@ -500,6 +448,17 @@ export default function CreateProductForm({
     }
 
     if (formIsValid === true) {
+      if(onePrice === true) {
+        const singlePrice = {
+          optionName: "",
+          optionType: "",
+          images: [],
+          price: singlePrice,
+          description: "",
+        }
+        setProductPriceOptions([...productPriceOptions, singlePrice])
+      }
+
       const newProduct = {
         name: productName,
         images: productImages,
@@ -509,8 +468,6 @@ export default function CreateProductForm({
         priceOptions: productPriceOptions,
         additionalOptions: productAdditionalOptions
       }
-
-      // console.log(newProduct);
 
       axios.post('/api/products/create' , newProduct)
       .then((res) => console.log(res))
@@ -534,6 +491,20 @@ export default function CreateProductForm({
     //   router.replace(router.asPath);
     //   handleFormClose();
     // }
+
+    setProductName("");
+    setProductImages([]);
+    setDisplayedImages([]);
+    setNewImage("");
+    setProductCategory("");
+    setProductCountInStock("");
+    setProductDescription("");
+    setOnePrice(false);
+    setMultiplePrices(false);
+    setYesAdditional(false);
+    setNoAdditional(false);
+    setProductAdditionalOptions([]);
+    setProductPriceOptions([]);
   };
 
   const handleFormClose = () => {
@@ -546,13 +517,23 @@ export default function CreateProductForm({
       600
     );
 
-    // setPostTitle("");
-    // setPostTitleError("");
-    // setPostContent("");
-    // setVideoURL("");
-    // setImageURL("");
-    // setPostType("");
-    // setPostTypeError("");
+    setProductName("");
+    setProductNameError("");
+    setProductImages([]);
+    setProductImagesError([]);
+    setDisplayedImages([]);
+    setNewImage("");
+    setProductCategoryError("");
+    setProductCountInStockError("");
+    setProductCategory("");
+    setProductCountInStock("");
+    setProductDescription("");
+    setOnePrice(false);
+    setMultiplePrices(false);
+    setYesAdditional(false);
+    setNoAdditional(false);
+    setProductAdditionalOptions([]);
+    setProductPriceOptions([]);
   }
 
   return (
@@ -815,13 +796,13 @@ export default function CreateProductForm({
                 type="text"
                 placeholder="p"
                 className="form-control"
-                value={optionPrice}
-                onChange={handleOptionPrice}
+                value={singlePrice}
+                onChange={handleSinglePrice}
               />
               <label className="thin-label">Price: $ <span style={{ color: `rgb(206, 139, 139)` }}>*</span></label>
-              {optionPriceError ? (
+              {singlePriceError ? (
                 <p style={{ color: "tomato" }} className="mt-1">
-                  {optionPriceError}
+                  {singlePriceError}
                 </p>
               ) : (
                 ""
@@ -967,7 +948,7 @@ export default function CreateProductForm({
 
           <div className="d-flex gap-3 justify-content-end mt-3">
             <button type="button" className="btn-site-cancel roboto" onClick={handleFormClose}>Cancel</button>
-            <input type="submit" value="Create Post" className={`roboto btn-site-blue ${formIsValid ? "" : "disabled-toast"}`} />
+            <input type="submit" value="Create Product" className={`roboto btn-site-blue ${formIsValid ? "" : "disabled-toast"}`} />
           </div>
         </form>
       </div>
