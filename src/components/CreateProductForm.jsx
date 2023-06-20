@@ -72,59 +72,69 @@ export default function CreateProductForm({
   setProductImagesError,
   setProductCategoryError,
   setProductCountInStockError,
-  setProductPriceOtionsError,
+  setProductPriceOptionsError,
   productNameError,
   productImagesError,
   productSlugError,
   productCategoryError,
-  productCountInStockError }) {
-  const [productName, setProductName] = useState();
+  productCountInStockError,
+  productPriceOptionsError }) {
+  const [productPriceError, setProductPriceError] = useState();
+  const [productName, setProductName] = useState("");
   const [productImages, setProductImages] = useState([]);
   const [displayedImages, setDisplayedImages] = useState([]);
-  const [newImage, setNewImage] = useState();
+  const [newImage, setNewImage] = useState("");
   // const [imagesToUpload, setImagesToUpload] = useState([]);
   // const [createObjectURL, setCreateObjectURL] = useState();
-  const [productCategory, setProductCategory] = useState();
-  const [productCountInStock, setProductCountInStock] = useState();
+  const [productCategory, setProductCategory] = useState("");
+  const [productCountInStock, setProductCountInStock] = useState("");
+  const [productDescription, setProductDescription] = useState("");
   const [onePrice, setOnePrice] = useState();
   const [multiplePrices, setMultiplePrices] = useState();
   const [yesAdditional, setYesAdditional] = useState();
   const [noAdditional, setNoAdditional] = useState();
 
   //price options
-  const [productPriceOptions, setProductPriceOtions] = useState();
-  const [priceName, setPriceName] = useState();
+  const [productPriceOptions, setProductPriceOptions] = useState([]);
+  const [priceName, setPriceName] = useState("");
   const [priceNameError, setPriceNameError] = useState();
-  const [priceType, setPriceType] = useState();
+  const [oldPriceName, setOldPriceName] = useState("");
+  const [priceType, setPriceType] = useState("");
   const [priceTypeError, setPriceTypeError] = useState();
-  const [priceOptionImages, setPriceOptionImages] = useState();
-  const [optionPrice, setOptionPrice] = useState();
+  const [priceOptionImages, setPriceOptionImages] = useState([]);
+  const [optionPrice, setOptionPrice] = useState("");
   const [optionPriceError, setOptionPriceError] = useState();
+  const [priceDesc, setPriceDesc] = useState("");
 
   //additional options
-  const [addOptionName, setAddOptionName] = useState();
+  const [addOptionName, setAddOptionName] = useState("");
+  const [oldAddOptionName, setOldAddOptionName] = useState("");
   const [addOptionNameError, setAddOptionNameError] = useState();
-  const [addOptionType, setAddOptionType] = useState();
+  const [addOptionType, setAddOptionType] = useState("");
   const [addOptionTypeError, setAddOptionTypeError] = useState();
   const [addOptionImages, setAddOptionImages] = useState([]);
-  const [displayedAddOptionImages, setDisplayedAddOptionImages] = useState([]);
-
-  const router = useRouter();
-
+  const [addOptionDesc, setAddOptionDesc] = useState("");
+  const [productAdditionalOptions, setProductAdditionalOptions] = useState([]);
 
   let formIsValid = false;
   formIsValid =
-    setProductNameError === null
-    && setProductImagesError === null
-    && setProductCategoryError === null
-    && setProductCountInStockError === null
-    && setProductPriceOtionsError === null
+    productNameError === null
+    && productImagesError === null
+    && productCategoryError === null
+    && productCountInStockError === null
+    && productPriceError === null
 
   let priceOptionIsValid = false;
   priceOptionIsValid =
     priceNameError === null
     && priceTypeError === null
     && optionPriceError === null
+
+
+  let addOptionIsValid = false;
+  addOptionIsValid =
+    addOptionNameError === null
+    && addOptionTypeError === null
 
 
   const handleProductName = (e) => {
@@ -138,10 +148,23 @@ export default function CreateProductForm({
   }
 
   const handleAddProductImages = () => {
+    let formValidator = [...displayedImages]
+
+    if (newImage.length < 1 || !newImage.includes("http")) {
+      toast("Invalid image URL")
+      return;
+    }
+
     if (!(displayedImages.includes(newImage))) {
       setDisplayedImages([...displayedImages, newImage])
+      formValidator = [...displayedImages, newImage]
     }
+    setProductImages([...displayedImages])
     setNewImage("")
+
+    if (formValidator.length > 1) {
+      setProductImagesError(null)
+    }
 
     //BELOW UPLOADS IMAGES TO public/uploads FOLDER
     // let tempImagesArray = []
@@ -192,6 +215,7 @@ export default function CreateProductForm({
 
 
   // * PRICE OPTIONS
+  //below two functions control opening and closing the respective forms
   const handleOnePrice = () => {
     setOnePrice(true)
     setMultiplePrices(false)
@@ -222,19 +246,35 @@ export default function CreateProductForm({
     }
   }
 
-  const handlePriceOptionImage = (e) => {
-    const newImage = e.target.value
-    setPriceOptionImages([...priceOptionImages, newImage])
+  const handlePriceOptionImage = () => {
+    if (newImage.length < 1 || !newImage.includes("http")) {
+      toast("Invalid image URL")
+      return;
+    }
+
+    if (!(priceOptionImages.includes(newImage))) {
+      setPriceOptionImages([...priceOptionImages, newImage])
+    }
+    setNewImage("")
+  }
+
+  const handleRemovePriceOptionImages = (img) => {
+    const filteredImages = priceOptionImages.filter((arrImg) => arrImg !== img)
+    setPriceOptionImages(filteredImages)
   }
 
   const handleOptionPrice = (e) => {
     setOptionPrice(e.target.value)
     if (e.target.value.length < 1) {
-      setPriceTypeError("Price is required for eahc price option.")
+      setOptionPriceError("Price is required for eahc price option.")
     }
     else {
-      setPriceTypeError(null)
+      setOptionPriceError(null)
     }
+  }
+
+  const handlePriceOptionDesc = (e) => {
+    setPriceDesc(e.target.value)
   }
 
   const createPriceOption = (e) => {
@@ -243,20 +283,72 @@ export default function CreateProductForm({
       optionType: priceType,
       images: [...priceOptionImages],
       price: optionPrice,
+      description: priceDesc
     }
 
     if (priceOptionIsValid === true) {
-      setProductPriceOtions([...productPriceOptions, newPriceOption])
+      setProductPriceOptions([...productPriceOptions, newPriceOption])
+      setPriceName("");
+      setPriceType("");
+      setPriceOptionImages([]);
+      setOptionPrice("")
+      setPriceDesc("");
+      setProductPriceError(null)
     }
     else {
+      toast("Please correct the required fields.")
       console.log('ERROR', newPriceOption);
     }
-
-    //after clicking SAVE, clears the form and allows for creation of another price option
   }
 
   const deletePriceOption = (optionName) => {
+    const filteredPriceOptions = productPriceOptions.filter((po) => po.optionName !== optionName)
+    setProductPriceOptions([...filteredPriceOptions])
+  }
 
+  const editPriceOption = (optionName) => {
+    const onePriceOption = productPriceOptions.filter((po) => po.optionName === optionName)
+
+    setOldPriceName(onePriceOption[0].optionName)
+    setPriceName(onePriceOption[0].optionName);
+    setPriceType(onePriceOption[0].optionType);
+    setPriceOptionImages([...onePriceOption[0].images]);
+    setOptionPrice(onePriceOption[0].price)
+    setPriceDesc(onePriceOption[0].description);
+
+    document.getElementById("create-price-option").style = "display: none !important"
+    document.getElementById("update-price-option").style = "display: block !important"
+  }
+
+  const updatePriceOption = () => {
+    const clonedArray = [...productPriceOptions]
+
+    for (let i = 0; i < clonedArray.length; i++) {
+      if (clonedArray[i].optionName === oldPriceName) {
+        clonedArray[i] = {
+          optionName: priceName,
+          optionType: priceType,
+          images: [...priceOptionImages],
+          price: optionPrice,
+          description: priceDesc
+        }
+      }
+    }
+
+    setOldPriceName(priceName)
+    setProductPriceOptions(clonedArray);
+    toast.success("Price option has been updated.")
+  }
+
+  const cancelUpdate = () => {
+    document.getElementById("create-price-option").style = "display: block !important"
+    document.getElementById("update-price-option").style = "display: none !important"
+
+    setPriceName("");
+    setPriceType("");
+    setPriceOptionImages([]);
+    setOptionPrice("")
+    setPriceDesc("");
   }
 
 
@@ -272,23 +364,117 @@ export default function CreateProductForm({
   }
 
   const handleAddOptionName = (e) => {
-
+    setAddOptionName(e.target.value);
+    if (e.target.value.length < 1) {
+      setAddOptionNameError("Each price option needs a name.")
+    }
+    else {
+      setAddOptionNameError(null)
+    }
   }
 
   const handleAddOptionType = (e) => {
-
+    setAddOptionType(e.target.value);
+    if (e.target.value.length < 1) {
+      setAddOptionTypeError("Please specify type.")
+    }
+    else {
+      setAddOptionTypeError(null)
+    }
   }
+
 
   const handleAddOptionImages = (e) => {
+    if (newImage.length < 1 || !newImage.includes("http")) {
+      toast("Invalid image URL")
+      return;
+    }
 
+    if (!(addOptionImages.includes(newImage))) {
+      setAddOptionImages([...addOptionImages, newImage])
+    }
+    setNewImage("")
   }
 
-  const handleRemoveOptionImages = (e) => {
+  const handleRemoveAddOptionImages = (img) => {
+    const filteredImages = addOptionImages.filter((arrImg) => arrImg !== img)
+    setAddOptionImages(filteredImages)
+  }
 
+  const handleAddOptionDesc = (e) => {
+    setAddOptionDesc(e.target.value)
+  }
+
+  const createAdditionalOption = (e) => {
+    const newAdditionalOption = {
+      optionName: addOptionName,
+      optionType: addOptionType,
+      images: [...addOptionImages],
+      description: addOptionDesc
+    }
+
+    if (addOptionIsValid === true) {
+      setProductAdditionalOptions([...productAdditionalOptions, newAdditionalOption])
+      setAddOptionName("");
+      setAddOptionType("");
+      setAddOptionImages([]);
+      setAddOptionDesc("");
+    }
+    else {
+      toast("Please correct the required fields.")
+      console.log('ERROR', newAdditionalOption);
+    }
+  }
+
+  const deleteAdditionalOption = (optionName) => {
+    const filteredAdditionalOptions = productAdditionalOptions.filter((po) => po.optionName !== optionName)
+    setProductAdditionalOptions([...filteredAdditionalOptions])
+  }
+
+  const editAdditionalOption = (optionName) => {
+    const oneAdditionalOption = productAdditionalOptions.filter((ao) => ao.optionName === optionName)
+
+    setOldAddOptionName(oneAdditionalOption[0].optionName)
+    setAddOptionName(oneAdditionalOption[0].optionName);
+    setAddOptionType(oneAdditionalOption[0].optionType);
+    setAddOptionImages([...oneAdditionalOption[0].images]);
+    setAddOptionDesc(oneAdditionalOption[0].description);
+
+    document.getElementById("create-additional-option").style = "display: none !important"
+    document.getElementById("update-additional-option").style = "display: block !important"
+  }
+
+  const updateAdditionalOption = () => {
+    const clonedArray = [...productAdditionalOptions]
+
+    for (let i = 0; i < clonedArray.length; i++) {
+      if (clonedArray[i].optionName === oldAddOptionName) {
+        clonedArray[i] = {
+          optionName: addOptionName,
+          optionType: addOptionType,
+          images: [...addOptionImages],
+          description: addOptionDesc
+        }
+      }
+    }
+    setOldAddOptionName(addOptionName)
+    setProductAdditionalOptions(clonedArray);
+    toast.success("Additional option has been updated.")
+  }
+
+  const cancelAdditionalUpdate = () => {
+    document.getElementById("create-additional-option").style = "display: block !important"
+    document.getElementById("update-additional-option").style = "display: none !important"
+
+    setAddOptionName("");
+    setAddOptionType("");
+    setAddOptionImages([]);
+    setAddOptionDesc("");
   }
 
 
-  const handleCreateProduct = async (e) => {
+
+  const handleCreateProduct = (e) => {
     e.preventDefault();
     //BELOW UPLOADS IMAGES TO public/uploads FOLDER
     // for(let i = 0; i < imagesToUpload.length; i++) {
@@ -297,6 +483,40 @@ export default function CreateProductForm({
 
     //   axios.post("/api/upload", body).then((res) => console.log(res.data)).catch((err) => console.log(err))
     // }
+
+    // if(productImages.length < 2) {
+    //   toast("Please add at least two image URLs.")
+    //   return;
+    // }
+
+    console.log(productNameError,
+      productImagesError,
+      productCategoryError,
+      productCountInStockError,
+      productPriceError);
+
+    if (formIsValid !== true) {
+      toast(`Please fill in the required parameters.`)
+    }
+
+    if (formIsValid === true) {
+      const newProduct = {
+        name: productName,
+        images: productImages,
+        category: productCategory,
+        countInStock: productCountInStock,
+        description: productDescription,
+        priceOptions: productPriceOptions,
+        additionalOptions: productAdditionalOptions
+      }
+
+      // console.log(newProduct);
+
+      axios.post('/api/products/create' , newProduct)
+      .then((res) => console.log(res))
+      .catch((err) => console.log(err))
+    }
+
 
 
     // if (formIsValid === true) {
@@ -347,8 +567,7 @@ export default function CreateProductForm({
       <div className="horizontal-line"></div>
       <div className="admin-card-body p-4">
 
-        <form onSubmit={handleCreateProduct} method="POST" className="col-lg-11 m-auto">
-
+        <form onSubmit={handleCreateProduct} className="col-lg-11 m-auto">
 
           <div className="form-floating">
             <input
@@ -388,7 +607,7 @@ export default function CreateProductForm({
                     </div>
                   ))}
                 </div>
-                <button className="btn-site-blue mt-2" onClick={handleAddProductImages}>Add Image</button>
+                <button type="button" className="btn-site-blue mt-2" onClick={handleAddProductImages}>Add Image</button>
               </div>
             </div>
           </div>
@@ -427,6 +646,17 @@ export default function CreateProductForm({
             ) : (
               ""
             )}
+          </div>
+
+          <div className="form-floating mt-2">
+            <input
+              type="text"
+              placeholder="p"
+              className="form-control"
+              value={productDescription}
+              onChange={(e) => setProductDescription(e.target.value)}
+            />
+            <label className="thin-label">Product Description <span style={{ color: `rgb(206, 139, 139)` }}>*</span></label>
           </div>
 
           <div className="horizontal-line" style={{ marginTop: `20px`, marginBottom: `20px` }}></div>
@@ -476,30 +706,7 @@ export default function CreateProductForm({
                 ""
               )}
             </div>
-            <div className="mt-2" style={{ backgroundColor: `white`, padding: `10px`, borderRadius: `5px` }}>
-              <div className="form-floating" >
-                <input
-                  type="text"
-                  placeholder="p"
-                  className="form-control"
-                  onChange={(e) => setNewImage(e.target.value)}
-                  multiple="multiple"
-                  value={newImage}
-                />
-                <label className="thin-label mb-1">Price Option Image <span style={{ color: `rgba(0,0,0,.5)` }}>(Optional)</span></label>
-                <div className="d-flex justify-content-between align-items-end">
-                  <div className="d-flex mt-2 new-product-images-container" style={{ minHeight: `60px` }}>
-                    {displayedImages.map((img, idx) => (
-                      <div className="new-product-images">
-                        <img src={img} alt="" key={idx} style={{ width: `60px`, height: `60px` }} id={img} />
-                        <span onClick={() => handleRemoveProductImages(img)}><i className="bi bi-x-circle-fill"></i></span>
-                      </div>
-                    ))}
-                  </div>
-                  <button className="btn-site-blue mt-2" onClick={handleAddProductImages}>Add Image</button>
-                </div>
-              </div>
-            </div>
+
             <div className="form-floating mt-2">
               <input
                 type="text"
@@ -518,11 +725,87 @@ export default function CreateProductForm({
               )}
             </div>
 
-            <div className="d-flex justify-content-center">
-              <button className="btn-site-blue mt-2 roboto" style={{ width: `100%` }} onClick={createPriceOption}>Save Price Option</button>
+            <div className="mt-2" style={{ backgroundColor: `white`, padding: `10px`, borderRadius: `5px` }}>
+              <div className="form-floating" >
+                <input
+                  type="text"
+                  placeholder="p"
+                  className="form-control"
+                  onChange={(e) => setNewImage(e.target.value)}
+                  multiple="multiple"
+                  value={newImage}
+                />
+                <label className="thin-label mb-1">Price Option Image <span style={{ color: `rgba(0,0,0,.5)` }}>(Optional)</span></label>
+                <div className="d-flex justify-content-between align-items-end">
+                  <div className="d-flex mt-2 new-product-images-container" style={{ minHeight: `60px` }}>
+                    {priceOptionImages.map((img, idx) => (
+                      <div className="new-product-images">
+                        <img src={img} alt="" key={idx} style={{ width: `60px`, height: `60px` }} id={img} />
+                        <span onClick={() => handleRemovePriceOptionImages(img)}><i className="bi bi-x-circle-fill"></i></span>
+                      </div>
+                    ))}
+                  </div>
+                  <button type="button" className="btn-site-blue mt-2" onClick={handlePriceOptionImage}>Add Image</button>
+                </div>
+              </div>
             </div>
 
-            <p className="mt-2">map through the price options here, with options to delete, edit, etc</p>
+            <div className="form-floating mt-2">
+              <input
+                type="text"
+                placeholder="p"
+                className="form-control"
+                value={priceDesc}
+                onChange={handlePriceOptionDesc}
+              />
+              <label className="thin-label">Description of Option <span style={{ color: `rgba(0,0,0,.5)` }}>(Optional)</span></label>
+            </div>
+
+            <div className="d-flex justify-content-center" id="create-price-option">
+              <button type="button" className="btn-site-blue mt-3 roboto" style={{ width: `100%` }} onClick={createPriceOption}>Save Price Option</button>
+            </div>
+
+            <div className="mt-3" id="update-price-option">
+              <div className="d-flex justify-content-between">
+                <button type="button" className="btn-site-blue roboto col-5" onClick={() => updatePriceOption()} style={{ width: `49%` }} >Update {oldPriceName}</button>
+                <button type="button" className="btn-site-cancel roboto col-5" onClick={cancelUpdate} style={{ width: `49%` }} >Done</button>
+              </div>
+            </div>
+
+            <div>
+              <div className="form-body all-posts-list-container box-shadow mt-3">
+                <table className="table table-sm m-auto">
+                  <thead>
+                    <tr>
+                      <th scope="col">Price Option Name</th>
+                      <th scope="col">Price Option Type</th>
+                      <th scope="col">Actions</th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                    {productPriceOptions.length < 1 ?
+                      <tr>
+                        <td colspan="3" className="text-center">No price options created.</td>
+                      </tr>
+                      : productPriceOptions.map((po) => {
+                        return (
+                          <tr>
+                            <td>{po.optionName}</td>
+                            <td>{po.optionType}</td>
+                            <td>
+                              <div className="d-flex justify-content-evenly">
+                                <button type="button" className="btn-site-blue roboto table-button-small" onClick={() => editPriceOption(po.optionName)}>Edit</button>
+
+                                <button type="button" className="btn-site-cancel roboto table-button-small" onClick={() => deletePriceOption(po.optionName)}>Delete</button>
+                              </div>
+                            </td>
+                          </tr>
+                        )
+                      })}
+                  </tbody>
+                </table>
+              </div>
+            </div>
 
           </div>}
 
@@ -609,20 +892,73 @@ export default function CreateProductForm({
                 <label className="thin-label mb-1">Option Image <span style={{ color: `rgba(0,0,0,.5)` }}>(Optional)</span></label>
                 <div className="d-flex justify-content-between align-items-end">
                   <div className="d-flex mt-2 new-product-images-container" style={{ minHeight: `60px` }}>
-                    {displayedAddOptionImages.map((img, idx) => (
+                    {addOptionImages.map((img, idx) => (
                       <div className="new-product-images">
                         <img src={img} alt="" key={idx} style={{ width: `60px`, height: `60px` }} id={img} />
-                        <span onClick={() => handleRemoveOptionImages(img)}><i className="bi bi-x-circle-fill"></i></span>
+                        <span onClick={() => handleRemoveAddOptionImages(img)}><i className="bi bi-x-circle-fill"></i></span>
                       </div>
                     ))}
                   </div>
-                  <button className="btn-site-blue mt-2" onClick={handleAddOptionImages}>Add Image</button>
+                  <button type="button" className="btn-site-blue mt-2" onClick={handleAddOptionImages}>Add Image</button>
                 </div>
               </div>
             </div>
 
-            <div className="d-flex justify-content-center">
-              <button className="btn-site-blue mt-2 roboto" style={{ width: `100%` }} onClick={createPriceOption}>Save Additional Option</button>
+            <div className="form-floating mt-2">
+              <input
+                type="text"
+                placeholder="p"
+                className="form-control"
+                value={addOptionDesc}
+                onChange={handleAddOptionDesc}
+              />
+              <label className="thin-label">Description of Option <span style={{ color: `rgba(0,0,0,.5)` }}>(Optional)</span></label>
+            </div>
+
+            <div className="d-flex justify-content-center" id="create-additional-option">
+              <button type="button" className="btn-site-blue mt-3 roboto" style={{ width: `100%` }} onClick={createAdditionalOption}>Save Additional Option</button>
+            </div>
+
+            <div className="mt-3" id="update-additional-option">
+              <div className="d-flex justify-content-between">
+                <button type="button" className="btn-site-blue roboto col-5" onClick={updateAdditionalOption} style={{ width: `49%` }} >Update {oldAddOptionName}</button>
+                <button type="button" className="btn-site-cancel roboto col-5" onClick={cancelAdditionalUpdate} style={{ width: `49%` }} >Done</button>
+              </div>
+            </div>
+
+            <div>
+              <div className="form-body all-posts-list-container box-shadow mt-3">
+                <table className="table table-sm m-auto">
+                  <thead>
+                    <tr>
+                      <th scope="col">Price Option Name</th>
+                      <th scope="col">Price Option Type</th>
+                      <th scope="col">Actions</th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                    {productAdditionalOptions.length < 1 ?
+                      <tr>
+                        <td colspan="3" className="text-center">No price options created.</td>
+                      </tr>
+                      : productAdditionalOptions.map((ao) => {
+                        return (
+                          <tr>
+                            <td>{ao.optionName}</td>
+                            <td>{ao.optionType}</td>
+                            <td>
+                              <div className="d-flex justify-content-evenly">
+                                <button type="button" className="btn-site-blue roboto table-button-small" onClick={() => editAdditionalOption(ao.optionName)}>Edit</button>
+
+                                <button type="button" className="btn-site-cancel roboto table-button-small" onClick={() => deleteAdditionalOption(ao.optionName)}>Delete</button>
+                              </div>
+                            </td>
+                          </tr>
+                        )
+                      })}
+                  </tbody>
+                </table>
+              </div>
             </div>
 
           </div>}
@@ -630,9 +966,8 @@ export default function CreateProductForm({
           <div className="horizontal-line" style={{ marginTop: `20px`, marginBottom: `20px` }}></div>
 
           <div className="d-flex gap-3 justify-content-end mt-3">
-            <button className="btn-site-cancel roboto" onClick={handleFormClose}>Cancel</button>
-            {/* <button type="submit" className={`roboto btn-site-blue ${formIsValid ? "" : "disabled"}`}>Create Post</button> */}
-            <button type="submit" className={`roboto btn-site-blue`}>Create Post</button>
+            <button type="button" className="btn-site-cancel roboto" onClick={handleFormClose}>Cancel</button>
+            <input type="submit" value="Create Post" className={`roboto btn-site-blue ${formIsValid ? "" : "disabled-toast"}`} />
           </div>
         </form>
       </div>

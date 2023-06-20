@@ -49,14 +49,14 @@ html {
 }
 
 .Toastify__toast-theme--light {
-  background-color: transparent !important;
-  backdrop-filter: blur(3px) !important;
+  background-color: rgba(255, 245, 254, 0.4) !important;
+  backdrop-filter: blur(3px) brightness(110%) !important;
   color: rgba(0,0,0);
 }
 
 .Toastify__toast-body> div {
   font-family: 'Roboto', sans-serif !important;
-  background-color: transparent;
+  /* background-color: rgba(255, 235, 252, 0.4); */
 }
 
 .Toastify__progress-bar {
@@ -622,7 +622,7 @@ a:hover {
   cursor: pointer;
   position: relative;
   left: -14px;
-  top: -13px;
+  top: -12px;
   /* background-color: white; */
   color: rgba(255,255,255,.9);
   font-size: 1.3rem;
@@ -633,6 +633,7 @@ a:hover {
 
 .new-product-images:hover span {
   opacity: 1;
+  filter: drop-shadow(0px 1px 1px rgba(0,0,0,.5))
 }
 
 .new-product-images:hover {
@@ -641,6 +642,14 @@ a:hover {
 
 .create-product-form {
   /* width: 80vw; */
+}
+
+#update-price-option {
+  display: none !important;
+}
+
+#update-additional-option {
+  display: none !important;
 }
 
 

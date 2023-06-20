@@ -285,6 +285,7 @@ const AdminPage = ({ allPosts, allProducts }) => {
               productSlugError={productSlugError}
               productCategoryError={productCategoryError}
               productCountInStockError={productCountInStockError}
+              productPriceOptionsError={productPriceOptionsError}
 
               setProductNameError={setProductNameError}
               setProductImagesError={setProductImagesError}

@@ -9,7 +9,6 @@ const ProductSchema = new mongoose.Schema(
     images: {
       type: [String],
       required: [true, "Products must have at least two images."],
-      validate: [imagesArray, `{PATH} needs at least two images.`]
     },
     category: {
       type: String,
@@ -19,6 +18,7 @@ const ProductSchema = new mongoose.Schema(
       type: Number,
       required: [true, "Products need a minimum in stock count."]
     },
+    description: String,
     priceOptions: [{
       optionName: String,
       optionType: String,
@@ -32,14 +32,15 @@ const ProductSchema = new mongoose.Schema(
     additionalOptions: [{
       optionName: String,
       optionType: String,
-      images: [String]
+      images: [String],
+      description: String,
     }],
   },
 )
 
-function imagesArray(val) {
-  return val.length >= 2;
-}
+// function imagesArray(val) {
+//   return val.length >= 2;
+// }
 
 const Product = mongoose.models.Product || mongoose.model("Product", ProductSchema);
 
