@@ -21,11 +21,12 @@ export default function ProductItem({ product }) {
   return (
     <div className="roboto product-card box-shadow-2">
       <div className="product-card-content d-flex flex-column gap-2">
-        <Link href={`/product/${product.slug}`}>
-          <img src={product.images[0]} alt={product.name} id={product.slug} onMouseOver={() => imageMouseOver(product.slug)} onMouseOut={() => imageMouseOut(product.slug)} />
+        {/* {product.name} */}
+        <Link href={`/product/${product._id}`}>
+          <img src={product.images[0]} alt={product.name} id={product._id} onMouseOver={() => imageMouseOver(product._id)} onMouseOut={() => imageMouseOut(product._id)} />
         </Link>
         <div className="d-flex align-items-center justify-content-between">
-          <Link href={`/product/${product.slug}`}>
+          <Link href={`/product/${product._id}`}>
             {product.name}
           </Link>
 

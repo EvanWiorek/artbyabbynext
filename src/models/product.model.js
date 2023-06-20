@@ -18,7 +18,9 @@ const ProductSchema = new mongoose.Schema(
       type: Number,
       required: [true, "Products need a minimum in stock count."]
     },
-    description: String,
+    description: {
+      type: String,
+    },
     priceOptions: [{
       optionName: String,
       optionType: String,

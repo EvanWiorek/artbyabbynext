@@ -1,9 +1,10 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import axios from "axios";
 import { toast } from "react-toastify";
+import { useRouter } from "next/router";
 
 export default function CreateProductForm({
-  setCreateProductFormOpen,
+  setUpdateProductFormOpen,
   setProductNameError,
   setProductImagesError,
   setProductCategoryError,
@@ -14,17 +15,18 @@ export default function CreateProductForm({
   productSlugError,
   productCategoryError,
   productCountInStockError,
-  productPriceOptionsError }) {
+  productPriceOptionsError,
+  oneProduct }) {
   const [productPriceError, setProductPriceError] = useState();
-  const [productName, setProductName] = useState("");
-  const [productImages, setProductImages] = useState([]);
-  const [displayedImages, setDisplayedImages] = useState([]);
+  const [productName, setProductName] = useState(oneProduct.name);
+  const [productImages, setProductImages] = useState(oneProduct.images);
+  const [displayedImages, setDisplayedImages] = useState(oneProduct.images);
   const [newImage, setNewImage] = useState("");
   // const [imagesToUpload, setImagesToUpload] = useState([]);
   // const [createObjectURL, setCreateObjectURL] = useState();
-  const [productCategory, setProductCategory] = useState("");
-  const [productCountInStock, setProductCountInStock] = useState("");
-  const [productDescription, setProductDescription] = useState("");
+  const [productCategory, setProductCategory] = useState(oneProduct.category);
+  const [productCountInStock, setProductCountInStock] = useState(oneProduct.countInStock);
+  const [productDescription, setProductDescription] = useState(oneProduct.description);
   const [singlePrice, setSinglePrice] = useState("");
   const [singlePriceError, setSinglePriceError] = useState("");
   const [onePrice, setOnePrice] = useState();
@@ -33,7 +35,7 @@ export default function CreateProductForm({
   const [noAdditional, setNoAdditional] = useState();
 
   //price options
-  const [productPriceOptions, setProductPriceOptions] = useState([]);
+  const [productPriceOptions, setProductPriceOptions] = useState(oneProduct.priceOptions);
   const [priceName, setPriceName] = useState("");
   const [priceNameError, setPriceNameError] = useState();
   const [oldPriceName, setOldPriceName] = useState("");
@@ -45,6 +47,7 @@ export default function CreateProductForm({
   const [priceDesc, setPriceDesc] = useState("");
 
   //additional options
+  const [productAdditionalOptions, setProductAdditionalOptions] = useState(oneProduct.additionalOptions);
   const [addOptionName, setAddOptionName] = useState("");
   const [oldAddOptionName, setOldAddOptionName] = useState("");
   const [addOptionNameError, setAddOptionNameError] = useState();
@@ -52,7 +55,25 @@ export default function CreateProductForm({
   const [addOptionTypeError, setAddOptionTypeError] = useState();
   const [addOptionImages, setAddOptionImages] = useState([]);
   const [addOptionDesc, setAddOptionDesc] = useState("");
-  const [productAdditionalOptions, setProductAdditionalOptions] = useState([]);
+
+  const router = useRouter();
+
+  useEffect(() => {
+    if (oneProduct.priceOptions.length > 1) {
+      setOnePrice(false)
+      setMultiplePrices(true)
+    }
+    if (oneProduct.additionalOptions.length > 0) {
+      setNoAdditional(false)
+      setYesAdditional(true)
+    }
+
+    setProductNameError(null)
+    setProductImagesError(null)
+    setProductCategoryError(null)
+    setProductCountInStockError(null)
+    setProductPriceError(null)
+  }, [])
 
   let formIsValid = false;
   formIsValid =
@@ -95,9 +116,10 @@ export default function CreateProductForm({
 
     if (!(displayedImages.includes(newImage))) {
       setDisplayedImages([...displayedImages, newImage])
-      formValidator = [...displayedImages, newImage]
       setProductImages([...displayedImages, newImage])
+      formValidator = [...displayedImages, newImage]
     }
+    // setProductImages([...displayedImages])
     setNewImage("")
 
     if (formValidator.length > 0) {
@@ -424,18 +446,6 @@ export default function CreateProductForm({
 
   const handleCreateProduct = (e) => {
     e.preventDefault();
-    //BELOW UPLOADS IMAGES TO public/uploads FOLDER
-    // for(let i = 0; i < imagesToUpload.length; i++) {
-    //   let body = new FormData();
-    //   body.append("file", imagesToUpload[i]);
-
-    //   axios.post("/api/upload", body).then((res) => console.log(res.data)).catch((err) => console.log(err))
-    // }
-
-    // if(productImages.length < 2) {
-    //   toast("Please add at least two image URLs.")
-    //   return;
-    // }
 
     console.log(productNameError,
       productImagesError,
@@ -448,7 +458,7 @@ export default function CreateProductForm({
     }
 
     if (formIsValid === true) {
-      if(onePrice === true) {
+      if (onePrice === true) {
         const singlePrice = {
           optionName: "",
           optionType: "",
@@ -459,7 +469,7 @@ export default function CreateProductForm({
         setProductPriceOptions([...productPriceOptions, singlePrice])
       }
 
-      const newProduct = {
+      const updatedProduct = {
         name: productName,
         images: productImages,
         category: productCategory,
@@ -469,46 +479,17 @@ export default function CreateProductForm({
         additionalOptions: productAdditionalOptions
       }
 
-      axios.post('/api/products/create' , newProduct)
+      axios.post(`/api/products/update/${oneProduct._id}` , updatedProduct)
       .then((res) => console.log(res))
       .catch((err) => console.log(err))
+
+      router.reload(window.location.pathname)
+      handleFormClose();
     }
-
-
-
-    // if (formIsValid === true) {
-    //   axios.post('/api/posts/create', {
-    //     postTitle,
-    //     postContent,
-    //     videoURL,
-    //     imageURL,
-    //     isLesson: isLessonCheck,
-    //     isUpdate: isUpdateCheck
-    //   })
-    //     .then((res) => console.log(res))
-    //     .catch((err) => console.log(err))
-
-    //   router.replace(router.asPath);
-    //   handleFormClose();
-    // }
-
-    setProductName("");
-    setProductImages([]);
-    setDisplayedImages([]);
-    setNewImage("");
-    setProductCategory("");
-    setProductCountInStock("");
-    setProductDescription("");
-    setOnePrice(false);
-    setMultiplePrices(false);
-    setYesAdditional(false);
-    setNoAdditional(false);
-    setProductAdditionalOptions([]);
-    setProductPriceOptions([]);
   };
 
   const handleFormClose = () => {
-    setCreateProductFormOpen(false);
+    setUpdateProductFormOpen(false);
     document.querySelector(".admin-page-dark").style = "opacity: 0";
     setTimeout(
       () =>
@@ -948,7 +929,7 @@ export default function CreateProductForm({
 
           <div className="d-flex gap-3 justify-content-end mt-3">
             <button type="button" className="btn-site-cancel roboto" onClick={handleFormClose}>Cancel</button>
-            <input type="submit" value="Create Product" className={`roboto btn-site-blue ${formIsValid ? "" : "disabled-toast"}`} />
+            <input type="submit" value={ `Update ${oneProduct.name}` } className={`roboto btn-site-blue ${formIsValid ? "" : "disabled-toast"}`} />
           </div>
         </form>
       </div>

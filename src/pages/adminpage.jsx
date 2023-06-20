@@ -6,14 +6,19 @@ import UpdatePostForm from "../components/UpdatePostForm";
 import { connectMongoDB } from "../libs/MongoConnect";
 import AbbyPost from "../models/post.model";
 import CreateProductForm from "../components/CreateProductForm";
+import UpdateProductForm from "../components/UpdateProductForm";
+import Product from "../models/product.model";
+import axios from "axios";
 
 export const getServerSideProps = async () => {
   try {
     await connectMongoDB();
     const allPosts = await AbbyPost.find();
+    const allProducts = await Product.find();
     return {
       props: {
-        allPosts: JSON.parse(JSON.stringify(allPosts))
+        allPosts: JSON.parse(JSON.stringify(allPosts)),
+        allProducts: JSON.parse(JSON.stringify(allProducts))
       }
     }
   }
@@ -32,6 +37,7 @@ const AdminPage = ({ allPosts, allProducts }) => {
   const [createPostFormOpen, setCreatePostFormOpen] = useState(false)
   const [createProductFormOpen, setCreateProductFormOpen] = useState(false)
   const [updateFormOpen, setUpdateFormOpen] = useState(false)
+  const [updateProductFormOpen, setUpdateProductFormOpen] = useState(false)
 
   //AbbyPost
   const [postTitleError, setPostTitleError] = useState("");
@@ -48,6 +54,7 @@ const AdminPage = ({ allPosts, allProducts }) => {
   const [productCategoryError, setProductCategoryError] = useState();
   const [productCountInStockError, setProductCountInStockError] = useState();
   const [productPriceOptionsError, setProductPriceOtionsError] = useState();
+  const [oneProduct, setOneProduct] = useState();
 
   const [changesMade, setChangesMade] = useState(false);
 
@@ -109,6 +116,26 @@ const AdminPage = ({ allPosts, allProducts }) => {
     document.querySelector(".admin-page-dark").style =
       "opacity: 1; display: block"
     setUpdateFormOpen(true)
+  }
+
+  const handleOpenProductEditForm = (productId) => {
+    axios.get(`/api/products/${productId}`)
+      .then((res) => {
+        console.log(res.data);
+        setOneProduct(res.data)
+        document.querySelector(".admin-page-dark").style =
+          "opacity: 1; display: block"
+        setUpdateProductFormOpen(true)
+      })
+      .catch((err) => console.log(err));
+
+  }
+
+  const deleteProduct = (productId) => {
+    axios.delete(`/api/posts/delete/${productId}`)
+    .then((res) => console.log(res))
+    .catch((err) => console.log(err))
+    router.replace(router.asPath);
   }
 
   return (
@@ -257,25 +284,67 @@ const AdminPage = ({ allPosts, allProducts }) => {
             <div className="left-side manage-products form-body box-shadow mt-4 mb-5">
               <h3 className="text-center">Manage Products</h3>
               <div className="horizontal-line-gray"></div>
-              <ul>
-                <li>View list of all products</li>
-                <li>Change price of a product</li>
-                <li>Add/remove a discount price for all products</li>
-                <li>Delete a product</li>
-                <li>Add a product</li>
-                <li>Edit a product</li>
-              </ul>
 
-              <div className="d-flex justify-content-center">
-                <button onClick={handleCreateProductFormOpen} className="btn-site-blue roboto d-flex align-items-center justify-content-center gap-2 mb-3" style={{ width: `100%` }}>
-                  <i className="bi bi-plus-circle" style={{ fontSize: `1.3rem` }}></i>
-                  <p style={{ marginBottom: 0 }}>New Product</p>
-                </button>
+              <div className="col-lg-9 m-auto">
+                <ul>
+                  <li><s>View list of all products</s></li>
+                  <li>Add/remove a discount price for all products</li>
+                  <li>Create discount codes that when used lower the price on the cart menu?</li>
+                  <li><s>Delete a product</s></li>
+                  <li><s>Add a product</s></li>
+                  <li><s>Edit a product</s></li>
+                </ul>
+
+                <div className="d-flex justify-content-center mt-3">
+                  <button onClick={handleCreateProductFormOpen} className="btn-site-blue roboto d-flex align-items-center justify-content-center gap-2 mb-3" style={{ width: `100%` }}>
+                    <i className="bi bi-plus-circle" style={{ fontSize: `1.3rem` }}></i>
+                    <p style={{ marginBottom: 0 }}>New Product</p>
+                  </button>
+                </div>
+                
+                <div className="form-body all-posts-list-container box-shadow">
+                  <h4 className="text-center mt-2">All Products</h4>
+                  <div className="horizontal-line-gray"></div>
+                  <table className="table table-sm m-auto">
+                    <thead>
+                      <tr>
+                        <th scope="col">Product Name</th>
+                        <th scope="col">Actions</th>
+                      </tr>
+                    </thead>
+                    <tbody>
+                      {allProducts.map((prod) => {
+                        return (
+                          <tr>
+                            <td>{prod.name}</td>
+                            <td>
+                              <div className="d-flex gap-1">
+                                <button className="btn-site-blue roboto table-button-small" onClick={() => handleOpenProductEditForm(prod._id)}>Edit</button>
+                                <button className="btn-site-cancel roboto table-button-small" onClick={() => deleteProduct(prod._id)}>Delete</button>
+                              </div>
+                            </td>
+                          </tr>
+                        )
+                      })}
+                    </tbody>
+                  </table>
+                </div>
+                
               </div>
+
             </div>
+
+
+
             {createPostFormOpen && <CreatePostForm setCreatePostFormOpen={setCreatePostFormOpen} setPostTitleError={setPostTitleError} setPostTypeError={setPostTypeError}
               postTitleError={postTitleError}
               postTypeError={postTypeError} />}
+
+            {updateFormOpen && <UpdatePostForm
+              setUpdateFormOpen={setUpdateFormOpen} setPostTitleError={setPostTitleError} setPostTypeError={setPostTypeError}
+              postTitleError={postTitleError}
+              postTypeError={postTypeError}
+              onePost={onePost} setChangesMade={setChangesMade} />}
 
             {createProductFormOpen && <CreateProductForm
               setCreateProductFormOpen={setCreateProductFormOpen}
@@ -295,11 +364,27 @@ const AdminPage = ({ allPosts, allProducts }) => {
               setProductPriceOtionsError={setProductPriceOtionsError}
             />}
 
-            {updateFormOpen && <UpdatePostForm
-              setUpdateFormOpen={setUpdateFormOpen} setPostTitleError={setPostTitleError} setPostTypeError={setPostTypeError}
-              postTitleError={postTitleError}
-              postTypeError={postTypeError}
-              onePost={onePost} setChangesMade={setChangesMade} />}
+            {updateProductFormOpen && <UpdateProductForm
+              setUpdateProductFormOpen={setUpdateProductFormOpen}
+
+              productNameError={productNameError}
+              productImagesError={productImagesError}
+              productSlugError={productSlugError}
+              productCategoryError={productCategoryError}
+              productCountInStockError={productCountInStockError}
+              productPriceOptionsError={productPriceOptionsError}
+
+              setProductNameError={setProductNameError}
+              setProductImagesError={setProductImagesError}
+              setProductSlugError={setProductSlugError}
+              setProductCategoryError={setProductCategoryError}
+              setProductCountInStockError={setProductCountInStockError}
+              setProductPriceOtionsError={setProductPriceOtionsError}
+
+              oneProduct={oneProduct}
+            />}
+
+
           </div>
         )}
 

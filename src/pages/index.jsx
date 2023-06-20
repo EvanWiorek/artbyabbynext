@@ -3,13 +3,30 @@ import Layout from '../components/Layout'
 import { useState, useRef, useEffect } from 'react';
 import data from '../utils/data'
 import ProductItem from '../components/ProductItem';
+import { connectMongoDB } from "@/src/libs/MongoConnect";
+import Product from '../models/product.model';
 
+export const getServerSideProps = async () => {
+  try {
+    await connectMongoDB();
+    const allProducts = await Product.find();
+    return {
+      props: {
+        allProducts: JSON.parse(JSON.stringify(allProducts))
+      }
+    }
+  }
+  catch (err) {
+    console.log(err);
+    return {
+      notFound: true
+    }
+  }
+}
 
-export default function Home() {
+export default function Home({ allProducts }) {
   const myRef = useRef();
   const [headerIsVisible, setHeaderIsVisible] = useState();
-
-
 
   useEffect(() => {
     const observer = new IntersectionObserver((entries) => {
@@ -58,8 +75,11 @@ export default function Home() {
           <div className="products-container-body">
             <div className="products-container-content m-auto d-flex gap-3 align-items-center col-lg-9">
               <h1 className='site-font'>All Products</h1>
-              {data.products.map((product) => (
+              {/* {data.products.map((product) => (
                 <ProductItem product={product} key={product.slug} />
+              ))} */}
+              {allProducts.map((product) => (
+                <ProductItem product={product} key={product._id} />
               ))}
             </div>
           </div>
