@@ -108,7 +108,7 @@ const data = {
       ]
     },
     {
-      name: 'Chain Necklace',
+      name: 'Stickers',
       images: ['/static/images/product-images/stickers.jpg', '/static/images/product-images/stickers2.png'],
       description: 'Select from a variety of stickers!',
       slug: 'stickers',

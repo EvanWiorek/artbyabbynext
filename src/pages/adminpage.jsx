@@ -132,7 +132,7 @@ const AdminPage = ({ allPosts, allProducts }) => {
   }
 
   const deleteProduct = (productId) => {
-    axios.delete(`/api/posts/delete/${productId}`)
+    axios.post(`/api/products/delete/${productId}`)
     .then((res) => console.log(res))
     .catch((err) => console.log(err))
     router.replace(router.asPath);

@@ -480,10 +480,14 @@ export default function CreateProductForm({
       }
 
       axios.post(`/api/products/update/${oneProduct._id}` , updatedProduct)
-      .then((res) => console.log(res))
+      .then((res) => {
+        console.log(res);
+        toast.success(`${productName} updated successfully`)
+        
+      })
       .catch((err) => console.log(err))
 
-      router.reload(window.location.pathname)
+      // router.reload(window.location.pathname)
       handleFormClose();
     }
   };
@@ -515,6 +519,9 @@ export default function CreateProductForm({
     setNoAdditional(false);
     setProductAdditionalOptions([]);
     setProductPriceOptions([]);
+
+    // setTimeout(() => , 100)
+    router.replace(router.asPath)
   }
 
   return (

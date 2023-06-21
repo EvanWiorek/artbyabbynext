@@ -1,6 +1,7 @@
 import { useState } from "react";
 import axios from "axios";
 import { toast } from "react-toastify";
+import { useRouter } from "next/router";
 
 export default function CreateProductForm({
   setCreateProductFormOpen,
@@ -53,6 +54,8 @@ export default function CreateProductForm({
   const [addOptionImages, setAddOptionImages] = useState([]);
   const [addOptionDesc, setAddOptionDesc] = useState("");
   const [productAdditionalOptions, setProductAdditionalOptions] = useState([]);
+
+  const router = useRouter();
 
   let formIsValid = false;
   formIsValid =
@@ -204,10 +207,10 @@ export default function CreateProductForm({
   const handleSinglePrice = (e) => {
     setSinglePrice(e.target.value)
     if (e.target.value.length < 1) {
-      setSinglePriceError("A price is required.")
+      setProductPriceError("A price is required.")
     }
     else {
-      setSinglePriceError(null)
+      setProductPriceError(null)
     }
   }
 
@@ -237,9 +240,12 @@ export default function CreateProductForm({
     if (priceOptionIsValid === true) {
       setProductPriceOptions([...productPriceOptions, newPriceOption])
       setPriceName("");
+      setPriceNameError("");
       setPriceType("");
+      setPriceTypeError("");
       setPriceOptionImages([]);
       setOptionPrice("")
+      setOptionPriceError("")
       setPriceDesc("");
       setProductPriceError(null)
     }
@@ -285,7 +291,7 @@ export default function CreateProductForm({
 
     setOldPriceName(priceName)
     setProductPriceOptions(clonedArray);
-    toast.success("Price option has been updated.")
+    toast.success(`${oldPriceName} has been updated.`)
   }
 
   const cancelUpdate = () => {
@@ -437,11 +443,11 @@ export default function CreateProductForm({
     //   return;
     // }
 
-    console.log(productNameError,
-      productImagesError,
-      productCategoryError,
-      productCountInStockError,
-      productPriceError);
+    // console.log(productNameError,
+    //   productImagesError,
+    //   productCategoryError,
+    //   productCountInStockError,
+    //   productPriceError);
 
     if (formIsValid !== true) {
       toast(`Please fill in the required parameters.`)
@@ -449,14 +455,14 @@ export default function CreateProductForm({
 
     if (formIsValid === true) {
       if(onePrice === true) {
-        const singlePrice = {
+        const newSinglePrice = {
           optionName: "",
           optionType: "",
           images: [],
           price: singlePrice,
           description: "",
         }
-        setProductPriceOptions([...productPriceOptions, singlePrice])
+        setProductPriceOptions([...productPriceOptions, newSinglePrice])
       }
 
       const newProduct = {
@@ -470,27 +476,13 @@ export default function CreateProductForm({
       }
 
       axios.post('/api/products/create' , newProduct)
-      .then((res) => console.log(res))
+      .then((res) => {
+        console.log(res);
+        toast.success(`${res.data.name} created successfully`)
+        // router.replace(router.asPath);
+      })
       .catch((err) => console.log(err))
     }
-
-
-
-    // if (formIsValid === true) {
-    //   axios.post('/api/posts/create', {
-    //     postTitle,
-    //     postContent,
-    //     videoURL,
-    //     imageURL,
-    //     isLesson: isLessonCheck,
-    //     isUpdate: isUpdateCheck
-    //   })
-    //     .then((res) => console.log(res))
-    //     .catch((err) => console.log(err))
-
-    //   router.replace(router.asPath);
-    //   handleFormClose();
-    // }
 
     setProductName("");
     setProductImages([]);
@@ -534,6 +526,8 @@ export default function CreateProductForm({
     setNoAdditional(false);
     setProductAdditionalOptions([]);
     setProductPriceOptions([]);
+
+    router.replace(router.asPath)
   }
 
   return (
@@ -947,7 +941,7 @@ export default function CreateProductForm({
           <div className="horizontal-line" style={{ marginTop: `20px`, marginBottom: `20px` }}></div>
 
           <div className="d-flex gap-3 justify-content-end mt-3">
-            <button type="button" className="btn-site-cancel roboto" onClick={handleFormClose}>Cancel</button>
+            <button type="button" className="btn-site-cancel roboto" onClick={handleFormClose}>Done</button>
             <input type="submit" value="Create Product" className={`roboto btn-site-blue ${formIsValid ? "" : "disabled-toast"}`} />
           </div>
         </form>
