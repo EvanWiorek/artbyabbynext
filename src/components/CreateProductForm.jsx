@@ -32,6 +32,8 @@ export default function CreateProductForm({
   const [multiplePrices, setMultiplePrices] = useState();
   const [yesAdditional, setYesAdditional] = useState();
   const [noAdditional, setNoAdditional] = useState();
+  const [additionalOptionsError, setAdditionalOptionsError] = useState();
+
 
   //price options
   const [productPriceOptions, setProductPriceOptions] = useState([]);
@@ -64,6 +66,7 @@ export default function CreateProductForm({
     && productCategoryError === null
     && productCountInStockError === null
     && productPriceError === null
+    && additionalOptionsError === null
 
   let priceOptionIsValid = false;
   priceOptionIsValid =
@@ -310,11 +313,13 @@ export default function CreateProductForm({
   const handleYesAdditional = () => {
     setYesAdditional(true)
     setNoAdditional(false)
+    setAdditionalOptionsError(null)
   }
 
   const handleNoAdditional = () => {
     setYesAdditional(false)
     setNoAdditional(true)
+    setAdditionalOptionsError(null)
   }
 
   const handleAddOptionName = (e) => {
@@ -454,34 +459,53 @@ export default function CreateProductForm({
     }
 
     if (formIsValid === true) {
-      if(onePrice === true) {
-        const newSinglePrice = {
+      if (onePrice === true) {
+        const singlePriceOption = {
           optionName: "",
           optionType: "",
           images: [],
           price: singlePrice,
           description: "",
         }
-        setProductPriceOptions([...productPriceOptions, newSinglePrice])
+        const tempProductPriceOptions = [singlePriceOption]
+        const newProduct = {
+          name: productName,
+          images: productImages,
+          category: productCategory,
+          countInStock: productCountInStock,
+          description: productDescription,
+          priceOptions: tempProductPriceOptions,
+          additionalOptions: productAdditionalOptions
+        }
+
+        axios.post('/api/products/create', newProduct)
+          .then((res) => {
+            console.log(res);
+            toast.success(`${res.data.name} created successfully`)
+            // router.replace(router.asPath);
+          })
+          .catch((err) => console.log(err))
       }
 
-      const newProduct = {
-        name: productName,
-        images: productImages,
-        category: productCategory,
-        countInStock: productCountInStock,
-        description: productDescription,
-        priceOptions: productPriceOptions,
-        additionalOptions: productAdditionalOptions
+      if(multiplePrices === true) {
+        const newProduct = {
+          name: productName,
+          images: productImages,
+          category: productCategory,
+          countInStock: productCountInStock,
+          description: productDescription,
+          priceOptions: productPriceOptions,
+          additionalOptions: productAdditionalOptions
+        }
+  
+        axios.post('/api/products/create', newProduct)
+          .then((res) => {
+            console.log(res);
+            toast.success(`${res.data.name} created successfully`)
+            // router.replace(router.asPath);
+          })
+          .catch((err) => console.log(err))
       }
-
-      axios.post('/api/products/create' , newProduct)
-      .then((res) => {
-        console.log(res);
-        toast.success(`${res.data.name} created successfully`)
-        // router.replace(router.asPath);
-      })
-      .catch((err) => console.log(err))
     }
 
     setProductName("");

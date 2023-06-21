@@ -51,6 +51,9 @@ export default function Home({ allProducts }) {
       },
       false
     );
+
+
+    // console.log(allProducts);
   }, [headerIsVisible])
 
 

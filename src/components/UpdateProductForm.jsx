@@ -33,6 +33,7 @@ export default function CreateProductForm({
   const [multiplePrices, setMultiplePrices] = useState();
   const [yesAdditional, setYesAdditional] = useState();
   const [noAdditional, setNoAdditional] = useState();
+  const [additionalOptionsError, setAdditionalOptionsError] = useState();
 
   //price options
   const [productPriceOptions, setProductPriceOptions] = useState(oneProduct.priceOptions);
@@ -63,9 +64,18 @@ export default function CreateProductForm({
       setOnePrice(false)
       setMultiplePrices(true)
     }
+    else if (oneProduct.priceOptions.length < 2) {
+      setOnePrice(true)
+      setMultiplePrices(false)
+      setSinglePrice(oneProduct.priceOptions[0].price)
+    }
     if (oneProduct.additionalOptions.length > 0) {
       setNoAdditional(false)
       setYesAdditional(true)
+    }
+    else if (oneProduct.additionalOptions.length === 0) {
+      setNoAdditional(true)
+      setYesAdditional(false)
     }
 
     setProductNameError(null)
@@ -73,6 +83,7 @@ export default function CreateProductForm({
     setProductCategoryError(null)
     setProductCountInStockError(null)
     setProductPriceError(null)
+    setAdditionalOptionsError(null)
   }, [])
 
   let formIsValid = false;
@@ -82,6 +93,7 @@ export default function CreateProductForm({
     && productCategoryError === null
     && productCountInStockError === null
     && productPriceError === null
+    && additionalOptionsError === null
 
   let priceOptionIsValid = false;
   priceOptionIsValid =
@@ -119,7 +131,6 @@ export default function CreateProductForm({
       setProductImages([...displayedImages, newImage])
       formValidator = [...displayedImages, newImage]
     }
-    // setProductImages([...displayedImages])
     setNewImage("")
 
     if (formValidator.length > 0) {
@@ -326,11 +337,13 @@ export default function CreateProductForm({
   const handleYesAdditional = () => {
     setYesAdditional(true)
     setNoAdditional(false)
+    setAdditionalOptionsError(null)
   }
 
   const handleNoAdditional = () => {
     setYesAdditional(false)
     setNoAdditional(true)
+    setAdditionalOptionsError(null)
   }
 
   const handleAddOptionName = (e) => {
@@ -447,11 +460,11 @@ export default function CreateProductForm({
   const handleCreateProduct = (e) => {
     e.preventDefault();
 
-    console.log(productNameError,
-      productImagesError,
-      productCategoryError,
-      productCountInStockError,
-      productPriceError);
+    // console.log(productNameError,
+    //   productImagesError,
+    //   productCategoryError,
+    //   productCountInStockError,
+    //   productPriceError);
 
     if (formIsValid !== true) {
       toast(`Please fill in the required parameters.`)
@@ -459,35 +472,52 @@ export default function CreateProductForm({
 
     if (formIsValid === true) {
       if (onePrice === true) {
-        const singlePrice = {
+        const singlePriceOption = {
           optionName: "",
           optionType: "",
           images: [],
           price: singlePrice,
           description: "",
         }
-        setProductPriceOptions([...productPriceOptions, singlePrice])
+        const tempProductPriceOptions = [singlePriceOption]
+        const updatedProduct = {
+          name: productName,
+          images: productImages,
+          category: productCategory,
+          countInStock: productCountInStock,
+          description: productDescription,
+          priceOptions: tempProductPriceOptions,
+          additionalOptions: productAdditionalOptions
+        }
+        axios.post(`/api/products/update/${oneProduct._id}` , updatedProduct)
+        .then((res) => {
+          console.log(res);
+          toast.success(`${productName} updated successfully`)
+          
+        })
+        .catch((err) => console.log(err))
       }
 
-      const updatedProduct = {
-        name: productName,
-        images: productImages,
-        category: productCategory,
-        countInStock: productCountInStock,
-        description: productDescription,
-        priceOptions: productPriceOptions,
-        additionalOptions: productAdditionalOptions
+      if(multiplePrices === true) {
+        const updatedProduct = {
+          name: productName,
+          images: productImages,
+          category: productCategory,
+          countInStock: productCountInStock,
+          description: productDescription,
+          priceOptions: productPriceOptions,
+          additionalOptions: productAdditionalOptions
+        }
+  
+        axios.post(`/api/products/update/${oneProduct._id}` , updatedProduct)
+        .then((res) => {
+          console.log(res);
+          toast.success(`${productName} updated successfully`)
+          
+        })
+        .catch((err) => console.log(err))
       }
 
-      axios.post(`/api/products/update/${oneProduct._id}` , updatedProduct)
-      .then((res) => {
-        console.log(res);
-        toast.success(`${productName} updated successfully`)
-        
-      })
-      .catch((err) => console.log(err))
-
-      // router.reload(window.location.pathname)
       handleFormClose();
     }
   };
