@@ -125,7 +125,7 @@ function PaymentScreen() {
                     <CheckoutWizard activeStep={1} />
                     <form onSubmit={(e) => handleSubmit(e)} className="shipping-submit-form m-auto" style={{ paddingBottom: `20px` }}>
 
-                      <h3 className="mb-2 roboto">Contact</h3>
+                      <h3 className="mb-2 roboto">Select Payment Method</h3>
 
                       {
                         ['Paypal', 'Stripe', 'CashOnDelivery'].map((payment) => (
