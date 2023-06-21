@@ -7,40 +7,38 @@ import data from "@/src/utils/data";
 import { Store } from "@/src/utils/Store";
 import { Flip, toast } from "react-toastify";
 import ReactImageMagnify from "react-image-magnify";
+import axios from "axios";
 
-// import { connectMongoDB } from "@/src/libs/MongoConnect";
-// import AbbyPost from "@/src/models/post.model";
+import { connectMongoDB } from "@/src/libs/MongoConnect";
+import Product from "@/src/models/product.model";
 
-// export const getServerSideProps = async () => {
-//   try {
-//     console.log('FROM lessons.jsx PAGE');
-//     await connectMongoDB();
-//     const allLessons = await AbbyPost.find({ isLesson: true });
-//     return {
-//       props: {
-//         allLessons: JSON.parse(JSON.stringify(allLessons))
-//       }
-//     }
-//   }
-//   catch (err) {
-//     console.log(err);
-//     return {
-//       notFound: true
-//     }
-//   }
-// }
-
-const ProductDetails = () => {
-  const { query } = useRouter();
-  const { slug } = query;
-  const productData = data.products.find((p) => p.slug === slug);
-  if (!productData) {
-    return <div></div>
+export const getServerSideProps = async (context) => {
+  const routeId = context.params.productId
+  try {
+    await connectMongoDB();
+    const productData = await Product.findOne({ _id: routeId });
+    return {
+      props: {
+        productData: JSON.parse(JSON.stringify(productData))
+      }
+    }
   }
+  catch (err) {
+    console.log(err);
+    return {
+      notFound: true
+    }
+  }
+}
+
+const ProductDetails = ({productData}) => {
+  // const { query } = useRouter();
+  // const { _id } = query;
+  // const productData = data.products.find((p) => p._id === _id);
   const { state, dispatch } = useContext(Store);
   const myRef = useRef();
   const [contentIsVisible, setContentIsVisible] = useState();
-  const [productDataLoaded, setProductDataLoaded] = useState();
+  const [productDataLoaded, setProductDataLoaded] = useState(false);
   const [productName, setProductName] = useState(productData.name);
   const [productPrice, setProductPrice] = useState(productData.priceOptions[0].price);
   const [productPriceOption, setProductPriceOption] = useState('');
@@ -159,8 +157,8 @@ const ProductDetails = () => {
     const compiledProduct = {
       productName: productName,
       productImage: productImage,
-      slug: productData.slug,
-      tempId: `${productData.slug}-${productPriceOption.optionName}-${additionalOption.optionName}`,
+      _id: productData._id,
+      tempId: `${productData._id}-${productPriceOption.optionName}-${additionalOption.optionName}`,
       productPriceOption: productPriceOption,
       additionalOption: additionalOption,
       productPrice: productPrice
@@ -205,7 +203,7 @@ const ProductDetails = () => {
               <form onSubmit={(e) => handleAddToCart(e)} className="roboto">
                 <div className="d-flex gap-3 flex-column-small">
 
-                  <img src={mainImage} alt={productData.slug} className="desktop-hide mobile-main-image"/>
+                  <img src={mainImage} alt={productData._id} className="desktop-hide mobile-main-image"/>
 
                   <div className="images-viewer d-flex-alt">
                     <div
@@ -248,7 +246,7 @@ const ProductDetails = () => {
                     <div className="main-image mobile-hide">
                       <ReactImageMagnify {...{
                         smallImage: {
-                          alt: productData.slug,
+                          alt: productData._id,
                           isFluidWidth: true,
                           src: mainImage
                         },

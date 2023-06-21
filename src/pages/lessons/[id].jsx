@@ -8,6 +8,7 @@ import AbbyPost from "@/src/models/post.model";
 
 export const getServerSideProps = async (context) => {
   const routeId = context.params.id
+  console.log(routeId);
   try {
     await connectMongoDB();
     const oneLesson = await AbbyPost.findOne({ _id: routeId });

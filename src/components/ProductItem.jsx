@@ -18,14 +18,10 @@ export default function ProductItem({ product }) {
     }
   }
 
-  console.log(product.name, product.description);
-
   return (
     <div className="roboto product-card box-shadow-2">
       <div className="product-card-content d-flex flex-column gap-2">
-        {/* {product.name} */}
-        {/* {product.priceOptions[0].price} */}
-        {/* <Link href={`/product/${product._id}`}>
+        <Link href={`/product/${product._id}`}>
           <img src={product.images[0]} alt={product.name} id={product._id} onMouseOver={() => imageMouseOver(product._id)} onMouseOut={() => imageMouseOut(product._id)} />
         </Link>
         <div className="d-flex align-items-center justify-content-between">
@@ -43,7 +39,7 @@ export default function ProductItem({ product }) {
         </div>
         <p>{
           product.description.length > 50 ? `${product.description.slice(0,50)}...` : product.description.slice(0,50)
-          }</p> */}
+          }</p>
       </div>
     </div>
   )
