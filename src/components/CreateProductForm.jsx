@@ -26,6 +26,7 @@ export default function CreateProductForm({
   const [productCategory, setProductCategory] = useState("");
   const [productCountInStock, setProductCountInStock] = useState("");
   const [productDescription, setProductDescription] = useState("");
+  const [productDescriptionError, setProductDescriptionError] = useState("");
   const [singlePrice, setSinglePrice] = useState("");
   const [singlePriceError, setSinglePriceError] = useState("");
   const [onePrice, setOnePrice] = useState();
@@ -33,8 +34,7 @@ export default function CreateProductForm({
   const [yesAdditional, setYesAdditional] = useState();
   const [noAdditional, setNoAdditional] = useState();
   const [additionalOptionsError, setAdditionalOptionsError] = useState();
-
-
+  
   //price options
   const [productPriceOptions, setProductPriceOptions] = useState([]);
   const [priceName, setPriceName] = useState("");
@@ -67,6 +67,7 @@ export default function CreateProductForm({
     && productCountInStockError === null
     && productPriceError === null
     && additionalOptionsError === null
+    && productDescriptionError === null
 
   let priceOptionIsValid = false;
   priceOptionIsValid =
@@ -153,6 +154,16 @@ export default function CreateProductForm({
     }
     else {
       setProductCountInStockError(null)
+    }
+  }
+
+  const handleProductDescription = (e) => {
+    setProductDescription(e.target.value);
+    if (e.target.value.length < 1) {
+      setProductDescriptionError("Product description cannot be blank.")
+    }
+    else {
+      setProductDescriptionError(null)
     }
   }
 
@@ -454,11 +465,14 @@ export default function CreateProductForm({
     //   productCountInStockError,
     //   productPriceError);
 
+    let productCreated = false;
+
     if (formIsValid !== true) {
       toast(`Please fill in the required parameters.`)
     }
 
     if (formIsValid === true) {
+      console.log(productDescription);
       if (onePrice === true) {
         const singlePriceOption = {
           optionName: "",
@@ -481,13 +495,18 @@ export default function CreateProductForm({
         axios.post('/api/products/create', newProduct)
           .then((res) => {
             console.log(res);
+            productCreated = true;
             toast.success(`${res.data.name} created successfully`)
-            // router.replace(router.asPath);
+
+            clearForm();
           })
-          .catch((err) => console.log(err))
+          .catch((err) => {
+            console.log('this is the error:', err)
+            toast(err)
+          })
       }
 
-      if(multiplePrices === true) {
+      if (multiplePrices === true) {
         const newProduct = {
           name: productName,
           images: productImages,
@@ -497,30 +516,21 @@ export default function CreateProductForm({
           priceOptions: productPriceOptions,
           additionalOptions: productAdditionalOptions
         }
-  
+
         axios.post('/api/products/create', newProduct)
           .then((res) => {
             console.log(res);
+            productCreated = true;
             toast.success(`${res.data.name} created successfully`)
-            // router.replace(router.asPath);
+
+            clearForm();
           })
-          .catch((err) => console.log(err))
+          .catch((err) => {
+            console.log('this is the error:', err)
+            toast(err)
+          })
       }
     }
-
-    setProductName("");
-    setProductImages([]);
-    setDisplayedImages([]);
-    setNewImage("");
-    setProductCategory("");
-    setProductCountInStock("");
-    setProductDescription("");
-    setOnePrice(false);
-    setMultiplePrices(false);
-    setYesAdditional(false);
-    setNoAdditional(false);
-    setProductAdditionalOptions([]);
-    setProductPriceOptions([]);
   };
 
   const handleFormClose = () => {
@@ -533,6 +543,12 @@ export default function CreateProductForm({
       600
     );
 
+    clearForm();
+
+    router.replace(router.asPath)
+  }
+
+  const clearForm = () => {
     setProductName("");
     setProductNameError("");
     setProductImages([]);
@@ -550,8 +566,6 @@ export default function CreateProductForm({
     setNoAdditional(false);
     setProductAdditionalOptions([]);
     setProductPriceOptions([]);
-
-    router.replace(router.asPath)
   }
 
   return (
@@ -653,9 +667,16 @@ export default function CreateProductForm({
               placeholder="p"
               className="form-control"
               value={productDescription}
-              onChange={(e) => setProductDescription(e.target.value)}
+              onChange={handleProductDescription}
             />
             <label className="thin-label">Product Description <span style={{ color: `rgb(206, 139, 139)` }}>*</span></label>
+            {productDescriptionError ? (
+              <p style={{ color: "tomato" }} className="mt-1">
+                {productDescriptionError}
+              </p>
+            ) : (
+              ""
+            )}
           </div>
 
           <div className="horizontal-line" style={{ marginTop: `20px`, marginBottom: `20px` }}></div>

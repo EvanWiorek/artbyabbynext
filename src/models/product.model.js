@@ -20,6 +20,7 @@ const ProductSchema = new mongoose.Schema(
     },
     description: {
       type: String,
+      required: [true, "Products need a description."]
     },
     priceOptions: [{
       optionName: String,

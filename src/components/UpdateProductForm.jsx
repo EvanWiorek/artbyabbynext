@@ -27,6 +27,7 @@ export default function CreateProductForm({
   const [productCategory, setProductCategory] = useState(oneProduct.category);
   const [productCountInStock, setProductCountInStock] = useState(oneProduct.countInStock);
   const [productDescription, setProductDescription] = useState(oneProduct.description);
+  const [productDescriptionError, setProductDescriptionError] = useState("");
   const [singlePrice, setSinglePrice] = useState("");
   const [singlePriceError, setSinglePriceError] = useState("");
   const [onePrice, setOnePrice] = useState();
@@ -180,6 +181,16 @@ export default function CreateProductForm({
     }
     else {
       setProductCountInStockError(null)
+    }
+  }
+
+  const handleProductDescription = (e) => {
+    setProductDescription(e.target.value);
+    if (e.target.value.length < 1) {
+      setProductDescriptionError("Product description cannot be blank.")
+    }
+    else {
+      setProductDescriptionError(null)
     }
   }
 
@@ -489,16 +500,16 @@ export default function CreateProductForm({
           priceOptions: tempProductPriceOptions,
           additionalOptions: productAdditionalOptions
         }
-        axios.post(`/api/products/update/${oneProduct._id}` , updatedProduct)
-        .then((res) => {
-          console.log(res);
-          toast.success(`${productName} updated successfully`)
-          
-        })
-        .catch((err) => console.log(err))
+        axios.post(`/api/products/update/${oneProduct._id}`, updatedProduct)
+          .then((res) => {
+            console.log(res);
+            toast.success(`${productName} updated successfully`)
+            handleFormClose();
+          })
+          .catch((err) => console.log(err))
       }
 
-      if(multiplePrices === true) {
+      if (multiplePrices === true) {
         const updatedProduct = {
           name: productName,
           images: productImages,
@@ -508,17 +519,16 @@ export default function CreateProductForm({
           priceOptions: productPriceOptions,
           additionalOptions: productAdditionalOptions
         }
-  
-        axios.post(`/api/products/update/${oneProduct._id}` , updatedProduct)
-        .then((res) => {
-          console.log(res);
-          toast.success(`${productName} updated successfully`)
-          
-        })
-        .catch((err) => console.log(err))
+
+        axios.post(`/api/products/update/${oneProduct._id}`, updatedProduct)
+          .then((res) => {
+            console.log(res);
+            toast.success(`${productName} updated successfully`)
+            handleFormClose();
+          })
+          .catch((err) => console.log(err))
       }
 
-      handleFormClose();
     }
   };
 
@@ -653,7 +663,7 @@ export default function CreateProductForm({
               placeholder="p"
               className="form-control"
               value={productDescription}
-              onChange={(e) => setProductDescription(e.target.value)}
+              onChange={handleProductDescription}
             />
             <label className="thin-label">Product Description <span style={{ color: `rgb(206, 139, 139)` }}>*</span></label>
           </div>
@@ -966,7 +976,7 @@ export default function CreateProductForm({
 
           <div className="d-flex gap-3 justify-content-end mt-3">
             <button type="button" className="btn-site-cancel roboto" onClick={handleFormClose}>Cancel</button>
-            <input type="submit" value={ `Update ${oneProduct.name}` } className={`roboto btn-site-blue ${formIsValid ? "" : "disabled-toast"}`} />
+            <input type="submit" value={`Update ${oneProduct.name}`} className={`roboto btn-site-blue ${formIsValid ? "" : "disabled-toast"}`} />
           </div>
         </form>
       </div>
