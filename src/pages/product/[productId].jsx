@@ -157,12 +157,14 @@ const ProductDetails = ({productData}) => {
     const compiledProduct = {
       productName: productName,
       productImage: productImage,
-      _id: productData._id,
+      originalId: productData._id,
       tempId: `${productData._id}-${productPriceOption.optionName}-${additionalOption.optionName}`,
       productPriceOption: productPriceOption,
       additionalOption: additionalOption,
       productPrice: productPrice
     }
+
+    // console.log(compiledProduct);
 
     if(formIsValid === true) {
       const existItem = state.cart.cartItems.find(

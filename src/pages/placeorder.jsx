@@ -8,6 +8,8 @@ import SiteHeader from "../components/SiteHeader";
 import { toast } from "react-toastify";
 import Cookies from "js-cookie";
 import Link from "next/link";
+import { getError } from "../utils/error";
+import axios from "axios";
 
 function PlaceOrderScreen() {
   const myRef = useRef();
@@ -41,11 +43,10 @@ function PlaceOrderScreen() {
       document.querySelector(".page-content").style = "opacity: 0;";
     }
 
-    // console.log(cartItems);
     let priceCount = 0;
     for(let i = 0; i < cartItems.length; i++) {
       // console.log(cartItems[i]);
-      console.log(cartItems[i].quantity);
+      // console.log(cartItems[i].quantity);
       let currentPrice = cartItems[i].productPrice
       
       if(cartItems[i].quantity > 1) {
@@ -62,8 +63,36 @@ function PlaceOrderScreen() {
     router.back();
   };
 
-  const handleSubmit = (e) => {
+  // console.log('customerInfo', customerInfo);
+  // console.log('paymentMethod', paymentMethod);
+  // console.log('cartTotal', cartTotal);
+  // console.log('Cart Items:', cartItems);
 
+  const handleSubmit = (e) => {
+    e.preventDefault();
+    
+    axios.post('/api/orders/create', {
+      orderItems: cartItems,
+      customerInfo,
+      paymentMethod,
+      cartTotal
+    })
+    .then((res) => {
+      console.log(res.data);
+      dispatch({ type: 'CART_CLEAR_ITEMS' });
+      Cookies.set(
+        'cart',
+        JSON.stringify({
+          ...cart,
+          cartItems: [],
+        })
+        )
+        router.push(`/orders/${res.data._id}`)
+      })
+      .catch((err) => {
+        console.log(err);
+        toast.error(getError(err))
+    })
   }
 
   return (
@@ -112,7 +141,7 @@ function PlaceOrderScreen() {
                     <div className="order-page-wizard">
                       <CheckoutWizard activeStep={2} />
                     </div>
-                    <form onSubmit={(e) => handleSubmit(e)} className="shipping-submit-form m-auto" style={{ paddingBottom: `20px` }}>
+                    <div className="shipping-submit-form m-auto" style={{ paddingBottom: `20px` }}>
                       <h3 className="mb-2 roboto">Place Order</h3>
 
                       <div className="card p-3 box-shadow-2">
@@ -146,13 +175,13 @@ function PlaceOrderScreen() {
 
                       </div>
 
-                    </form>
+                    </div>
 
 
                   </div>
 
                   <div className="order-summary">
-                    <div className="shipping-submit-form">
+                    <form onSubmit={(e) => handleSubmit(e)} className="shipping-submit-form">
                       <h4 className="mb-3 roboto order-sum-text">Order Summary</h4>
 
                       {cartItems.map((item, idx) => {
@@ -183,9 +212,9 @@ function PlaceOrderScreen() {
                         <h5>${cartTotal}</h5>
                       </div>
 
-                      <button type="button" className="btn-site-pink roboto mt-2" style={{ width: `100%` }}>Place Order</button>
+                      <button type="submit" className="btn-site-pink roboto mt-2" style={{ width: `100%` }}>Place Order</button>
 
-                    </div>
+                    </form>
                   </div>
 
                 </div>

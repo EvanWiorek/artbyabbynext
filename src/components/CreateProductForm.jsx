@@ -2,6 +2,7 @@ import { useState } from "react";
 import axios from "axios";
 import { toast } from "react-toastify";
 import { useRouter } from "next/router";
+import { getError } from "../utils/error";
 
 export default function CreateProductForm({
   setCreateProductFormOpen,
@@ -502,7 +503,7 @@ export default function CreateProductForm({
           })
           .catch((err) => {
             console.log('this is the error:', err)
-            toast(err)
+            toast.error(getErrorError(err))
           })
       }
 
@@ -527,7 +528,7 @@ export default function CreateProductForm({
           })
           .catch((err) => {
             console.log('this is the error:', err)
-            toast(err)
+            toast.error(getErrorError(err))
           })
       }
     }
