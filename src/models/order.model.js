@@ -37,7 +37,10 @@ const OrderSchema = new mongoose.Schema(
     ],
     paymentMethod: String,
     cartTotal: Number,
-    isShipped: false,
+    isShipped: {
+      type: Boolean,
+      default: false
+    },
     trackingNumber: String,
   },
   { timestamps: true }
