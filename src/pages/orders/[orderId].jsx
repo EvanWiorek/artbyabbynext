@@ -104,22 +104,100 @@ const OneOrder = ({ isVisible, oneOrder }) => {
 
         <div className="body-white" style={{ paddingTop: `100px` }}>
 
-          <div className="col-lg-5 m-auto mt-3">
+          {loading ? (<div>Loading...</div>) :
+            error ? <div>{error}</div> :
 
-            <div className="links mb-3 desktop-link d-flex flex-column align-items-end" style={{ marginLeft: `10px`, width: `135px` }} onClick={handleGoBack}>
-              <p><i className="bi bi-arrow-left" style={{ fontSize: `.9rem` }}></i> Back to Home</p>
-              <div className="desktop-link-line"></div>
-            </div>
 
-            <div className="alert alert-success" role="alert">
-              <h4 className="alert-heading">Order ID: {oneOrder._id}</h4>
-              <hr />
-              <p>Thank you for your order!</p>
-              <p className="mb-0">The order details have been sent to your email address.</p>
-            </div>
+              <div className="col-lg-5 m-auto mt-3">
 
-          </div>
+                <div className="links mb-3 desktop-link d-flex flex-column align-items-end" style={{ marginLeft: `10px`, width: `135px` }} onClick={handleGoBack}>
+                  <p><i className="bi bi-arrow-left" style={{ fontSize: `.9rem` }}></i> Back to Home</p>
+                  <div className="desktop-link-line"></div>
+                </div>
 
+                <div className='roboto'>
+                  <h1 className='roboto'>Thank you for your order</h1>
+                  <p>An email confirmation has been sent to <b>{order.customerInfo.email}</b></p>
+                  <div className="card customer-info">
+                    <div className="card-body">
+                      <div className="d-flex gap-3">
+                        <div className="left-side">
+                          <p>Order ID:</p>
+                          <p>Order total:</p>
+                          <p>Shipping to:</p>
+                          <p></p>
+                        </div>
+                        <div className="right-side">
+                          <p><b>{order._id}</b></p>
+                          <p><b>
+                            {
+                              Number.isInteger(order.cartTotal)
+                                ? `$${order.cartTotal}.00` : `$${order.cartTotal.toFixed(2)}`
+                            }
+                          </b></p>
+                          <p className='mb-0'><b>{order.customerInfo.fullName}</b></p>
+                          <p>{order.customerInfo.address}, {order.customerInfo.city}, {order.customerInfo.userState}, {order.customerInfo.postalCode}</p>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                  <div className="card order-details mt-3">
+                    <div className="card-body">
+                      <h4 className='roboto mb-3'>Order Details</h4>
+                      {order.orderItems.map((item, idx) => {
+                        return (
+                          <div key={idx} className="d-flex align-items-center gap-3" style={{ marginBottom: `15px` }}>
+                            <div className="position-relative">
+                              <img src={item.productImage} alt={item.productImage} style={{ width: `60px`, borderRadius: `5px` }} className="order-summary-img box-shadow-2" />
+                              <span className="position-absolute translate-middle badge rounded-pill single-item-count roboto box-shadow-2">
+                                {item.quantity}
+                                <span className="visually-hidden">Quantity of Item</span>
+                              </span>
+                            </div>
+                            <p className="mt-2">{item.productName}</p>
+                            <p className="mt-2" style={{ position: `absolute`, right: 15 }}><b>
+                              {
+                                Number.isInteger(item.productPrice)
+                                  ? `$${item.productPrice}.00` : `$${item.productPrice.toFixed(2)}`
+                              }
+                            </b></p>
+                          </div>
+                        )
+
+                      })}
+                      <div className="horizontal-line-gray"></div>
+                      <h4 className='roboto mb-3'>Payment Details</h4>
+                      <div className="d-flex justify-content-between">
+                        <div className="left-side">
+                          <p>Payment Method:</p>
+                          <p>Subtotal (Including Sales Tax):</p>
+                          <p>Shipping:</p>
+                          <p>Total:</p>
+                          <p></p>
+                        </div>
+                        <div className="right-side">
+                          <p><b>{order.paymentMethod}</b></p>
+                          <p><b>                            {
+                            Number.isInteger(order.cartTotal)
+                              ? `$${order.cartTotal}.00` : `$${order.cartTotal.toFixed(2)}`
+                          }</b></p>
+                          <p><b>                            {
+                            Number.isInteger(order.cartTotal)
+                              ? `$${order.cartTotal}.00` : `$${order.cartTotal.toFixed(2)}`
+                          }</b></p><p><b>                            {
+                            Number.isInteger(order.cartTotal)
+                              ? `$${order.cartTotal}.00` : `$${order.cartTotal.toFixed(2)}`
+                          }</b></p>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+
+              </div>}
+          <br />
+          <br />
+          <br />
         </div>
 
       </main>
