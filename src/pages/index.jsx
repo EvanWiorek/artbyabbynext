@@ -39,11 +39,9 @@ export default function Home({ allProducts }) {
 
     document.getElementById("navbarBody").classList.add("fade-scroll")
 
-    document.querySelector(".desktop-search-input").style = "background-color: transparent"
+    document.querySelector(".desktop-search-input").style = "background-color: transparent; color: white"
 
     document.querySelector(".desktop-search-input").classList.add("search-input-scroll")
-
-    document.querySelector(".desktop-search-input").classList.add("search-placeholder-scroll")
 
     document.querySelector(".logo-img").classList.add("logo-scroll")
 
@@ -87,7 +85,7 @@ export default function Home({ allProducts }) {
             <br />
             <h2 className='text-center roboto'>Lorem, ipsum dolor sit amet consectetur adipisicing elit. Nulla doloribus exercitationem perspiciatis beatae. Ex nam atque fugiat vero id ullam.</h2>
             <br />
-            <button type='button' className='btn-site-pink roboto' style={{ width: `50%` }} >Shop</button>
+            <button type='button' className='btn-site-pink roboto box-shadow-2' style={{ width: `50%` }} >Shop</button>
           </div>
         </div>
 

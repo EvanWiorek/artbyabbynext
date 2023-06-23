@@ -109,9 +109,9 @@ const Navbar = ({ headerIsVisible }) => {
 
           <div className="right-side-desktop col-3 d-flex-alt align-items-center gap-4">
             <div className="input-group mb-3 nav-search">
-              <input type="text" className="form-control desktop-search-input" placeholder="Search" />
+              <input type="text" className="form-control desktop-search-input" defaultValue="Search" />
               <div className="input-group-append">
-                <button type="button"><span className="bi-search"></span></button>
+                <button type="button"><span className="bi-search "></span></button>
               </div>
             </div>
             <CartButtonDesktop />
