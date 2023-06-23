@@ -19,7 +19,7 @@ function CartButtonMobile() {
   }
 
   return (
-    <button type="button" className="position-relative cart-button" style={{ marginTop: `-17px`, backgroundColor: `rgba(255,255,255,.5)` }} onClick={handleOpenCartMobile}>
+    <button type="button" className="position-relative cart-button" style={{ marginTop: `-17px` }} onClick={handleOpenCartMobile}>
       <i className="bi bi-bag" style={{ fontSize: `1rem` }}></i>
       <span className="position-absolute translate-middle badge rounded-pill items-count">
         {cart.cartItems.length > 0 ? cart.cartItems.length > 0 && (

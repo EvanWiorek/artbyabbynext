@@ -77,22 +77,22 @@ const Navbar = ({ headerIsVisible }) => {
 
   return <>
     <div>
-      <div className="navbar-body pt-3 border-on-bottom" id='navbarBody'>
+      <div className="navbar-body pt-3" id='navbarBody'>
         <div className="navbar-content d-flex align-items-center justify-content-around col-lg-11 m-auto">
           <div className="left-side-desktop col-3 mobile-hide" >
             <div className="links d-flex custom-gap">
               <div className="d-flex flex-column align-items-center desktop-link">
-                <p onClick={() => handleRoute("/updates")}>News</p>
+                <p onClick={() => handleRoute("/updates")} className='black-scroll-link'>News</p>
                 <div className="desktop-link-line"></div>
               </div>
               <br />
               <div className="d-flex flex-column align-items-center desktop-link">
-                <p onClick={() => handleRoute("/lessons")}>Art Lessons</p>
+                <p onClick={() => handleRoute("/lessons")} className='black-scroll-link'>Art Lessons</p>
                 <div className="desktop-link-line"></div>
               </div>
               <br />
               <div className="d-flex flex-column align-items-center desktop-link">
-                <p onClick={() => handleRoute("/allproducts")}>Browse All Products</p>
+                <p onClick={() => handleRoute("/allproducts")} className='black-scroll-link'>Browse All Products</p>
                 <div className="desktop-link-line"></div>
               </div>
             </div>
@@ -103,13 +103,13 @@ const Navbar = ({ headerIsVisible }) => {
           <div className="middle site-logo text-center mobile-indent">
             <Link href="/" style={{ textDecoration: 'none' }}>
               <img src="/static/images/logo.svg" alt="site-logo" className="logo-img" />
-              <p className="abby-name">Abby Novotny</p>
+              <p className="abby-name black-scroll-link">Abby Novotny</p>
             </Link>
           </div>
 
           <div className="right-side-desktop col-3 d-flex-alt align-items-center gap-4">
             <div className="input-group mb-3 nav-search">
-              <input type="text" className="form-control" placeholder="Search" />
+              <input type="text" className="form-control desktop-search-input" placeholder="Search" />
               <div className="input-group-append">
                 <button type="button"><span className="bi-search"></span></button>
               </div>
