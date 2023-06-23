@@ -34,7 +34,7 @@ export default function Home({ allProducts }) {
       setHeaderIsVisible(entry.isIntersecting)
     })
     observer.observe(myRef.current)
-    
+
     document.querySelector(".navbar-body").style = "background-color: transparent; backdrop-filter: blur(0); box-shadow: 0px 0px rgba(0,0,0,0)"
 
     document.getElementById("navbarBody").classList.add("fade-scroll")
@@ -47,10 +47,10 @@ export default function Home({ allProducts }) {
 
     const blackScrollsArr = document.querySelectorAll(".black-scroll-link")
 
-    for(let i = 0; i< blackScrollsArr.length; i++) {
+    for (let i = 0; i < blackScrollsArr.length; i++) {
       blackScrollsArr[i].classList.add("black-scroll")
     }
-  
+
     window.addEventListener(
       "scroll",
       () => {
@@ -94,12 +94,9 @@ export default function Home({ allProducts }) {
           <br />
           <br />
           <br />
+          <h1 className='roboto text-center all-products-title' style={{ fontWeight: 100, fontSize: `3rem` }}>All Products</h1>
           <div className="products-container-body">
-            <div className="products-container-content m-auto d-flex gap-3 align-items-center col-lg-9">
-              <h1 className='site-font'>All Products</h1>
-              {/* {data.products.map((product) => (
-                <ProductItem product={product} key={product.slug} />
-              ))} */}
+            <div className="products-container-content m-auto d-flex gap-4 align-items-center justify-content-center flex-column-small">
               {allProducts.map((product) => (
                 <ProductItem product={product} key={product._id} />
               ))}
