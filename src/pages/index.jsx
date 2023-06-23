@@ -1,7 +1,6 @@
 import Head from 'next/head'
 import Layout from '../components/Layout'
 import { useState, useRef, useEffect } from 'react';
-import data from '../utils/data'
 import ProductItem from '../components/ProductItem';
 import { connectMongoDB } from "@/src/libs/MongoConnect";
 import Product from '../models/product.model';
@@ -51,6 +50,14 @@ export default function Home({ allProducts }) {
       blackScrollsArr[i].classList.add("black-scroll")
     }
 
+    setTimeout(() => document.querySelector(".header-content").style = "opacity: 1", 1000)
+
+    setTimeout(() => document.querySelector(".header-video").style = "opacity: 1", 300)
+
+    setTimeout(() => document.querySelector(".header-background").style = "opacity: 1", 100)
+
+    setTimeout(() => document.querySelector(".fade-in-screen").style = "display: none", 600)
+
     window.addEventListener(
       "scroll",
       () => {
@@ -61,8 +68,6 @@ export default function Home({ allProducts }) {
       },
       false
     );
-
-
     // console.log(allProducts);
   }, [headerIsVisible])
 
@@ -75,9 +80,10 @@ export default function Home({ allProducts }) {
       </Head>
       <main>
         {/* <div className="navbar-white"></div> */}
+        <div className="fade-in-screen"></div>
 
         <div className="parallax-container" ref={myRef}>
-          <video src="/static/videos/header-one.mp4" autoPlay muted loop></video>
+          <video src="/static/videos/header-one.mp4" className='header-video' autoPlay muted loop></video>
           <div className="header-background">
           </div>
           <div className="header-content col-lg-4 d-flex align-items-center flex-column roboto">
