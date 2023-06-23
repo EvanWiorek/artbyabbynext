@@ -4,6 +4,7 @@ import { useState, useRef, useEffect } from 'react';
 import ProductItem from '../components/ProductItem';
 import { connectMongoDB } from "@/src/libs/MongoConnect";
 import Product from '../models/product.model';
+import Cookies from 'js-cookie';
 
 export const getServerSideProps = async () => {
   try {
@@ -51,24 +52,26 @@ export default function Home({ allProducts }) {
     }
 
     setTimeout(() => document.querySelector(".header-content").style = "opacity: 1", 1000)
-
+    
     setTimeout(() => document.querySelector(".header-video").style = "opacity: 1", 300)
-
+    
     setTimeout(() => document.querySelector(".header-background").style = "opacity: 1", 100)
-
-    setTimeout(() => document.querySelector(".fade-in-screen").style = "display: none", 600)
-
+    
+    setTimeout(() => document.querySelector(".fade-in-screen-content").style = "opacity: 1", 0)
+    
+    setTimeout(() => document.querySelector(".fade-in-screen").style = "display: none", 1100)
+    
     window.addEventListener(
       "scroll",
       () => {
         document.body.style.setProperty(
           "--scroll",
           window.pageYOffset / (document.body.offsetHeight - window.innerHeight)
+          );
+        },
+        false
         );
-      },
-      false
-    );
-    // console.log(allProducts);
+        // console.log(allProducts);
   }, [headerIsVisible])
 
 
@@ -80,7 +83,16 @@ export default function Home({ allProducts }) {
       </Head>
       <main>
         {/* <div className="navbar-white"></div> */}
-        <div className="fade-in-screen"></div>
+        <div className="fade-in-screen">
+          <div className="fade-in-screen-content">
+            <div className="d-flex flex-column align-items-center">
+              <img src="/static/images/logo.svg" alt="site-logo" className="logo-img" />
+              <h4 className="site-font">Abby Novotny</h4>
+              <br />
+              <div class="custom-loader"></div>
+            </div>
+          </div>
+        </div>
 
         <div className="parallax-container" ref={myRef}>
           <video src="/static/videos/header-one.mp4" className='header-video' autoPlay muted loop></video>

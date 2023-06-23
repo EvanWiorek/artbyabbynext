@@ -15,7 +15,8 @@ const Navbar = ({ headerIsVisible }) => {
   const { cart } = state;
   const router = useRouter();
 
-  useEffect(() => {
+  useEffect(() => { 
+    
     if (headerIsVisible) {
       document.querySelector(".logo-img").style = "width: 200px;"
       document.querySelector(".abby-name").style = "font-size: 1rem;"
