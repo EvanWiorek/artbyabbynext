@@ -84,6 +84,11 @@ const Lessons = ({ allUpdates }) => {
             ))}
             <br />
           </div>
+
+          <br />
+          <br />
+          <br />
+          <br />
         </div>
 
       </main>

@@ -5,6 +5,7 @@ import ProductItem from '../components/ProductItem';
 import { connectMongoDB } from "@/src/libs/MongoConnect";
 import Product from '../models/product.model';
 import Cookies from 'js-cookie';
+import { useRouter } from 'next/router';
 
 export const getServerSideProps = async () => {
   try {
@@ -27,6 +28,7 @@ export const getServerSideProps = async () => {
 export default function Home({ allProducts }) {
   const myRef = useRef();
   const [headerIsVisible, setHeaderIsVisible] = useState();
+  const router = useRouter();
 
   useEffect(() => {
     const observer = new IntersectionObserver((entries) => {
@@ -75,7 +77,6 @@ export default function Home({ allProducts }) {
   }, [headerIsVisible])
 
 
-
   return (
     <Layout headerIsVisible={headerIsVisible}>
       <Head>
@@ -103,7 +104,7 @@ export default function Home({ allProducts }) {
             <br />
             <h2 className='text-center roboto'>Lorem, ipsum dolor sit amet consectetur adipisicing elit. Nulla doloribus exercitationem perspiciatis beatae. Ex nam atque fugiat vero id ullam.</h2>
             <br />
-            <button type='button' className='btn-site-pink roboto box-shadow-2' style={{ width: `50%` }} >Shop</button>
+            <button type='button' className='btn-site-pink roboto box-shadow-2' style={{ width: `50%` }} onClick={() => router.push('/allproducts')}>Shop</button>
           </div>
         </div>
 

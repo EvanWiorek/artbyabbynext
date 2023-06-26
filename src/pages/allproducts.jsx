@@ -59,6 +59,11 @@ const allproducts = ({ isVisible, allProducts }) => {
               ))}
             </div>
           </div>
+
+          <br />
+          <br />
+          <br />
+          <br />
         </div>
 
       </main>

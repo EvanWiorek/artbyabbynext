@@ -98,6 +98,10 @@ const Lessons = ({ allLessons }) => {
             ))}
             <br />
           </div>
+          <br />
+          <br />
+          <br />
+          <br />
         </div>
 
       </main>
