@@ -145,6 +145,7 @@ textarea:focus {
   animation-delay: calc(var(--scroll) * -.3s);
   animation-iteration-count: 1;
   animation-fill-mode: both;
+  transition: .2s;
 }
 
 .black-scroll {
@@ -154,6 +155,7 @@ textarea:focus {
   animation-delay: calc(var(--scroll) * -.3s);
   animation-iteration-count: 1;
   animation-fill-mode: both;
+  transition: .2s;
 }
 
 .logo-scroll {
@@ -163,6 +165,7 @@ textarea:focus {
   animation-delay: calc(var(--scroll) * -.3s);
   animation-iteration-count: 1;
   animation-fill-mode: both;
+  transition: .2s;
 }
 
 @keyframes fade-scroll {
@@ -212,11 +215,11 @@ textarea:focus {
 }
 
 .site-logo:hover p {
-  color: rgb(131, 180, 192);
+  color: rgb(131, 180, 192) !important;
 }
 
 .site-logo:hover img {
-  filter: invert(73%) sepia(37%) saturate(262%) hue-rotate(120deg) brightness(100%) contrast(110%);
+  filter: invert(73%) sepia(37%) saturate(262%) hue-rotate(120deg) brightness(100%) contrast(110%) !important;
 }
 
 a {
@@ -242,7 +245,7 @@ a:hover {
 }
 
 .links p:hover {
-  color: rgb(131, 180, 192);
+  color: rgb(131, 180, 192) !important;
 }
 
 .desktop-link-line {

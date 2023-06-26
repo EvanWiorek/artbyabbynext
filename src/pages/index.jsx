@@ -59,7 +59,7 @@ export default function Home({ allProducts }) {
     
     setTimeout(() => document.querySelector(".fade-in-screen-content").style = "opacity: 1", 0)
     
-    setTimeout(() => document.querySelector(".fade-in-screen").style = "display: none", 1100)
+    setTimeout(() => document.querySelector(".fade-in-screen").style = "display: none", 1000)
     
     window.addEventListener(
       "scroll",
@@ -95,7 +95,7 @@ export default function Home({ allProducts }) {
         </div>
 
         <div className="parallax-container" ref={myRef}>
-          <video src="/static/videos/header-one.mp4" className='header-video' autoPlay muted loop></video>
+          <video src="/static/videos/header-one-small.mp4" className='header-video' autoPlay muted loop></video>
           <div className="header-background">
           </div>
           <div className="header-content col-lg-4 d-flex align-items-center flex-column roboto">
