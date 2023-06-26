@@ -7,6 +7,7 @@ import dayjs from 'dayjs';
 // import Order from '@/src/models/order.model';
 import axios from 'axios';
 import { getError } from '@/src/utils/error';
+import { toast } from 'react-toastify';
 
 // export const getServerSideProps = async (context) => {
 //   const routeId = context.params.orderId
@@ -63,6 +64,31 @@ const OneOrder = ({ isVisible, oneOrder }) => {
         dispatch({ type: 'FETCH_REQUEST' });
         const { data } = await axios.get(`/api/orders/${orderId}`);
         dispatch({ type: 'FETCH_SUCCESS', payload: data })
+        console.log(data);
+        // Email.send({
+        //   Host: "smtp.elasticemail.com",
+        //   Username: 'wiorek.evan@gmail.com',
+        //   Password: "33BCE3F0F2479D1EA6B49B489186D0E71057",
+        //   To: `${data.customerInfo.email}`,
+        //   From: 'wiorek.evan@gmail.com',
+        //   Subject: `Your Art By Abby Order Confirmation (#${order._id})`,
+        //   Body: `
+        //   <div style="background-color: rgba(206,139,139, .8); color: white; width: 70%; margin: 0 auto; border-radius: 5px; padding: 15px; font-family: Trebuchet MS; font-size: 1rem; font-weight: 100">
+        //     <p>This is a test</p>
+
+        //   </div>
+        //   `
+        // })
+        //   .then(
+        //     message => {
+        //       if (message === 'OK') {
+        //         toast.success("Order confirmation email sent.")
+        //       }
+        //       else {
+        //         toast.error(message)
+        //       }
+        //     }
+        //   )
       }
       catch (err) {
         dispatch({ type: 'FETCH_FAIL', payload: getError(err) });
@@ -72,6 +98,9 @@ const OneOrder = ({ isVisible, oneOrder }) => {
     if (!order._id || (order._id && order._id !== orderId)) {
       fetchOrder();
     }
+
+
+
 
   }, [order, orderId])
 
@@ -89,7 +118,6 @@ const OneOrder = ({ isVisible, oneOrder }) => {
       document.querySelector(".page-content").style = "opacity: 0;"
     }
   }, [contentIsVisible])
-
 
   const handleGoBack = () => {
     router.push("/")

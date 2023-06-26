@@ -72,11 +72,9 @@ const ContactPage = () => {
     // console.log(userMessage);
 
     Email.send({
-      // Host: "smtp.elasticemail.com",
       Host: "smtp.elasticemail.com",
       Username: 'wiorek.evan@gmail.com',
       Password: "33BCE3F0F2479D1EA6B49B489186D0E71057",
-      // To: 'evan.wiorek.pitchblu@gmail.com',
       To: 'wiorek.evan@gmail.com',
       From: 'wiorek.evan@gmail.com',
       Subject: `New Contact Form - ${userName} - Art By Abby`,
@@ -98,7 +96,6 @@ const ContactPage = () => {
           We will be in touch with you soon.`, { position: 'top-center' })
           }
           else {
-            // alert(message)
             toast.error(message)
           }
         }
@@ -175,9 +172,9 @@ const ContactPage = () => {
 
             </form>
             <div className="div" style={{ backgroundColor: `rgba(206,139,139, .1)`, display: `flex`, justifyContent: `center`, flexDirection: `column`, alignItems: `center` }}>
-                <p>TEST</p>
-                <p>TEST</p>
-                <p>TEST</p>
+              <p>TEST</p>
+              <p>TEST</p>
+              <p>TEST</p>
             </div>
             <br />
             <br />
