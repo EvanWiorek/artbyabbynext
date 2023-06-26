@@ -83,7 +83,6 @@ export default function Home({ allProducts }) {
         <title>Home | Art by Abby</title>
       </Head>
       <main>
-        {/* <div className="navbar-white"></div> */}
         <div className="fade-in-screen">
           <div className="fade-in-screen-content">
             <div className="d-flex flex-column align-items-center">
