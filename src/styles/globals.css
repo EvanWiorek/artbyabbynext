@@ -1175,6 +1175,10 @@ a:hover {
   font-size: .8rem !important;
 }
 
+.square-control {
+  border-radius: 0px !important;
+}
+
 .checkout-tab {
   color: rgba(0, 0, 0, .5);
   padding: 5px 0px 10px;
