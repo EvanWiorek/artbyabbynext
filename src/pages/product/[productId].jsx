@@ -31,7 +31,7 @@ export const getServerSideProps = async (context) => {
   }
 }
 
-const ProductDetails = ({productData}) => {
+const ProductDetails = ({ productData }) => {
   // const { query } = useRouter();
   // const { _id } = query;
   // const productData = data.products.find((p) => p._id === _id);
@@ -68,24 +68,24 @@ const ProductDetails = ({productData}) => {
       const hasPriceOptions = productData.priceOptions.length > 1
       const hasAdditionalOptions = productData.additionalOptions.length > 0
 
-      if(hasPriceOptions && hasAdditionalOptions) {
+      if (hasPriceOptions && hasAdditionalOptions) {
         setProductPriceOptionError("Select a price")
         setAdditionalOptionError("Select an option")
       }
-      if(hasPriceOptions && !hasAdditionalOptions) {
+      if (hasPriceOptions && !hasAdditionalOptions) {
         setProductPriceOptionError("Select a price")
         setAdditionalOptionError(null)
       }
-      if(!hasPriceOptions && hasAdditionalOptions) {
+      if (!hasPriceOptions && hasAdditionalOptions) {
         setProductPriceOptionError(null)
         setAdditionalOptionError("Select an option")
       }
-      if(!hasPriceOptions && !hasAdditionalOptions) {
+      if (!hasPriceOptions && !hasAdditionalOptions) {
         setProductPriceOptionError(null)
         setAdditionalOptionError(null)
       }
 
-      
+
       setProductDataLoaded(true);
       const imagesArray = document.querySelectorAll(".side-images-img");
       for (let i = 1; i < imagesArray.length; i++) {
@@ -107,7 +107,7 @@ const ProductDetails = ({productData}) => {
     setProductPriceOption(selectedPriceOption);
     setProductPrice(selectedPriceOption.price)
     const optionImg = selectedPriceOption.images[0]
-    if(productData.priceOptions[0].images.length > 0) {
+    if (productData.priceOptions[0].images.length > 0) {
       changeMainPicture(optionImg)
     }
     setProductPriceOptionError(null)
@@ -119,7 +119,7 @@ const ProductDetails = ({productData}) => {
     setAdditionalOption(selectedAdditionalOption)
     // console.log(selectedAdditionalOption);
     const optionImg = selectedAdditionalOption.images[0]
-    if(productData.additionalOptions[0].images.length > 0) {
+    if (productData.additionalOptions[0].images.length > 0) {
       changeMainPicture(optionImg)
     }
     setAdditionalOptionError(null)
@@ -166,7 +166,7 @@ const ProductDetails = ({productData}) => {
 
     // console.log(compiledProduct);
 
-    if(formIsValid === true) {
+    if (formIsValid === true) {
       const existItem = state.cart.cartItems.find(
         (product) => product.tempId === compiledProduct.tempId
       );
@@ -179,10 +179,10 @@ const ProductDetails = ({productData}) => {
 
       dispatch({ type: "CART_ADD_ITEM", payload: { ...compiledProduct, quantity } });
 
-      if(mediaType === 'desktop') {
+      if (mediaType === 'desktop') {
         handleOpenCartDesktop();
       }
-      else if (mediaType === 'mobile'){
+      else if (mediaType === 'mobile') {
         handleOpenCartMobile();
       }
     }
@@ -205,7 +205,7 @@ const ProductDetails = ({productData}) => {
               <form onSubmit={(e) => handleAddToCart(e)} className="roboto">
                 <div className="d-flex gap-3 flex-column-small">
 
-                  <img src={mainImage} alt={productData._id} className="desktop-hide mobile-main-image"/>
+                  <img src={mainImage} alt={productData._id} className="desktop-hide mobile-main-image" />
 
                   <div className="images-viewer d-flex-alt">
                     <div
@@ -347,15 +347,19 @@ const ProductDetails = ({productData}) => {
                       onClick={(e) => handleAddToCart(e, 'desktop')}
                     >Add to Cart</button>
                   </div>
-                  
+
                   <div className="add-to-cart-container desktop-hide">
                     <button
                       className="btn-site-blue roboto"
                       style={{ width: `100%`, fontSize: `1.4rem`, fontWeight: `100` }}
                       onClick={(e) => handleAddToCart(e, 'mobile')}
-                    >Add to Cart - ${productPrice}.00</button>
+                    >Add to Cart - 
+                      {
+                        isNaN(productPrice) ? `$${productPrice}.00` : `$${productPrice.toFixed(2)}`
+                      }
+                      </button>
                   </div>
-                
+
                 </div>
               </form>
             </div>

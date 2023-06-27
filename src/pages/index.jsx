@@ -86,6 +86,12 @@ export default function Home({ allProducts }) {
     router.push('/allproducts')
   }
 
+  const handleRoute = (href) => {
+    document.querySelector(".pulse-loader").style = "display: flex"
+    document.querySelector(".index-container").style = "opacity: .7; filter: saturate(.1)"
+    router.push(href)
+  }
+
   return (
     <Layout headerIsVisible={headerIsVisible}>
       <Head>
@@ -113,12 +119,16 @@ export default function Home({ allProducts }) {
             <br />
             <br />
             <br />
-            <h1 className='roboto text-center all-products-title' style={{ fontWeight: 100, fontSize: `3rem` }}>All Products</h1>
-            <div className="products-container-body">
-              <div className="products-container-content m-auto d-flex gap-4 align-items-center justify-content-center flex-column-small">
-                {allProducts.map((product) => (
+            <h1 className='site-font text-center all-products-title'>Featured Products</h1>
+            <div className="products-container-body m-auto">
+              <div className="products-container-content d-flex flex-wrap col-lg-8 m-auto gap-3 align-items-center">
+                {allProducts.slice(0,7).map((product) => (
                   <ProductItem product={product} key={product._id} />
                 ))}
+                <div className="d-flex flex-column align-items-center desktop-link roboto justify-content-center">
+                  <p onClick={() => handleRoute("/allproducts")} style={{ cursor: `pointer`, marginBottom: 0 }}>View All Products</p>
+                  <div className="desktop-link-line"></div>
+                </div>
               </div>
             </div>
             <br />

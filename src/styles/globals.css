@@ -264,6 +264,15 @@ a:hover {
   width: 90%;
 }
 
+.desktop-link {
+  transition: .2s;
+}
+
+.desktop-link:hover {
+  color: rgb(131, 180, 192);
+
+}
+
 .nav-search input,
 .nav-search button {
   font-family: 'Bressay Trial', sans-serif;
@@ -972,13 +981,11 @@ a:hover {
 
 /* Product Cards */
 .products-container-body {
-  width: 100%;
-  padding: 15px 0px;
+
 }
 
 .products-container-content {
-  padding: 30px;
-  overflow-y: auto;
+
 }
 
 .products-container-content::-webkit-scrollbar {
@@ -995,8 +1002,10 @@ a:hover {
   background-color: rgb(255, 255, 255);
   padding: 10px;
   border: 1px solid rgba(255, 255, 255, .3);
-  width: 241px;
+  width: 45%;
+  min-height: 350px;
   transition: .2s;
+  max-width: 240px;
 }
 
 .product-card:hover {
@@ -1008,7 +1017,7 @@ a:hover {
 }
 
 .product-card img {
-  width: 200px;
+  width: 100%;
   height: 250px;
   object-fit: cover;
   transition: .1s;
@@ -1432,6 +1441,22 @@ a:hover {
   .order-page-wizard {
     margin-left: 15px;
   }
+  
+  .view-all-products-link {
+    width: 45%;
+  }
+
+  .product-card {
+    min-height: 270px;
+    max-height: 270px;
+  }
+
+  .product-card img {
+    width: 100%;
+    height: 150px;
+    object-fit: cover;
+    transition: .1s;
+  }
 }
 
 /* Tablet and Smaller Desktop */
@@ -1507,6 +1532,17 @@ a:hover {
 
   .update-card-body {
     min-height: 0;
+  }
+
+  .products-container-content {
+    width: 90vw;
+  }
+
+  .product-card img {
+    width: 100%;
+    height: 250px;
+    object-fit: cover;
+    transition: .1s;
   }
 }
 

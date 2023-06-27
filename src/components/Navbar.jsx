@@ -64,10 +64,16 @@ const Navbar = ({ headerIsVisible }) => {
     if (router.asPath == "/") {
       document.querySelector(".logo-img").style = "width: 130px;"
       document.querySelector(".abby-name").style = "font-size: .6rem;"
+      document.querySelector(".pulse-loader").style = "display: flex"
+      document.querySelector(".index-container").style = "opacity: .7; filter: saturate(.1)"
       setTimeout(() => router.push(href), 200)
     }
     if (router.asPath != "/") {
-      router.push(href)
+      if(router.asPath !== href) {
+        document.querySelector(".pulse-loader").style = "display: flex"
+        document.querySelector(".page-content").style = "opacity: .7; filter: saturate(.1)"
+        router.push(href)
+      }
     }
   }
 
@@ -80,6 +86,7 @@ const Navbar = ({ headerIsVisible }) => {
 
   return <>
     <div>
+    <div className="pulse-loader"></div>
       <div className="navbar-body pt-3" id='navbarBody'>
         <div className="navbar-content d-flex align-items-center justify-content-around col-lg-11 m-auto">
           <div className="left-side-desktop col-3 mobile-hide" >
@@ -156,9 +163,6 @@ const Navbar = ({ headerIsVisible }) => {
           </div>
         </div>
       </div>
-
-      <div className="pulse-loader"></div>
-      <div className="loading-overlay"></div>
 
     </div>
   </>

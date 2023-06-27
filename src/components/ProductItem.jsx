@@ -24,12 +24,13 @@ export default function ProductItem({ product }) {
         <Link href={`/product/${product._id}`}>
           <img src={product.images[0]} alt={product.name} id={product._id} onMouseOver={() => imageMouseOver(product._id)} onMouseOut={() => imageMouseOut(product._id)} />
         </Link>
-        <div className="d-flex align-items-center justify-content-between">
+        <div className="">
           <Link href={`/product/${product._id}`}>
             {product.name}
           </Link>
+          <br />
 
-          <p style={{ fontSize: `1.3rem`, margin: 0, fontWeight: `300` }}>
+          <p style={{ margin: 0, fontWeight: `300`, color: `rgba(0,0,0,.7)` }}>
             {
               Number.isInteger(product.priceOptions[0].price)
               ? `$${product.priceOptions[0].price}` : `$${product.priceOptions[0].price.toFixed(2)}`
@@ -37,9 +38,6 @@ export default function ProductItem({ product }) {
           </p>
 
         </div>
-        <p>{
-          product.description.length > 50 ? `${product.description.slice(0,50)}...` : product.description.slice(0,50)
-          }</p>
       </div>
     </div>
   )
