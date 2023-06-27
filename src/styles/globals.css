@@ -998,6 +998,10 @@ a:hover {
   border: 0px;
 }
 
+.view-all-products-link {
+  margin: auto;
+}
+
 .product-card {
   background-color: rgb(255, 255, 255);
   padding: 10px;
@@ -1441,9 +1445,14 @@ a:hover {
   .order-page-wizard {
     margin-left: 15px;
   }
-  
+
+  .products-container-content {
+    justify-content: center;
+  }
+
   .view-all-products-link {
     width: 45%;
+    margin: 0;
   }
 
   .product-card {
@@ -1534,6 +1543,21 @@ a:hover {
     min-height: 0;
   }
 
+  
+  .products-container-content {
+    justify-content: center;
+  }
+  
+  .view-all-products-link {
+    width: 45%;
+    margin: 0;
+  }
+  
+  .product-card {
+    min-height: 270px;
+    max-height: 270px;
+  }
+  
   .products-container-content {
     width: 90vw;
   }

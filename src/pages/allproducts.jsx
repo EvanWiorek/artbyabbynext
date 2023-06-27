@@ -51,12 +51,12 @@ const allproducts = ({ isVisible, allProducts }) => {
       <main ref={myRef} className='page-content'>
         
         <div className="body-white" style={{ paddingTop: `100px` }}>
-        <div className="col-lg-7 m-auto">
+        <div className="col-lg-8 m-auto">
           <h1 className='text-center mt-3 mb-0 site-font'>All Products</h1>
         <div className="horizontal-line-gray"></div>
         </div>
           <div className="products-container-body">
-            <div className="products-container-content m-auto d-flex gap-4 align-items-center justify-content-center flex-column-small">
+            <div className="products-container-content d-flex flex-wrap col-lg-8 m-auto gap-3 align-items-center">
               {allProducts.map((product) => (
                 <ProductItem product={product} key={product._id} />
               ))}

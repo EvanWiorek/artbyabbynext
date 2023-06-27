@@ -79,8 +79,14 @@ const Navbar = ({ headerIsVisible }) => {
 
   const handleRouteMobile = (href) => {
     handleCloseMobileMenu()
-    document.querySelector(".loading-overlay").style = "display: block"
-    document.querySelector(".pulse-loader").style = "display: flex"
+    if (router.asPath === '/') {
+      document.querySelector(".index-container").style = "opacity: .7; filter: saturate(.1)"
+      document.querySelector(".pulse-loader").style = "display: flex"
+    }
+    if (router.asPath !== '/') {
+      document.querySelector(".page-content").style = "opacity: .7; filter: saturate(.1)"
+      document.querySelector(".pulse-loader").style = "display: flex"
+    }
     setTimeout(() => router.push(href), 500)
   }
 

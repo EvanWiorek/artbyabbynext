@@ -125,7 +125,7 @@ export default function Home({ allProducts }) {
                 {allProducts.slice(0,7).map((product) => (
                   <ProductItem product={product} key={product._id} />
                 ))}
-                <div className="d-flex flex-column align-items-center desktop-link roboto justify-content-center">
+                <div className="d-flex flex-column align-items-center desktop-link roboto view-all-products-link">
                   <p onClick={() => handleRoute("/allproducts")} style={{ cursor: `pointer`, marginBottom: 0 }}>View All Products</p>
                   <div className="desktop-link-line"></div>
                 </div>
