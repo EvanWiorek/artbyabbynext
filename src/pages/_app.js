@@ -1,4 +1,5 @@
 import '../styles/globals.css'
+import '../styles/loaders.css'
 import '../../node_modules/bootstrap/dist/css/bootstrap.min.css'
 import 'react-quill/dist/quill.snow.css'
 import { StoreProvider } from '../utils/Store'

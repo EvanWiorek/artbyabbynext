@@ -44,6 +44,10 @@ html {
   color: white;
 }
 
+.index-container {
+  transition: 1s;
+}
+
 .d-flex-alt {
   display: flex !important;
 }
@@ -286,7 +290,7 @@ a:hover {
 }
 
 .search-input-scroll {
-  background-color: rgba(0,0,0,0);
+  background-color: rgba(0, 0, 0, 0);
   animation: search-input-scroll .1s linear infinite;
   animation-play-state: paused;
   animation-delay: calc(var(--scroll) * -.3s);
@@ -339,51 +343,6 @@ a:hover {
   font-size: .6rem !important;
 }
 
-.fade-in-screen {
-  width: 100vw;
-  height: 100vh;
-  position: fixed;
-  /* background-color: rgb(223, 223, 223); */
-  background-color: rgb(255, 255, 255);
-  z-index: 300;
-  animation-name: fade-in-screen;
-  animation-delay: 1s;
-  animation-duration: .5s;
-}
-
-.fade-in-screen-content {
-  position: absolute;
-  top: 45%;
-  left: 50%;
-  -ms-transform: translate(-50%, -50%);
-  transform: translate(-50%, -50%);
-  opacity: 0;
-  transition: .1s;
-}
-
-@keyframes fade-in-screen {
-  to {
-    opacity: 0;
-  }
-}
-
-.custom-loader {
-  height:3px;
-  width:300px;
-  background:
-   linear-gradient(rgb(206,139,139) 0 0),
-   linear-gradient(rgb(206,139,139) 0 0),
-   #E4E4ED;
- background-size: 60% 100%;
- background-repeat: no-repeat;
- animation: p6 3s infinite;
-}
-
-@keyframes p6 {
- 0%   {background-position:-150% 0,-150% 0}
- 66%  {background-position: 250% 0,-150% 0}
- 100% {background-position: 250% 0, 250% 0}
-}
 
 .header-video {
   opacity: 0;
@@ -396,7 +355,7 @@ a:hover {
   left: 50%;
   -ms-transform: translate(-50%, -50%);
   transform: translate(-50%, -50%);
-  background-color: rgba(0,0,0,.2);
+  background-color: rgba(0, 0, 0, .2);
   width: 100%;
   height: 100%;
   backdrop-filter: contrast(.5);
@@ -469,12 +428,12 @@ a:hover {
 }
 
 .sub-text {
-  color: rgba(0,0,0,.4);
+  color: rgba(0, 0, 0, .4);
   font-size: .8rem;
 }
 
 .footer-text {
-  color: rgba(0,0,0,.7) !important;
+  color: rgba(0, 0, 0, .7) !important;
   margin-bottom: 0;
 }
 
