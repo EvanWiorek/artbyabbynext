@@ -12,8 +12,8 @@ function CartButtonMobile() {
   const handleOpenCartMobile = () => {
     document.querySelector(".mobile-menu-content").style = "display: none"
     document.querySelector(".cart-menu-body").style = "width: 80vw;"
-    document.querySelector(".screen-darken").style = "display: block"
-    setTimeout(() => document.querySelector(".screen-darken").style = "display: block; opacity: 1", 100)
+    document.querySelector(".screen-darken").style = "display: block; right: -100%;"
+    setTimeout(() => document.querySelector(".screen-darken").style = "display: block; right: 0", 100)
     setTimeout(() => document.querySelector(".cart-menu-content").style = "opacity: 1", 150)
     setTimeout(() => document.querySelector(".cart-menu-body").style = "background-color: rgba(255, 255, 255, 0); width: 80vw;", 200)
   }
