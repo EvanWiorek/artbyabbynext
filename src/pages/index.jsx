@@ -81,21 +81,11 @@ export default function Home({ allProducts }) {
 
     document.querySelector(".pulse-loader").style = "display: flex"
 
-    // setTimeout(() =>     document.querySelector(".loading-overlay").style = "display: block; opacity: 1", 1)
-
-    // setTimeout(() =>  document.querySelector(".pulse-loader").style = "display: flex; opacity: 1", 500)
-
     goToAllProducts()
   }
 
   const goToAllProducts = () => {
     router.push('/allproducts')
-    loadingDisplayNone()
-  }
-
-  const loadingDisplayNone = () => {
-    document.querySelector(".pulse-loader").style = "display: none"
-    document.querySelector(".loading-overlay").style = "display: none"
   }
 
   return (
