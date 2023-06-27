@@ -49,7 +49,7 @@ const allproducts = ({ isVisible, allProducts }) => {
         <title>All Products | Art by Abby</title>
       </Head>
       <main ref={myRef} className='page-content'>
-
+        
         <div className="body-white" style={{ paddingTop: `100px` }}>
         <h1 className='roboto text-center all-products-title' style={{ fontWeight: 100, fontSize: `3rem` }}>All Products</h1>
           <div className="products-container-body">

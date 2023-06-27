@@ -59,9 +59,7 @@ export default function Home({ allProducts }) {
 
     setTimeout(() => document.querySelector(".header-background").style = "opacity: 1", 100)
 
-    setTimeout(() => document.querySelector(".fade-in-screen-content").style = "opacity: 1", 0)
-
-    setTimeout(() => document.querySelector(".fade-in-screen").style = "display: none", 1000)
+    setTimeout(() => document.querySelector(".fade-in-screen").style = "opacity: 0", 100)
 
     window.addEventListener(
       "scroll",
@@ -77,11 +75,10 @@ export default function Home({ allProducts }) {
   }, [headerIsVisible])
 
   const handleShopButton = () => {
-    document.querySelector(".loading-overlay").style = "display: block"
-
     document.querySelector(".pulse-loader").style = "display: flex"
+    document.querySelector(".index-container").style = "opacity: .7; filter: saturate(.1)"
 
-    goToAllProducts()
+    setTimeout(() => goToAllProducts(), 10000)
   }
 
   const goToAllProducts = () => {
@@ -95,19 +92,9 @@ export default function Home({ allProducts }) {
       </Head>
       <main>
         <div className="pulse-loader"></div>
-        <div className="loading-overlay"></div>
-        {/* <div className="dot-loader-1"></div> */}
+        {/* <div className="loading-overlay"></div> */}
         <div className="index-container">
-          <div className="fade-in-screen">
-            <div className="fade-in-screen-content">
-              <div className="d-flex flex-column align-items-center">
-                <img src="/static/images/logo.svg" alt="site-logo" className="logo-img" />
-                <h4 className="site-font">Abby Novotny</h4>
-                <br />
-                <div class="custom-loader"></div>
-              </div>
-            </div>
-          </div>
+          <div className="fade-in-screen"></div>
           <div className="parallax-container" ref={myRef}>
             <video src="/static/videos/header-one-small.mp4" className='header-video' autoPlay muted loop></video>
             <div className="header-background">

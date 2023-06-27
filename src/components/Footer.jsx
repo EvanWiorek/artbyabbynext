@@ -6,11 +6,17 @@ const Footer = () => {
       <div className="footer-content col-10 m-auto">
         <br />
         <br />
-        <div className="d-flex gap-5 mb-5">
+        {/* <div className="d-flex flex-column align-items-center mb-5 desktop-hide">
+            <p className="sub-text">ABOUT ART BY ABBY</p>
+            <p className="footer-text">Lorem ipsum, dolor sit amet consectetur adipisicing elit. Obcaecati explicabo sequi, quo voluptates ratione totam esse veniam quisquam harum voluptas.</p>
+          </div> */}
+        <div className="d-flex gap-5 mb-5 flex-column-small">
           <div className="column-1 col-lg-4">
-          <img src="/static/images/logo.svg" alt="site-logo" className="footer-logo"/>
-          <br />
-          <br />
+          <div className="mobile-hide">
+            <img src="/static/images/logo.svg" alt="site-logo" className="footer-logo"/>
+            <br />
+            <br />
+          </div>
             <p className="sub-text">ABOUT ART BY ABBY</p>
             <p className="footer-text">Lorem ipsum, dolor sit amet consectetur adipisicing elit. Obcaecati explicabo sequi, quo voluptates ratione totam esse veniam quisquam harum voluptas.</p>
           </div>

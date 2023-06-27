@@ -15,25 +15,8 @@
   position: fixed;
   background-color: rgb(223,206,206);
   z-index: 300;
-  animation-name: fade-in-screen;
-  animation-delay: 1s;
-  animation-duration: .5s;
-}
-
-.fade-in-screen-content {
-  position: absolute;
-  top: 45%;
-  left: 50%;
-  -ms-transform: translate(-50%, -50%);
-  transform: translate(-50%, -50%);
-  opacity: 0;
-  transition: .1s;
-}
-
-@keyframes fade-in-screen {
-  to {
-    opacity: 0;
-  }
+  transition: .2s;
+  pointer-events: none;
 }
 
 .custom-loader {
@@ -67,21 +50,18 @@
 /* PULSE LOADER */
 .pulse-loader {
   position: fixed;
+  bottom: 10px;
+  right: 15px;
   z-index: 900;
   display: none;
   align-items: center;
   justify-content: center;
   width: 100%;
-  max-width: 8rem;
+  max-width: 4rem;
   margin-top: 3rem;
   margin-bottom: 3rem;
-  top: 45%;
-  left: 50%;
-  -ms-transform: translate(-50%, -50%);
-  transform: translate(-50%, -50%);
-  /* opacity: 0; */
-  /* filter: drop-shadow(0px 0px 10px rgba(0,0,0,.3)); */
 }
+
 .pulse-loader:before,
 .pulse-loader:after {
   content: "";

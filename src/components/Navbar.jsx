@@ -15,8 +15,8 @@ const Navbar = ({ headerIsVisible }) => {
   const { cart } = state;
   const router = useRouter();
 
-  useEffect(() => { 
-    
+  useEffect(() => {
+
     if (headerIsVisible) {
       document.querySelector(".logo-img").style = "width: 200px;"
       document.querySelector(".abby-name").style = "font-size: 1rem;"
@@ -73,6 +73,8 @@ const Navbar = ({ headerIsVisible }) => {
 
   const handleRouteMobile = (href) => {
     handleCloseMobileMenu()
+    document.querySelector(".loading-overlay").style = "display: block"
+    document.querySelector(".pulse-loader").style = "display: flex"
     setTimeout(() => router.push(href), 500)
   }
 
@@ -154,6 +156,9 @@ const Navbar = ({ headerIsVisible }) => {
           </div>
         </div>
       </div>
+
+      <div className="pulse-loader"></div>
+      <div className="loading-overlay"></div>
 
     </div>
   </>
