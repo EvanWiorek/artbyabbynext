@@ -171,11 +171,6 @@ const ContactPage = () => {
               <button type="submit" className='btn-site-pink roboto mt-3' style={{ width: `100%` }}>Send</button>
 
             </form>
-            <div className="div" style={{ backgroundColor: `rgba(206,139,139, .1)`, display: `flex`, justifyContent: `center`, flexDirection: `column`, alignItems: `center` }}>
-              <p>TEST</p>
-              <p>TEST</p>
-              <p>TEST</p>
-            </div>
             <br />
             <br />
             <br />
