@@ -78,7 +78,8 @@ export default function Home({ allProducts }) {
     document.querySelector(".pulse-loader").style = "display: flex"
     document.querySelector(".index-container").style = "opacity: .7; filter: saturate(.1)"
 
-    setTimeout(() => goToAllProducts(), 10000)
+    // setTimeout(() => goToAllProducts(), 10000)
+    goToAllProducts()
   }
 
   const goToAllProducts = () => {
