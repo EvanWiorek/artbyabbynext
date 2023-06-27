@@ -69,7 +69,7 @@ const Navbar = ({ headerIsVisible }) => {
       setTimeout(() => router.push(href), 200)
     }
     if (router.asPath != "/") {
-      if(router.asPath !== href) {
+      if (router.asPath !== href) {
         document.querySelector(".pulse-loader").style = "display: flex"
         document.querySelector(".page-content").style = "opacity: .7; filter: saturate(.1)"
         router.push(href)
@@ -82,17 +82,22 @@ const Navbar = ({ headerIsVisible }) => {
     if (router.asPath === '/') {
       document.querySelector(".index-container").style = "opacity: .7; filter: saturate(.1)"
       document.querySelector(".pulse-loader").style = "display: flex"
+      router.push(href)
     }
     if (router.asPath !== '/') {
-      document.querySelector(".page-content").style = "opacity: .7; filter: saturate(.1)"
-      document.querySelector(".pulse-loader").style = "display: flex"
+      if (router.asPath !== href) {
+        document.querySelector(".page-content").style = "opacity: .7; filter: saturate(.1)"
+        document.querySelector(".pulse-loader").style =
+          "display: flex"
+        router.push(href)
+
+      }
     }
-    setTimeout(() => router.push(href), 500)
   }
 
   return <>
     <div>
-    <div className="pulse-loader"></div>
+      <div className="pulse-loader"></div>
       <div className="navbar-body pt-3" id='navbarBody'>
         <div className="navbar-content d-flex align-items-center justify-content-around col-lg-11 m-auto">
           <div className="left-side-desktop col-3 mobile-hide" >
