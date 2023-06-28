@@ -1645,7 +1645,10 @@ a:hover {
   .update-card-body {
     min-height: 0;
   }
-
+  
+  .manage-views-container {
+    width: 100vw;
+  }
   
   .products-container-content {
     justify-content: center;

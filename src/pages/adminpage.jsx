@@ -280,7 +280,7 @@ const AdminPage = ({ allPosts, allProducts }) => {
                   <h5 className="roboto p-3" style={{ marginBottom: 0}}>
                     Admin Page
                   </h5>
-                  <p onClick={handleCloseMenu} style={{ marginTop: `-22px`, marginLeft: `10px
+                  <p onClick={handleCloseMenu} className="desktop-hide" style={{ marginTop: `-22px`, marginLeft: `10px
                   `, marginRight: `10px`, cursor: `pointer` }}><i className="bi bi-x-lg close-cart-menu" style={{ color: `rgb(124, 126, 128)` }}></i></p>
                 </div>
                 <div className="horizontal-line-gray"></div>
