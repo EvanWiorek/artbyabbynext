@@ -110,9 +110,12 @@ const ContactPage = () => {
         </Head>
         <main ref={myRef} className='page-content'>
 
-          <div className="body-color" style={{ paddingTop: `100px` }}>
+          <div className="body-color" style={{ paddingTop: `130px` }}>
 
-            <form onSubmit={sendEmail} className='col-lg-4 m-auto'>
+            <form onSubmit={sendEmail} className='col-lg-4 m-auto roboto'>
+              <h3 className='roboto text-center'>Have a question?</h3>
+              <h5 className='roboto text-center'>Let us know how we can help.</h5>
+              <br />
 
               <div className="form-floating thin-floating mt-3">
                 <input
@@ -151,12 +154,12 @@ const ContactPage = () => {
               </div>
 
               <div className="form-floating thin-floating mt-3">
-                <input
-                  type="text"
+                <textarea
                   placeholder="p"
-                  className="form-control thin-control square-control"
+                  className="form-control square-control"
                   value={userMessage}
                   onChange={handleUserMessage}
+                  style={{ minHeight: `130px` }}
                 />
                 <label className="thin-label">Message <span style={{ color: `rgb(206, 139, 139)` }}>*</span></label>
                 {userMessageError ? (

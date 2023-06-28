@@ -1,5 +1,5 @@
 import Head from "next/head";
-import { useContext, useEffect, useRef, useState } from "react";
+import { useContext, useEffect, useReducer, useRef, useState } from "react";
 import { Store } from "../utils/Store";
 import dynamic from "next/dynamic";
 import { useRouter } from "next/router";
@@ -10,12 +10,15 @@ import Cookies from "js-cookie";
 import Link from "next/link";
 import { getError } from "../utils/error";
 import axios from "axios";
+import { PayPalButtons, usePayPalScriptReducer } from "@paypal/react-paypal-js";
 
 function PlaceOrderScreen() {
   const myRef = useRef();
   const router = useRouter();
   const [contentIsVisible, setContentIsVisible] = useState();
   const [cartTotal, setCartTotal] = useState();
+  const [{ isPending }, paypalDispatch] = usePayPalScriptReducer();
+  // const [{successPay}] = useReducer()
 
   //from useContext
   const { state, dispatch } = useContext(Store)
@@ -57,7 +60,20 @@ function PlaceOrderScreen() {
     priceCount = priceCount.toFixed(2)
     setCartTotal(priceCount)
 
-  }, [contentIsVisible, router, customerInfo.address]);
+    // const loadPaypalScript = async () => {
+    //   const { data: clientId } = await axios.get('/api/keys/paypal');
+    //   paypalDispatch({
+    //     type: 'resetOptions',
+    //     value: {
+    //       'client-id': clientId,
+    //       currency: 'USD',
+    //     },
+    //   });
+    //   paypalDispatch({ type: 'setLoadingStatus', value: 'pending' });
+    // }
+    // loadPaypalScript();
+
+  }, [contentIsVisible, router, customerInfo.address, paypalDispatch]);
 
   const handleGoBack = () => {
     router.back();
@@ -213,6 +229,12 @@ function PlaceOrderScreen() {
                       </div>
 
                       <button type="submit" className="btn-site-pink roboto mt-2" style={{ width: `100%` }}>Place Order</button>
+
+                      <PayPalButtons
+                      // createOrder={createOrder}
+                      // onApprove={onApprove}
+                      // onError={onError}
+                      ></PayPalButtons>
 
                     </form>
                   </div>

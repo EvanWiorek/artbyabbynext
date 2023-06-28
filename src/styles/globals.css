@@ -745,6 +745,95 @@ a:hover {
   width: 50%;
 }
 
+.manage-views-container {
+  /* width: 83vw; */
+  position: absolute;
+  right: 0;
+  /* background-color: red; */
+}
+
+.manage-views-content {
+  width: 90%;
+  margin: auto;
+}
+
+/* Admin Side Bar */
+.admin-side-bar-body {
+  height: 100dvh;
+  position: fixed;
+  z-index: 300;
+  left: 0px;
+  min-width: 200px;
+  border: 1px solid rgba(255, 255, 255, .3);
+  backdrop-filter: blur(25px);
+  background-color: rgba(255, 255, 255, .25);
+  transition: .4s;
+}
+
+.admin-side-bar-content {
+  transition: .2s;
+}
+
+.manage-button {
+  font-size: 1.1rem;
+  font-family: 'Roboto', sans-serif;
+  font-weight: 300;
+  width: 100%;
+  padding: 20px 10px;
+  margin-top: 10px;
+  cursor: pointer;
+  transition: .2s;
+}
+
+.manage-button:hover {
+  background-color: rgba(255,255,255,.20);
+}
+
+.manage-button-active {
+  background-color: rgba(255,255,255,.35);
+  color: rgb(112, 164, 177);
+  padding: 20px 10px;
+}
+
+.manage-button-active span {
+  background-color: rgba(255,255,255,0) !important;
+  font-size: 1.5rem;
+  transition: .2s;
+}
+
+.manage-button span {
+  background-color: rgba(255,255,255,.4);
+  padding: 12px 15px;
+  margin-right: 10px;
+  transition: .2s;
+}
+
+.settings-button {
+  position: absolute;
+  bottom: 15px;
+}
+
+.back-home-button {
+  position: absolute;
+  bottom: 95px;
+}
+
+.admin-side-bar-mobile-button {
+  position: fixed;
+  bottom: 15px;
+  left: 10px;
+  z-index: 300;
+  padding: 15px 20px;
+  border-radius: 50px;
+  border: 1px solid rgba(255, 255, 255, .3);
+  backdrop-filter: blur(25px);
+  background-color: rgba(255, 255, 255, .25);
+  display: none;
+  font-size: 1.3rem;
+  transition: .2s;
+}
+
+
 /* Manage Products */
 .new-product-images {
   transition: .2s;
@@ -782,7 +871,7 @@ a:hover {
 
 /* adminPage Background */
 .area {
-  background: linear-gradient(#fff7f8, #ffdfe4);
+  background: linear-gradient(#f0d8dc, #e9c6cb);
   width: 100%;
   height: 100vh;
   position: fixed;
@@ -801,9 +890,10 @@ a:hover {
   position: absolute;
   display: block;
   list-style: none;
-  width: 20px;
-  height: 20px;
-  background: rgba(255, 255, 255, 0.5);
+  width: 50px;
+  height: 50px;
+  /* background: rgba(255, 255, 255, 0.5); */
+  background: rgba(131,180,192, .5);
   animation: animate 25s linear infinite;
   bottom: -150px;
 
@@ -823,6 +913,7 @@ a:hover {
   height: 20px;
   animation-delay: 2s;
   animation-duration: 12s;
+  background: rgba(192, 190, 131, 0.5) !important;
 }
 
 .circles li:nth-child(3) {
@@ -838,6 +929,7 @@ a:hover {
   height: 60px;
   animation-delay: 0s;
   animation-duration: 18s;
+  background: rgba(192, 190, 131, 0.5) !important;
 }
 
 .circles li:nth-child(5) {
@@ -852,6 +944,7 @@ a:hover {
   width: 110px;
   height: 110px;
   animation-delay: 3s;
+  background: rgba(192, 190, 131, 0.5) !important;
 }
 
 .circles li:nth-child(7) {
@@ -867,6 +960,7 @@ a:hover {
   height: 25px;
   animation-delay: 15s;
   animation-duration: 45s;
+  background: rgba(192, 190, 131, 0.5) !important;
 }
 
 .circles li:nth-child(9) {
@@ -1344,6 +1438,15 @@ a:hover {
 
   .update-card-body {
     min-height: 0;
+  }
+
+  .admin-side-bar-body {
+    display: none;
+    /* transition: .2s; */
+  }
+  
+  .admin-side-bar-mobile-button {
+    display: block;
   }
 
   .details-content img {

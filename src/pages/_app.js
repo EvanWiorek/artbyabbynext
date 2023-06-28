@@ -5,12 +5,15 @@ import 'react-quill/dist/quill.snow.css'
 import { StoreProvider } from '../utils/Store'
 import 'react-toastify/dist/ReactToastify.css';
 import { ToastContainer } from 'react-toastify';
+import { PayPalScriptProvider } from '@paypal/react-paypal-js'
 
 export default function App({ Component, pageProps }) {
   return (
     <StoreProvider>
-      <Component {...pageProps} />
-      <ToastContainer />
+      <PayPalScriptProvider deferLoading={true}>
+        <Component {...pageProps} />
+        <ToastContainer />
+      </PayPalScriptProvider>
     </StoreProvider>
   )
 }
