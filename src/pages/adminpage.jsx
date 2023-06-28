@@ -201,14 +201,21 @@ const AdminPage = ({ allPosts, allProducts }) => {
     setTimeout(() => document.querySelector(".admin-side-bar-content").style = "display: none;", 600)
     
     setTimeout(() => document.querySelector(".admin-side-bar-mobile-button").style = "display: block; opacity: 1", 200)
+
+    setTimeout(() => document.querySelector(".screen-darken").style = "left: -100%; display: block; transition: .2s", 200)
+
+    setTimeout(() => document.querySelector(".screen-darken").style = "display: none", 600)
   }
 
   const handleOpenMenu = () => {
     document.querySelector(".admin-side-bar-body").style = "display: block; left: -100%;"
     document.querySelector(".admin-side-bar-content").style = "display: block;"
     document.querySelector(".admin-side-bar-mobile-button").style = "opacity: 0"
+    document.querySelector(".screen-darken").style = "display: block; left: -100%;"
 
-    setTimeout(() => document.querySelector(".admin-side-bar-body").style = "display: block; left: 0;", 1)
+    setTimeout(() => document.querySelector(".screen-darken").style = "display: block; left: 0", 100)
+
+    setTimeout(() => document.querySelector(".admin-side-bar-body").style = "display: block; left: 0; backdrop-filter: blur(25px) brightness(115%)", 1)
 
     setTimeout(() => document.querySelector(".admin-side-bar-mobile-button").style = "display: none", 200)
   }
@@ -265,6 +272,7 @@ const AdminPage = ({ allPosts, allProducts }) => {
 
         {loggedIn && (
           <div>
+            <div className="screen-darken" onClick={handleCloseMenu}></div>
             <div className="admin-side-bar-body box-shadow col-lg-2">
               <div className="admin-side-bar-content">
                 <div
