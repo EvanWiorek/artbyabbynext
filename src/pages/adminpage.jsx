@@ -9,16 +9,19 @@ import CreateProductForm from "../components/CreateProductForm";
 import UpdateProductForm from "../components/UpdateProductForm";
 import Product from "../models/product.model";
 import axios from "axios";
+import Order from "../models/order.model";
 
 export const getServerSideProps = async () => {
   try {
     await connectMongoDB();
     const allPosts = await AbbyPost.find();
     const allProducts = await Product.find();
+    const allOrders = await Order.find();
     return {
       props: {
         allPosts: JSON.parse(JSON.stringify(allPosts)),
         allProducts: JSON.parse(JSON.stringify(allProducts)),
+        allOrders: JSON.parse(JSON.stringify(allOrders)),
       },
     };
   } catch (err) {
@@ -29,7 +32,7 @@ export const getServerSideProps = async () => {
   }
 };
 
-const AdminPage = ({ allPosts, allProducts }) => {
+const AdminPage = ({ allPosts, allProducts, allOrders }) => {
   const myRef = useRef();
   const router = useRouter();
   const [loggedIn, setLoggedIn] = useState("");
@@ -189,6 +192,10 @@ const AdminPage = ({ allPosts, allProducts }) => {
       document.getElementById("ordersView").classList.remove("manage-button-active")
       document.getElementById("settingsView").classList.add("manage-button-active")
     }
+
+    if(document.querySelector(".screen-darken").style.display === "block") {
+      handleCloseMenu();
+    }
   };
 
   const handleCloseMenu = () => {
@@ -283,7 +290,7 @@ const AdminPage = ({ allPosts, allProducts }) => {
                     src={"/static/images/square-logo.png"}
                     alt="Logo"
                     style={{ width: `40px` }}
-                    className="box-shadow-2 rounded "
+                    className="box-shadow-2 rounded"
                   />
                   <h5 className="roboto p-3" style={{ marginBottom: 0}}>
                     Admin Page
@@ -307,7 +314,7 @@ const AdminPage = ({ allPosts, allProducts }) => {
                   onClick={() => changeAdminView("products")}
                   id="productsView"
                 >
-                  <span>
+                  <span className="">
                     <i className="bi bi-shop"></i>
                   </span>{" "}
                   Products
@@ -351,7 +358,7 @@ const AdminPage = ({ allPosts, allProducts }) => {
             </div>
             <div className="pt-4 roboto manage-views-container col-lg-10">
               <div className="manage-views-content">
-                {postsViewActive && <div className="right-side create-post form-body box-shadow">
+                {postsViewActive && <div className="create-post form-body box-shadow-2 mt-3 mb-5">
                   <h3 className="text-center roboto">Manage Posts</h3>
                   <div className="horizontal-line-gray"></div>
                   <div className="col-lg-9 m-auto">
@@ -368,7 +375,7 @@ const AdminPage = ({ allPosts, allProducts }) => {
                         <p style={{ marginBottom: 0 }}>New Post</p>
                       </button>
                     </div>
-                    <div className="form-body all-posts-list-container box-shadow">
+                    <div className="form-body all-posts-list-container box-shadow-2">
                       <h4 className="text-center roboto mt-2">Art Lessons</h4>
                       <div className="horizontal-line-gray"></div>
                       <table className="table table-sm m-auto">
@@ -411,7 +418,7 @@ const AdminPage = ({ allPosts, allProducts }) => {
                         </tbody>
                       </table>
                     </div>
-                    <div className="form-body all-posts-list-container box-shadow mt-3 mb-3">
+                    <div className="form-body all-posts-list-container box-shadow-2 mt-3 mb-3">
                       <h4 className="text-center roboto mt-2">News & Updates</h4>
                       <div className="horizontal-line-gray"></div>
                       <table className="table table-sm m-auto">
@@ -456,7 +463,7 @@ const AdminPage = ({ allPosts, allProducts }) => {
                     </div>
                   </div>
                 </div>}
-                {productsViewActive && <div className="left-side manage-products form-body box-shadow mt-4 mb-5">
+                {productsViewActive && <div className="manage-products form-body box-shadow-2 mt-3 mb-5">
                   <h3 className="text-center roboto">Manage Products</h3>
                   <div className="horizontal-line-gray"></div>
                   <div className="col-lg-9 m-auto">
@@ -480,8 +487,63 @@ const AdminPage = ({ allPosts, allProducts }) => {
                         <p style={{ marginBottom: 0 }}>New Product</p>
                       </button>
                     </div>
-                    <div className="form-body all-posts-list-container box-shadow mb-3">
+                    <div className="form-body all-posts-list-container box-shadow-2 mb-3">
                       <h4 className="text-center roboto mt-2">All Products</h4>
+                      <div className="horizontal-line-gray"></div>
+                      <table className="table table-sm m-auto">
+                        <thead>
+                          <tr>
+                            <th scope="col">Product Name</th>
+                            <th scope="col">Actions</th>
+                          </tr>
+                        </thead>
+                        <tbody>
+                          {allProducts.map((prod) => {
+                            return (
+                              <tr>
+                                <td>{prod.name}</td>
+                                <td>
+                                  <div className="d-flex gap-1">
+                                    <button
+                                      className="btn-site-blue roboto table-button-small"
+                                      onClick={() =>
+                                        handleOpenProductEditForm(prod._id)
+                                      }
+                                    >
+                                      Edit
+                                    </button>
+                                    <button
+                                      className="btn-site-cancel roboto table-button-small"
+                                      onClick={() => deleteProduct(prod._id)}
+                                    >
+                                      Delete
+                                    </button>
+                                  </div>
+                                </td>
+                              </tr>
+                            );
+                          })}
+                        </tbody>
+                      </table>
+                    </div>
+                  </div>
+                </div>}
+                {ordersViewActive && <div className="manage-products form-body box-shadow-2 mt-3 mb-5">
+                  <h3 className="text-center roboto">Manage Orders</h3>
+                  <div className="horizontal-line-gray"></div>
+                  <div className="col-lg-9 m-auto">
+                    <ul>
+                      <li>Add tracking number to orders</li>
+                      <li>When order is checked completed, notify customer</li>
+                      <li>Refund/cancel orders here?</li>
+                    </ul>
+                    <div className="form-body all-posts-list-container box-shadow-2 mb-3">
+                      <h4 className="text-center roboto mt-2">Open Orders</h4>
+                      <div className="horizontal-line-gray"></div>
+                      
+                    </div>
+                    <div className="form-body all-posts-list-container box-shadow-2 mt-4 mb-3">
+                      <h4 className="text-center roboto mt-2">Completed Orders</h4>
                       <div className="horizontal-line-gray"></div>
                       <table className="table table-sm m-auto">
                         <thead>

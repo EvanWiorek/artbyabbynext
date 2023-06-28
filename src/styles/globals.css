@@ -1227,6 +1227,7 @@ a:hover {
 
 .thin-floating {
   font-size: .8rem !important;
+  color: rgba(0,0,0,.5) !important;
 }
 
 .thin-select {
