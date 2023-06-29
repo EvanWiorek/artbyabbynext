@@ -746,15 +746,60 @@ a:hover {
 }
 
 .manage-views-container {
-  /* width: 83vw; */
   position: absolute;
   right: 0;
-  /* background-color: red; */
 }
 
 .manage-views-content {
   width: 90%;
   margin: auto;
+}
+
+/* Manage Orders */
+.orders-list-menu {
+  position: fixed;
+  margin-bottom: 20px;
+  border-bottom: 1px solid rgba(0,0,0,.1);
+  width: 98%;
+}
+
+.orders-list-menu p {
+  margin-bottom: 0;
+  font-size: 1.1rem;
+  padding: 10px 15px;
+  cursor: pointer;
+  transition: .2s;
+  border: 1px solid rgba(255,255,255,0);
+}
+
+.orders-list-menu>p>span {
+  padding: 0px 5px;
+  background-color: rgb(112, 164, 177);
+  font-size: .7rem;
+  border-radius: 50%;
+  color: white;
+}
+
+.orders-list-menu p:hover {
+  background-color: rgba(255,255,255,.15);
+  border-radius: 7px 7px 0px 0px;
+  border: 1px solid rgba(255,255,255,.25);
+  box-shadow: -.5px -.5px 2px rgba(0,0,0,.05);
+  color: rgb(112, 164, 177);
+}
+
+.orders-list-active {
+  background-color: rgba(255,255,255, .2) !important;
+  border-radius: 7px 7px 0px 0px !important;
+  border: 1px solid rgba(255,255,255,.5) !important;
+  box-shadow: -.5px -.5px 2px rgba(0,0,0,.15) !important;
+  color: rgb(112, 164, 177);
+}
+
+.orders-list-view {
+  overflow-x: auto;
+  margin-top: 60px;
+  height: 53vh;
 }
 
 /* Admin Side Bar */
@@ -892,7 +937,6 @@ a:hover {
   list-style: none;
   width: 50px;
   height: 50px;
-  /* background: rgba(255, 255, 255, 0.5); */
   background: rgba(131,180,192, .5);
   animation: animate 25s linear infinite;
   bottom: -150px;
@@ -1074,14 +1118,6 @@ a:hover {
 }
 
 /* Product Cards */
-.products-container-body {
-
-}
-
-.products-container-content {
-
-}
-
 .products-container-content::-webkit-scrollbar {
   height: 10px;
 }

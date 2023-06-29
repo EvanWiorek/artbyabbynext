@@ -10,6 +10,8 @@ import UpdateProductForm from "../components/UpdateProductForm";
 import Product from "../models/product.model";
 import axios from "axios";
 import Order from "../models/order.model";
+import allproducts from "./allproducts";
+import dayjs from "dayjs";
 
 export const getServerSideProps = async () => {
   try {
@@ -63,6 +65,11 @@ const AdminPage = ({ allPosts, allProducts, allOrders }) => {
   const [productsViewActive, setProductsViewActive] = useState(false);
   const [ordersViewActive, setOrdersViewActive] = useState(false);
   const [settingsViewActive, setSettingsViewActive] = useState(false);
+
+  //Orders
+  const [selectedOrdersList, setSelectedOrdersList] = useState(
+    allOrders.filter((order) => order.isShipped === false)
+  );
 
   const [changesMade, setChangesMade] = useState(false);
 
@@ -148,84 +155,173 @@ const AdminPage = ({ allPosts, allProducts, allOrders }) => {
   };
 
   const changeAdminView = (adminView) => {
-    if(adminView === 'posts') {
-      setPostsViewActive(true)
-      setProductsViewActive(false)
-      setOrdersViewActive(false)
-      setSettingsViewActive(false)
+    if (adminView === "posts") {
+      setPostsViewActive(true);
+      setProductsViewActive(false);
+      setOrdersViewActive(false);
+      setSettingsViewActive(false);
 
-      document.getElementById("postsView").classList.add("manage-button-active")
-      document.getElementById("productsView").classList.remove("manage-button-active")
-      document.getElementById("ordersView").classList.remove("manage-button-active")
-      document.getElementById("settingsView").classList.remove("manage-button-active")
+      document
+        .getElementById("postsView")
+        .classList.add("manage-button-active");
+      document
+        .getElementById("productsView")
+        .classList.remove("manage-button-active");
+      document
+        .getElementById("ordersView")
+        .classList.remove("manage-button-active");
+      document
+        .getElementById("settingsView")
+        .classList.remove("manage-button-active");
     }
-    if(adminView === 'products') {
-      setPostsViewActive(false)
-      setProductsViewActive(true)
-      setOrdersViewActive(false)
-      setSettingsViewActive(false)
+    if (adminView === "products") {
+      setPostsViewActive(false);
+      setProductsViewActive(true);
+      setOrdersViewActive(false);
+      setSettingsViewActive(false);
 
-      document.getElementById("postsView").classList.remove("manage-button-active")
-      document.getElementById("productsView").classList.add("manage-button-active")
-      document.getElementById("ordersView").classList.remove("manage-button-active")
-      document.getElementById("settingsView").classList.remove("manage-button-active")
+      document
+        .getElementById("postsView")
+        .classList.remove("manage-button-active");
+      document
+        .getElementById("productsView")
+        .classList.add("manage-button-active");
+      document
+        .getElementById("ordersView")
+        .classList.remove("manage-button-active");
+      document
+        .getElementById("settingsView")
+        .classList.remove("manage-button-active");
     }
-    if(adminView === 'orders') {
-      setPostsViewActive(false)
-      setProductsViewActive(false)
-      setOrdersViewActive(true)
-      setSettingsViewActive(false)
+    if (adminView === "orders") {
+      setPostsViewActive(false);
+      setProductsViewActive(false);
+      setOrdersViewActive(true);
+      setSettingsViewActive(false);
 
-      document.getElementById("postsView").classList.remove("manage-button-active")
-      document.getElementById("productsView").classList.remove("manage-button-active")
-      document.getElementById("ordersView").classList.add("manage-button-active")
-      document.getElementById("settingsView").classList.remove("manage-button-active")
+      document
+        .getElementById("postsView")
+        .classList.remove("manage-button-active");
+      document
+        .getElementById("productsView")
+        .classList.remove("manage-button-active");
+      document
+        .getElementById("ordersView")
+        .classList.add("manage-button-active");
+      document
+        .getElementById("settingsView")
+        .classList.remove("manage-button-active");
     }
-    if(adminView === 'settings') {
-      setPostsViewActive(false)
-      setProductsViewActive(false)
-      setOrdersViewActive(false)
-      setSettingsViewActive(true)
+    if (adminView === "settings") {
+      setPostsViewActive(false);
+      setProductsViewActive(false);
+      setOrdersViewActive(false);
+      setSettingsViewActive(true);
 
-      document.getElementById("postsView").classList.remove("manage-button-active")
-      document.getElementById("productsView").classList.remove("manage-button-active")
-      document.getElementById("ordersView").classList.remove("manage-button-active")
-      document.getElementById("settingsView").classList.add("manage-button-active")
+      document
+        .getElementById("postsView")
+        .classList.remove("manage-button-active");
+      document
+        .getElementById("productsView")
+        .classList.remove("manage-button-active");
+      document
+        .getElementById("ordersView")
+        .classList.remove("manage-button-active");
+      document
+        .getElementById("settingsView")
+        .classList.add("manage-button-active");
     }
 
-    if(document.querySelector(".screen-darken").style.display === "block") {
+    if (document.querySelector(".screen-darken").style.display === "block") {
       handleCloseMenu();
     }
   };
 
+  const changeOrdersView = (bool) => {
+    setSelectedOrdersList(
+      allOrders.filter((order) => order.isShipped === bool)
+    );
+
+    document
+      .getElementById(`${bool}IsShipped`)
+      .classList.add("orders-list-active");
+
+    document
+      .getElementById(`${!bool}IsShipped`)
+      .classList.remove("orders-list-active");
+  };
+
   const handleCloseMenu = () => {
-    document.querySelector(".admin-side-bar-body").style = "display: block; left: -100%"
-    document.querySelector(".admin-side-bar-content").style = "opacity: 0;"
-    document.querySelector(".admin-side-bar-mobile-button").style = "display: block; opacity: 0"
-    
-    setTimeout(() => document.querySelector(".admin-side-bar-body").style = "display: none;", 600)
+    document.querySelector(".admin-side-bar-body").style =
+      "display: block; left: -100%";
+    document.querySelector(".admin-side-bar-content").style = "opacity: 0;";
+    document.querySelector(".admin-side-bar-mobile-button").style =
+      "display: block; opacity: 0";
 
-    setTimeout(() => document.querySelector(".admin-side-bar-content").style = "display: none;", 600)
-    
-    setTimeout(() => document.querySelector(".admin-side-bar-mobile-button").style = "display: block; opacity: 1", 200)
+    setTimeout(
+      () =>
+        (document.querySelector(".admin-side-bar-body").style =
+          "display: none;"),
+      600
+    );
 
-    setTimeout(() => document.querySelector(".screen-darken").style = "left: -100%; display: block; transition: .2s", 200)
+    setTimeout(
+      () =>
+        (document.querySelector(".admin-side-bar-content").style =
+          "display: none;"),
+      600
+    );
 
-    setTimeout(() => document.querySelector(".screen-darken").style = "display: none", 600)
-  }
+    setTimeout(
+      () =>
+        (document.querySelector(".admin-side-bar-mobile-button").style =
+          "display: block; opacity: 1"),
+      200
+    );
+
+    setTimeout(
+      () =>
+        (document.querySelector(".screen-darken").style =
+          "left: -100%; display: block; transition: .2s"),
+      200
+    );
+
+    setTimeout(
+      () => (document.querySelector(".screen-darken").style = "display: none"),
+      600
+    );
+  };
 
   const handleOpenMenu = () => {
-    document.querySelector(".admin-side-bar-body").style = "display: block; left: -100%;"
-    document.querySelector(".admin-side-bar-content").style = "display: block;"
-    document.querySelector(".admin-side-bar-mobile-button").style = "opacity: 0"
-    document.querySelector(".screen-darken").style = "display: block; left: -100%;"
+    document.querySelector(".admin-side-bar-body").style =
+      "display: block; left: -100%;";
+    document.querySelector(".admin-side-bar-content").style = "display: block;";
+    document.querySelector(".admin-side-bar-mobile-button").style =
+      "opacity: 0";
+    document.querySelector(".screen-darken").style =
+      "display: block; left: -100%;";
 
-    setTimeout(() => document.querySelector(".screen-darken").style = "display: block; left: 0", 100)
+    setTimeout(
+      () =>
+        (document.querySelector(".screen-darken").style =
+          "display: block; left: 0"),
+      100
+    );
 
-    setTimeout(() => document.querySelector(".admin-side-bar-body").style = "display: block; left: 0; backdrop-filter: blur(25px) brightness(115%)", 1)
+    setTimeout(
+      () =>
+        (document.querySelector(".admin-side-bar-body").style =
+          "display: block; left: 0; backdrop-filter: blur(25px) brightness(115%)"),
+      1
+    );
 
-    setTimeout(() => document.querySelector(".admin-side-bar-mobile-button").style = "display: none", 200)
-  }
+    setTimeout(
+      () =>
+        (document.querySelector(".admin-side-bar-mobile-button").style =
+          "display: none"),
+      200
+    );
+  };
 
   return (
     <>
@@ -292,11 +388,25 @@ const AdminPage = ({ allPosts, allProducts, allOrders }) => {
                     style={{ width: `40px` }}
                     className="box-shadow-2 rounded"
                   />
-                  <h5 className="roboto p-3" style={{ marginBottom: 0}}>
+                  <h5 className="roboto p-3" style={{ marginBottom: 0 }}>
                     Admin Page
                   </h5>
-                  <p onClick={handleCloseMenu} className="desktop-hide" style={{ marginTop: `-22px`, marginLeft: `10px
-                  `, marginRight: `10px`, cursor: `pointer` }}><i className="bi bi-x-lg close-cart-menu" style={{ color: `rgb(124, 126, 128)` }}></i></p>
+                  <p
+                    onClick={handleCloseMenu}
+                    className="desktop-hide"
+                    style={{
+                      marginTop: `-22px`,
+                      marginLeft: `10px
+                  `,
+                      marginRight: `10px`,
+                      cursor: `pointer`,
+                    }}
+                  >
+                    <i
+                      className="bi bi-x-lg close-cart-menu"
+                      style={{ color: `rgb(124, 126, 128)` }}
+                    ></i>
+                  </p>
                 </div>
                 <div className="horizontal-line-gray"></div>
                 <div
@@ -338,254 +448,305 @@ const AdminPage = ({ allPosts, allProducts, allOrders }) => {
                   </span>{" "}
                   Back to Home
                 </div>
-                <div 
-                className="manage-button settings-button"
-                onClick={() => changeAdminView("settings")}
-                id="settingsView"
-                
+                <div
+                  className="manage-button settings-button"
+                  onClick={() => changeAdminView("settings")}
+                  id="settingsView"
                 >
                   <span>
-                    <i
-                      className="bi bi-nut-fill"
-                    ></i>
+                    <i className="bi bi-nut-fill"></i>
                   </span>{" "}
                   Settings
                 </div>
               </div>
             </div>
-            <div className="admin-side-bar-mobile-button box-shadow" onClick={handleOpenMenu}>
-            <i className="bi bi-sliders"></i>
+            <div
+              className="admin-side-bar-mobile-button box-shadow"
+              onClick={handleOpenMenu}
+            >
+              <i className="bi bi-sliders"></i>
             </div>
             <div className="pt-4 roboto manage-views-container col-lg-10">
               <div className="manage-views-content">
-                {postsViewActive && <div className="create-post form-body box-shadow-2 mt-3 mb-5">
-                  <h3 className="text-center roboto">Manage Posts</h3>
-                  <div className="horizontal-line-gray"></div>
-                  <div className="col-lg-9 m-auto">
-                    <div className="d-flex justify-content-center">
-                      <button
-                        onClick={handleCreatePostFormOpen}
-                        className="btn-site-blue roboto d-flex align-items-center justify-content-center gap-2 mb-3"
-                        style={{ width: `100%` }}
-                      >
-                        <i
-                          className="bi bi-plus-circle"
-                          style={{ fontSize: `1.3rem` }}
-                        ></i>
-                        <p style={{ marginBottom: 0 }}>New Post</p>
-                      </button>
-                    </div>
-                    <div className="form-body all-posts-list-container box-shadow-2">
-                      <h4 className="text-center roboto mt-2">Art Lessons</h4>
-                      <div className="horizontal-line-gray"></div>
-                      <table className="table table-sm m-auto">
-                        <thead>
-                          <tr>
-                            <th scope="col">Post Title</th>
-                            <th scope="col">Actions</th>
-                          </tr>
-                        </thead>
-                        <tbody>
-                          {allLessons.map((p) => {
-                            let postType = "";
-                            if (p.isLesson === true) {
-                              postType = "Art Lesson";
-                            } else if (p.isUpdate === true) {
-                              postType = "News/Update";
-                            }
-                            return (
-                              <tr>
-                                <td>{p.postTitle}</td>
-                                <td>
-                                  <div className="d-flex justify-content-center gap-1">
-                                    <button
-                                      className="btn-site-blue roboto table-button-small"
-                                      onClick={() => handleUpdateFormOpen(p._id)}
-                                    >
-                                      Edit
-                                    </button>
-                                    <button
-                                      className="btn-site-cancel roboto table-button-small"
-                                      onClick={() => deletePost(p._id)}
-                                    >
-                                      Delete
-                                    </button>
-                                  </div>
-                                </td>
-                              </tr>
-                            );
-                          })}
-                        </tbody>
-                      </table>
-                    </div>
-                    <div className="form-body all-posts-list-container box-shadow-2 mt-3 mb-3">
-                      <h4 className="text-center roboto mt-2">News & Updates</h4>
-                      <div className="horizontal-line-gray"></div>
-                      <table className="table table-sm m-auto">
-                        <thead>
-                          <tr>
-                            <th scope="col">Post Title</th>
-                            <th scope="col">Actions</th>
-                          </tr>
-                        </thead>
-                        <tbody>
-                          {allUpdates.map((p) => {
-                            let postType = "";
-                            if (p.isLesson === true) {
-                              postType = "Art Lesson";
-                            } else if (p.isUpdate === true) {
-                              postType = "News/Update";
-                            }
-                            return (
-                              <tr>
-                                <td>{p.postTitle}</td>
-                                <td>
-                                  <div className="d-flex justify-content-center gap-1">
-                                    <button
-                                      className="btn-site-blue roboto table-button-small"
-                                      onClick={() => handleUpdateFormOpen(p._id)}
-                                    >
-                                      Edit
-                                    </button>
-                                    <button
-                                      className="btn-site-cancel roboto table-button-small"
-                                      onClick={() => deletePost(p._id)}
-                                    >
-                                      Delete
-                                    </button>
-                                  </div>
-                                </td>
-                              </tr>
-                            );
-                          })}
-                        </tbody>
-                      </table>
-                    </div>
-                  </div>
-                </div>}
-                {productsViewActive && <div className="manage-products form-body box-shadow-2 mt-3 mb-5">
-                  <h3 className="text-center roboto">Manage Products</h3>
-                  <div className="horizontal-line-gray"></div>
-                  <div className="col-lg-9 m-auto">
-                    <ul>
-                      <li>Add/remove a discount price for all products</li>
-                      <li>
-                        Create discount codes that when used lower the price on
-                        the cart menu?
-                      </li>
-                    </ul>
-                    <div className="d-flex justify-content-center mt-3">
-                      <button
-                        onClick={handleCreateProductFormOpen}
-                        className="btn-site-blue roboto d-flex align-items-center justify-content-center gap-2 mb-3"
-                        style={{ width: `100%` }}
-                      >
-                        <i
-                          className="bi bi-plus-circle"
-                          style={{ fontSize: `1.3rem` }}
-                        ></i>
-                        <p style={{ marginBottom: 0 }}>New Product</p>
-                      </button>
-                    </div>
-                    <div className="form-body all-posts-list-container box-shadow-2 mb-3">
-                      <h4 className="text-center roboto mt-2">All Products</h4>
-                      <div className="horizontal-line-gray"></div>
-                      <table className="table table-sm m-auto">
-                        <thead>
-                          <tr>
-                            <th scope="col">Product Name</th>
-                            <th scope="col">Actions</th>
-                          </tr>
-                        </thead>
-                        <tbody>
-                          {allProducts.map((prod) => {
-                            return (
-                              <tr>
-                                <td>{prod.name}</td>
-                                <td>
-                                  <div className="d-flex gap-1">
-                                    <button
-                                      className="btn-site-blue roboto table-button-small"
-                                      onClick={() =>
-                                        handleOpenProductEditForm(prod._id)
-                                      }
-                                    >
-                                      Edit
-                                    </button>
-                                    <button
-                                      className="btn-site-cancel roboto table-button-small"
-                                      onClick={() => deleteProduct(prod._id)}
-                                    >
-                                      Delete
-                                    </button>
-                                  </div>
-                                </td>
-                              </tr>
-                            );
-                          })}
-                        </tbody>
-                      </table>
+                {postsViewActive && (
+                  <div className="create-post form-body box-shadow-2 mt-3 mb-5">
+                    <h3 className="text-center roboto">Manage Posts</h3>
+                    <div className="horizontal-line-gray"></div>
+                    <div className="col-lg-9 m-auto">
+                      <div className="d-flex justify-content-center">
+                        <button
+                          onClick={handleCreatePostFormOpen}
+                          className="btn-site-blue roboto d-flex align-items-center justify-content-center gap-2 mb-3"
+                          style={{ width: `100%` }}
+                        >
+                          <i
+                            className="bi bi-plus-circle"
+                            style={{ fontSize: `1.3rem` }}
+                          ></i>
+                          <p style={{ marginBottom: 0 }}>New Post</p>
+                        </button>
+                      </div>
+                      <div className="form-body all-posts-list-container box-shadow-2">
+                        <h4 className="text-center roboto mt-2">Art Lessons</h4>
+                        <div className="horizontal-line-gray"></div>
+                        <table className="table table-sm m-auto">
+                          <thead>
+                            <tr>
+                              <th scope="col">Post Title</th>
+                              <th scope="col">Actions</th>
+                            </tr>
+                          </thead>
+                          <tbody>
+                            {allLessons.map((p) => {
+                              let postType = "";
+                              if (p.isLesson === true) {
+                                postType = "Art Lesson";
+                              } else if (p.isUpdate === true) {
+                                postType = "News/Update";
+                              }
+                              return (
+                                <tr>
+                                  <td>{p.postTitle}</td>
+                                  <td>
+                                    <div className="d-flex justify-content-center gap-1">
+                                      <button
+                                        className="btn-site-blue roboto table-button-small"
+                                        onClick={() =>
+                                          handleUpdateFormOpen(p._id)
+                                        }
+                                      >
+                                        Edit
+                                      </button>
+                                      <button
+                                        className="btn-site-cancel roboto table-button-small"
+                                        onClick={() => deletePost(p._id)}
+                                      >
+                                        Delete
+                                      </button>
+                                    </div>
+                                  </td>
+                                </tr>
+                              );
+                            })}
+                          </tbody>
+                        </table>
+                      </div>
+                      <div className="form-body all-posts-list-container box-shadow-2 mt-3 mb-3">
+                        <h4 className="text-center roboto mt-2">
+                          News & Updates
+                        </h4>
+                        <div className="horizontal-line-gray"></div>
+                        <table className="table table-sm m-auto">
+                          <thead>
+                            <tr>
+                              <th scope="col">Post Title</th>
+                              <th scope="col">Actions</th>
+                            </tr>
+                          </thead>
+                          <tbody>
+                            {allUpdates.map((p) => {
+                              let postType = "";
+                              if (p.isLesson === true) {
+                                postType = "Art Lesson";
+                              } else if (p.isUpdate === true) {
+                                postType = "News/Update";
+                              }
+                              return (
+                                <tr>
+                                  <td>{p.postTitle}</td>
+                                  <td>
+                                    <div className="d-flex justify-content-center gap-1">
+                                      <button
+                                        className="btn-site-blue roboto table-button-small"
+                                        onClick={() =>
+                                          handleUpdateFormOpen(p._id)
+                                        }
+                                      >
+                                        Edit
+                                      </button>
+                                      <button
+                                        className="btn-site-cancel roboto table-button-small"
+                                        onClick={() => deletePost(p._id)}
+                                      >
+                                        Delete
+                                      </button>
+                                    </div>
+                                  </td>
+                                </tr>
+                              );
+                            })}
+                          </tbody>
+                        </table>
+                      </div>
                     </div>
                   </div>
-                </div>}
-                {ordersViewActive && <div className="manage-products form-body box-shadow-2 mt-3 mb-5">
-                  <h3 className="text-center roboto">Manage Orders</h3>
-                  <div className="horizontal-line-gray"></div>
-                  <div className="col-lg-9 m-auto">
-                    <ul>
-                      <li>Add tracking number to orders</li>
-                      <li>When order is checked completed, notify customer</li>
-                      <li>Refund/cancel orders here?</li>
-                    </ul>
-                    <div className="form-body all-posts-list-container box-shadow-2 mb-3">
-                      <h4 className="text-center roboto mt-2">Open Orders</h4>
-                      <div className="horizontal-line-gray"></div>
-                      
-                    </div>
-                    <div className="form-body all-posts-list-container box-shadow-2 mt-4 mb-3">
-                      <h4 className="text-center roboto mt-2">Completed Orders</h4>
-                      <div className="horizontal-line-gray"></div>
-                      <table className="table table-sm m-auto">
-                        <thead>
-                          <tr>
-                            <th scope="col">Product Name</th>
-                            <th scope="col">Actions</th>
-                          </tr>
-                        </thead>
-                        <tbody>
-                          {allProducts.map((prod) => {
-                            return (
-                              <tr>
-                                <td>{prod.name}</td>
-                                <td>
-                                  <div className="d-flex gap-1">
-                                    <button
-                                      className="btn-site-blue roboto table-button-small"
-                                      onClick={() =>
-                                        handleOpenProductEditForm(prod._id)
-                                      }
-                                    >
-                                      Edit
-                                    </button>
-                                    <button
-                                      className="btn-site-cancel roboto table-button-small"
-                                      onClick={() => deleteProduct(prod._id)}
-                                    >
-                                      Delete
-                                    </button>
-                                  </div>
-                                </td>
-                              </tr>
-                            );
-                          })}
-                        </tbody>
-                      </table>
+                )}
+                {productsViewActive && (
+                  <div className="manage-products form-body box-shadow-2 mt-3 mb-5">
+                    <h3 className="text-center roboto">Manage Products</h3>
+                    <div className="horizontal-line-gray"></div>
+                    <div className="col-lg-9 m-auto">
+                      <ul>
+                        <li>Add/remove a discount price for all products</li>
+                        <li>
+                          Create discount codes that when used lower the price
+                          on the cart menu?
+                        </li>
+                      </ul>
+                      <div className="d-flex justify-content-center mt-3">
+                        <button
+                          onClick={handleCreateProductFormOpen}
+                          className="btn-site-blue roboto d-flex align-items-center justify-content-center gap-2 mb-3"
+                          style={{ width: `100%` }}
+                        >
+                          <i
+                            className="bi bi-plus-circle"
+                            style={{ fontSize: `1.3rem` }}
+                          ></i>
+                          <p style={{ marginBottom: 0 }}>New Product</p>
+                        </button>
+                      </div>
+                      <div className="form-body all-posts-list-container box-shadow-2 mb-3">
+                        <h4 className="text-center roboto mt-2">
+                          All Products
+                        </h4>
+                        <div className="horizontal-line-gray"></div>
+                        <table className="table table-sm m-auto">
+                          <thead>
+                            <tr>
+                              <th scope="col">Product Name</th>
+                              <th scope="col">Actions</th>
+                            </tr>
+                          </thead>
+                          <tbody>
+                            {allProducts.map((prod) => {
+                              return (
+                                <tr>
+                                  <td>{prod.name}</td>
+                                  <td>
+                                    <div className="d-flex gap-1">
+                                      <button
+                                        className="btn-site-blue roboto table-button-small"
+                                        onClick={() =>
+                                          handleOpenProductEditForm(prod._id)
+                                        }
+                                      >
+                                        Edit
+                                      </button>
+                                      <button
+                                        className="btn-site-cancel roboto table-button-small"
+                                        onClick={() => deleteProduct(prod._id)}
+                                      >
+                                        Delete
+                                      </button>
+                                    </div>
+                                  </td>
+                                </tr>
+                              );
+                            })}
+                          </tbody>
+                        </table>
+                      </div>
                     </div>
                   </div>
-                </div>}
-                {settingsViewActive && <div>
-                
-                  </div>}
+                )}
+                {ordersViewActive && (
+                  <div
+                    className="manage-orders form-body box-shadow-2 mt-3 mb-5"
+                    style={{ height: `88dvh` }}
+                  >
+                    <h3 className="text-center roboto">Manage Orders</h3>
+                    <div className="horizontal-line-gray"></div>
+                    <div className="col-lg-9 m-auto">
+                      <ul>
+                        <li>Add tracking number to orders</li>
+                        <li>
+                          When order is checked completed, notify customer
+                        </li>
+                        <li>Refund/cancel orders here?</li>
+                      </ul>
+
+                      <div className="orders-list form-body box-shadow-2 mb-3 p-2">
+                        <div className="d-flex gap-1 orders-list-menu">
+                          <p
+                            className="orders-list-active d-flex align-items-center gap-2"
+                            id="falseIsShipped"
+                            onClick={() => changeOrdersView(false)}
+                          >
+                            New{" "}
+                            <span>
+                              {
+                                allOrders.filter(
+                                  (order) => order.isShipped === false
+                                ).length
+                              }
+                            </span>
+                          </p>
+                          <p
+                            className="d-flex align-items-center gap-2"
+                            id="trueIsShipped"
+                            onClick={() => changeOrdersView(true)}
+                          >
+                            Completed{" "}
+                            <span>
+                              {
+                                allOrders.filter(
+                                  (order) => order.isShipped === true
+                                ).length
+                              }
+                            </span>
+                          </p>
+                        </div>
+                        <div className="orders-list-view">
+                          {selectedOrdersList.length > 1 ?
+                          
+                          selectedOrdersList.map((order, idx) => (
+                            <div key={idx}>
+                              <div className="card mb-2">
+                                <div className="card-header">
+
+                                  <table>
+                                    <thead>
+                                      <tr>
+                                        <th className="roboto" style={{ fontSize: `.9rem`, padding: `0px 10px`, paddingLeft: 0 }}>Order Placed</th>
+                                        <th className="roboto" style={{ fontSize: `.9rem`, padding: `0px 10px` }}>Total</th>
+                                        <th className="roboto" style={{ fontSize: `.9rem`, padding: `0px 10px` }}>Order ID</th>
+                                      </tr>
+                                    </thead>
+                                    <tbody>
+                                      <tr>
+                                        <td style={{ color: `rgba(0,0,0,.5)`, fontSize: `.8rem`, padding: `0px 10px`,paddingLeft: 0 }}>{dayjs(order.createdAt).format('MMMM D, YYYY')}</td>
+                                        <td style={{ color: `rgba(0,0,0,.5)`, fontSize: `.8rem`, padding: `0px 10px` }}>${order.cartTotal}</td>
+                                        <td style={{ color: `rgba(0,0,0,.5)`, fontSize: `.8rem`, padding: `0px 10px` }}>{order._id}</td>
+                                      </tr>
+                                    </tbody>
+                                  </table>
+{/* 
+                                  <div className="d-flex gap-3">
+                                    <p className="mb-0">Order Placed</p>
+                                    <p className="mb-0">Total</p>
+                                    <p className="mb-0">Order ID</p>
+                                  </div>
+                                  <div className="d-flex gap-3">
+                                    <p className="mb-0">{dayjs(order.createdAt).format('MMMM D, YYYY')}</p>
+                                    <p className="mb-0">${order.cartTotal}</p>
+                                    <p className="mb-0">{order._id}</p>
+                                  </div> */}
+                                </div>
+                                <div className="card-body"></div>
+                              </div>
+                            </div>
+                          ))
+                        
+                        :
+                        <p className="text-center">No orders to display.</p>
+                        }
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                )}
+                {settingsViewActive && <div></div>}
               </div>
               {createPostFormOpen && (
                 <CreatePostForm
