@@ -444,9 +444,8 @@ a:hover {
 }
 
 .footer-logo {
-  width: 50%;
+  width: 35%;
 }
-
 
 .cart-menu-body {
   width: 0px;
@@ -814,6 +813,18 @@ a:hover {
 
 .order-info-body {
   gap: 4rem;
+}
+
+.delete-order-desktop {
+  position: absolute;
+  right: 20px;
+  top: 17px;
+  cursor: pointer;
+  transition: .2s;
+}
+
+.delete-order-desktop:hover {
+  color: rgb(131, 180, 192);
 }
 
 

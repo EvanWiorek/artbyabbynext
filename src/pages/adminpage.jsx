@@ -71,6 +71,7 @@ const AdminPage = ({ allPosts, allProducts, allOrders }) => {
     allOrders.filter((order) => order.isShipped === false)
   );
   const [trackingNumber, setTrackingNumber] = useState("");
+  const [deleteOrderModalOpen, setDeleteOrderModalOpen] = useState(false);
 
   const [changesMade, setChangesMade] = useState(false);
 
@@ -84,15 +85,15 @@ const AdminPage = ({ allPosts, allProducts, allOrders }) => {
     document.querySelector(".admin-page-dark").style = "opacity: 0";
     setTimeout(
       () =>
-        (document.querySelector(".admin-page-dark").style =
-          "opacity: 0; display: none"),
+      (document.querySelector(".admin-page-dark").style =
+        "opacity: 0; display: none"),
       600
     );
     document.querySelector(".admin-card").style = "opacity: 0";
     setTimeout(
       () =>
-        (document.querySelector(".admin-card").style =
-          "opacity: 0; display: none"),
+      (document.querySelector(".admin-card").style =
+        "opacity: 0; display: none"),
       600
     );
   };
@@ -261,29 +262,29 @@ const AdminPage = ({ allPosts, allProducts, allOrders }) => {
 
     setTimeout(
       () =>
-        (document.querySelector(".admin-side-bar-body").style =
-          "display: none;"),
+      (document.querySelector(".admin-side-bar-body").style =
+        "display: none;"),
       600
     );
 
     setTimeout(
       () =>
-        (document.querySelector(".admin-side-bar-content").style =
-          "display: none;"),
+      (document.querySelector(".admin-side-bar-content").style =
+        "display: none;"),
       600
     );
 
     setTimeout(
       () =>
-        (document.querySelector(".admin-side-bar-mobile-button").style =
-          "display: block; opacity: 1"),
+      (document.querySelector(".admin-side-bar-mobile-button").style =
+        "display: block; opacity: 1"),
       200
     );
 
     setTimeout(
       () =>
-        (document.querySelector(".screen-darken").style =
-          "left: -100%; display: block; transition: .2s"),
+      (document.querySelector(".screen-darken").style =
+        "left: -100%; display: block; transition: .2s"),
       200
     );
 
@@ -304,25 +305,37 @@ const AdminPage = ({ allPosts, allProducts, allOrders }) => {
 
     setTimeout(
       () =>
-        (document.querySelector(".screen-darken").style =
-          "display: block; left: 0"),
+      (document.querySelector(".screen-darken").style =
+        "display: block; left: 0"),
       100
     );
 
     setTimeout(
       () =>
-        (document.querySelector(".admin-side-bar-body").style =
-          "display: block; left: 0; backdrop-filter: blur(25px) brightness(115%)"),
+      (document.querySelector(".admin-side-bar-body").style =
+        "display: block; left: 0; backdrop-filter: blur(25px) brightness(115%)"),
       1
     );
 
     setTimeout(
       () =>
-        (document.querySelector(".admin-side-bar-mobile-button").style =
-          "display: none"),
+      (document.querySelector(".admin-side-bar-mobile-button").style =
+        "display: none"),
       200
     );
   };
+
+  const openDeleteOrderModal = () => {
+    document.querySelector(".admin-page-dark").style = "display: block";
+    setTimeout(
+      () =>
+      (document.querySelector(".admin-page-dark").style =
+      "opacity: 1; display: block"),
+      1
+      );
+
+    setDeleteOrderModalOpen(true);
+  }
 
   return (
     <>
@@ -745,7 +758,7 @@ const AdminPage = ({ allPosts, allProducts, allOrders }) => {
                                           ${order.cartTotal}
                                         </p>
                                       </div>
-                                      <div className="order-info d-flex-small gap-small">
+                                      <div className="order-info d-flex-small flex-column-small">
                                         <p
                                           style={{
                                             fontSize: `.9rem`,
@@ -764,6 +777,7 @@ const AdminPage = ({ allPosts, allProducts, allOrders }) => {
                                           {order._id}
                                         </p>
                                       </div>
+                                      <p className="mobile-hide delete-order-desktop"><i class="bi bi-trash-fill"></i> Delete Order</p>
                                     </div>
                                   </div>
                                   <div className="card-body">
@@ -777,17 +791,24 @@ const AdminPage = ({ allPosts, allProducts, allOrders }) => {
                                             />
                                             <div>
                                               <p>Quantity: {orderItem.quantity}</p>
-                                              <p>{orderItem.additionalOption.optionName === undefined ? "" : `${orderItem.additionalOption.optionType}: ${orderItem.additionalOption.optionName}` }</p>
-                                              <p>{orderItem.productPriceOption.optionName === undefined ? "" : `${orderItem.productPriceOption.optionType}: ${orderItem.productPriceOption.optionName}` }</p>
+                                              <p>{orderItem.additionalOption.optionName === undefined ? "" : `${orderItem.additionalOption.optionType}: ${orderItem.additionalOption.optionName}`}</p>
+                                              <p>{orderItem.productPriceOption.optionName === undefined ? "" : `${orderItem.productPriceOption.optionType}: ${orderItem.productPriceOption.optionName}`}</p>
                                             </div>
                                           </div>
                                         ))}
                                       </div>
                                       <div className="order-shipping-info">
-                                        <p>Shipping to:</p>
-                                        <p><b>{order.customerInfo.fullName}</b></p>
-                                        <p>{order.customerInfo.address}</p>
-                                        <p>{order.customerInfo.city}, {order.customerInfo.userState} {order.customerInfo.postalCode}</p>
+                                        <div className="">
+                                          <p><b>Shipping to:</b></p>
+                                          <p>{order.customerInfo.fullName}</p>
+                                          <p>{order.customerInfo.address}</p>
+                                          <p>{order.customerInfo.city}, {order.customerInfo.userState} {order.customerInfo.postalCode}</p>
+                                        </div>
+                                        <div className="mt-3 mb-2">
+                                          <p><b>Contact Info:</b></p>
+                                          <p>{order.customerInfo.email}</p>
+                                          <p>{order.customerInfo.phoneNumber}</p>
+                                        </div>
                                       </div>
                                       <div className="order-actions col-lg-4">
                                         <div className="form-floating thin-floating">
@@ -795,7 +816,10 @@ const AdminPage = ({ allPosts, allProducts, allOrders }) => {
                                           <label htmlFor="trackingNumber">Tracking Number:</label>
                                         </div>
                                         <button type="button" className="btn-site-blue roboto" style={{ width: `100%` }}>Add Tracking Number</button>
-                                        <p className="mt-3">Cancel and Refund Order</p>
+                                        <div className="desktop-hide">
+                                          <div className="horizontal-line-gray"></div>
+                                          <button className="roboto btn-site-cancel" style={{ width: `100%` }} onClick={openDeleteOrderModal}><i class="bi bi-trash-fill"></i> Delete Order</button>
+                                        </div>
                                       </div>
                                     </div>
                                   </div>
@@ -866,6 +890,28 @@ const AdminPage = ({ allPosts, allProducts, allOrders }) => {
                   setProductPriceOtionsError={setProductPriceOtionsError}
                   oneProduct={oneProduct}
                 />
+              )}
+
+              {deleteOrderModalOpen && (
+                <div>
+                  <div className="admin-page-dark"></div>
+                  <div className="admin-card box-shadow roboto small-card">
+                    <div className="admin-card-header text-center roboto p-3">
+                      <h3 className="roboto">Delete Order</h3>
+                    </div>
+                    <div className="horizontal-line"></div>
+                    <div className="admin-card-body p-4">
+                      <p>Are you sure you want to delete this order?</p>
+                      <button
+                        className="btn-site-blue roboto mt-3"
+                        style={{ width: `100%` }}
+
+                      >
+                        Access Page
+                      </button>
+                    </div>
+                  </div>
+                </div>
               )}
             </div>
           </div>
