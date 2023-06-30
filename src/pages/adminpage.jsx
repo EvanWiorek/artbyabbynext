@@ -70,6 +70,7 @@ const AdminPage = ({ allPosts, allProducts, allOrders }) => {
   const [selectedOrdersList, setSelectedOrdersList] = useState(
     allOrders.filter((order) => order.isShipped === false)
   );
+  const [trackingNumber, setTrackingNumber] = useState("");
 
   const [changesMade, setChangesMade] = useState(false);
 
@@ -698,49 +699,112 @@ const AdminPage = ({ allPosts, allProducts, allOrders }) => {
                           </p>
                         </div>
                         <div className="orders-list-view">
-                          {selectedOrdersList.length > 1 ?
-                          
-                          selectedOrdersList.map((order, idx) => (
-                            <div key={idx}>
-                              <div className="card mb-2">
-                                <div className="card-header">
-
-                                  <table>
-                                    <thead>
-                                      <tr>
-                                        <th className="roboto" style={{ fontSize: `.9rem`, padding: `0px 10px`, paddingLeft: 0 }}>Order Placed</th>
-                                        <th className="roboto" style={{ fontSize: `.9rem`, padding: `0px 10px` }}>Total</th>
-                                        <th className="roboto" style={{ fontSize: `.9rem`, padding: `0px 10px` }}>Order ID</th>
-                                      </tr>
-                                    </thead>
-                                    <tbody>
-                                      <tr>
-                                        <td style={{ color: `rgba(0,0,0,.5)`, fontSize: `.8rem`, padding: `0px 10px`,paddingLeft: 0 }}>{dayjs(order.createdAt).format('MMMM D, YYYY')}</td>
-                                        <td style={{ color: `rgba(0,0,0,.5)`, fontSize: `.8rem`, padding: `0px 10px` }}>${order.cartTotal}</td>
-                                        <td style={{ color: `rgba(0,0,0,.5)`, fontSize: `.8rem`, padding: `0px 10px` }}>{order._id}</td>
-                                      </tr>
-                                    </tbody>
-                                  </table>
-{/* 
-                                  <div className="d-flex gap-3">
-                                    <p className="mb-0">Order Placed</p>
-                                    <p className="mb-0">Total</p>
-                                    <p className="mb-0">Order ID</p>
+                          {selectedOrdersList.length > 1 ? (
+                            selectedOrdersList.map((order, idx) => (
+                              <div key={idx}>
+                                <div className="card mb-2">
+                                  <div className="card-header">
+                                    <div className="d-flex gap-large flex-column-small">
+                                      <div className="order-info d-flex-small gap-small">
+                                        <p
+                                          style={{
+                                            fontSize: `.9rem`,
+                                            marginBottom: 0,
+                                          }}
+                                        >
+                                          Order Placed
+                                        </p>
+                                        <p
+                                          style={{
+                                            color: `rgba(0,0,0,.5)`,
+                                            fontSize: `.8rem`,
+                                            marginBottom: 0,
+                                          }}
+                                        >
+                                          {dayjs(order.createdAt).format(
+                                            "MMMM D, YYYY"
+                                          )}
+                                        </p>
+                                      </div>
+                                      <div className="order-info d-flex-small gap-small">
+                                        <p
+                                          style={{
+                                            fontSize: `.9rem`,
+                                            marginBottom: 0,
+                                          }}
+                                        >
+                                          Total
+                                        </p>
+                                        <p
+                                          style={{
+                                            color: `rgba(0,0,0,.5)`,
+                                            fontSize: `.8rem`,
+                                            marginBottom: 0,
+                                          }}
+                                        >
+                                          ${order.cartTotal}
+                                        </p>
+                                      </div>
+                                      <div className="order-info d-flex-small gap-small">
+                                        <p
+                                          style={{
+                                            fontSize: `.9rem`,
+                                            marginBottom: 0,
+                                          }}
+                                        >
+                                          Order ID
+                                        </p>
+                                        <p
+                                          style={{
+                                            color: `rgba(0,0,0,.5)`,
+                                            fontSize: `.8rem`,
+                                            marginBottom: 0,
+                                          }}
+                                        >
+                                          {order._id}
+                                        </p>
+                                      </div>
+                                    </div>
                                   </div>
-                                  <div className="d-flex gap-3">
-                                    <p className="mb-0">{dayjs(order.createdAt).format('MMMM D, YYYY')}</p>
-                                    <p className="mb-0">${order.cartTotal}</p>
-                                    <p className="mb-0">{order._id}</p>
-                                  </div> */}
+                                  <div className="card-body">
+                                    <div className="order-info-body d-flex flex-column-small gap-small">
+                                      <div className="order-list col-lg-3">
+                                        {order.orderItems.map((orderItem, idx) => (
+                                          <div className="order-items d-flex gap-3 mb-3" key={idx}>
+                                            <img
+                                              src={orderItem.productImage}
+                                              alt={orderItem.productName}
+                                            />
+                                            <div>
+                                              <p>Quantity: {orderItem.quantity}</p>
+                                              <p>{orderItem.additionalOption.optionName === undefined ? "" : `${orderItem.additionalOption.optionType}: ${orderItem.additionalOption.optionName}` }</p>
+                                              <p>{orderItem.productPriceOption.optionName === undefined ? "" : `${orderItem.productPriceOption.optionType}: ${orderItem.productPriceOption.optionName}` }</p>
+                                            </div>
+                                          </div>
+                                        ))}
+                                      </div>
+                                      <div className="order-shipping-info">
+                                        <p>Shipping to:</p>
+                                        <p><b>{order.customerInfo.fullName}</b></p>
+                                        <p>{order.customerInfo.address}</p>
+                                        <p>{order.customerInfo.city}, {order.customerInfo.userState} {order.customerInfo.postalCode}</p>
+                                      </div>
+                                      <div className="order-actions col-lg-4">
+                                        <div className="form-floating thin-floating">
+                                          <input type="text" placeholder="p" name="trackingNumber" value={trackingNumber} className="form-control thin-control square-control mb-3" />
+                                          <label htmlFor="trackingNumber">Tracking Number:</label>
+                                        </div>
+                                        <button type="button" className="btn-site-blue roboto" style={{ width: `100%` }}>Add Tracking Number</button>
+                                        <p className="mt-3">Cancel and Refund Order</p>
+                                      </div>
+                                    </div>
+                                  </div>
                                 </div>
-                                <div className="card-body"></div>
                               </div>
-                            </div>
-                          ))
-                        
-                        :
-                        <p className="text-center">No orders to display.</p>
-                        }
+                            ))
+                          ) : (
+                            <p className="text-center">No orders to display.</p>
+                          )}
                         </div>
                       </div>
                     </div>

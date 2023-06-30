@@ -63,7 +63,7 @@ const Lessons = ({ allLessons }) => {
       </Head>
       <main ref={myRef} className='page-content'>
 
-        <div className="body-color" style={{ paddingTop: `100px` }}>
+        <div className="body-color" style={{ paddingTop: `110px` }}>
           <h1 className='text-center mt-3 mb-0 site-font'>Virtual Art Lessons</h1>
           <div className="lesson-post-list col-lg-7 m-auto">
 

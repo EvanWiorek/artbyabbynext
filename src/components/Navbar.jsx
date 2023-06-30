@@ -18,12 +18,10 @@ const Navbar = ({ headerIsVisible }) => {
   useEffect(() => {
 
     if (headerIsVisible) {
-      document.querySelector(".logo-img").style = "width: 200px;"
-      document.querySelector(".abby-name").style = "font-size: 1rem;"
+      document.querySelector(".logo-img").style = "width: 130px;"
     }
     else {
-      document.querySelector(".logo-img").style = "width: 130px;"
-      document.querySelector(".abby-name").style = "font-size: .6rem;"
+      document.querySelector(".logo-img").style = "width: 80px;"
     }
   })
 
@@ -62,8 +60,7 @@ const Navbar = ({ headerIsVisible }) => {
 
   const handleRoute = (href) => {
     if (router.asPath == "/") {
-      document.querySelector(".logo-img").style = "width: 130px;"
-      document.querySelector(".abby-name").style = "font-size: .6rem;"
+      document.querySelector(".logo-img").style = "width: 80px;"
       document.querySelector(".pulse-loader").style = "display: flex"
       document.querySelector(".index-container").style = "opacity: .7; filter: saturate(.1)"
       setTimeout(() => router.push(href), 200)
@@ -124,7 +121,6 @@ const Navbar = ({ headerIsVisible }) => {
           <div className="middle site-logo text-center mobile-indent">
             <Link href="/" style={{ textDecoration: 'none' }}>
               <img src="/static/images/logo.svg" alt="site-logo" className="logo-img" />
-              <p className="abby-name black-scroll-link">Abby Novotny</p>
             </Link>
           </div>
 

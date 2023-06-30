@@ -11,7 +11,6 @@ const SiteHeader = () => {
           <div className="middle site-logo text-center mobile-indent">
             <Link href="/" style={{ textDecoration: 'none' }}>
               <img src="/static/images/logo.svg" alt="site-logo" className="logo-img" />
-              <p className="abby-name">Abby Novotny</p>
             </Link>
           </div>
 

@@ -52,6 +52,14 @@ html {
   display: flex !important;
 }
 
+.gap-large {
+  gap: 1.5rem;
+}
+
+.col-lg-2-5 {
+  width: 20%;
+}
+
 .Toastify__toast-theme--light {
   background-color: rgba(255, 245, 254, 0.4) !important;
   backdrop-filter: blur(3px) brightness(110%) !important;
@@ -206,20 +214,9 @@ textarea:focus {
 }
 
 .site-logo img {
-  width: 130px;
+  width: 80px;
   transition: .2s;
   image-rendering: auto;
-}
-
-.abby-name {
-  font-size: .6rem;
-  transition: .2s;
-  margin-bottom: 0;
-  /* color: black; */
-}
-
-.site-logo:hover p {
-  color: rgb(131, 180, 192) !important;
 }
 
 .site-logo:hover img {
@@ -759,7 +756,7 @@ a:hover {
 .orders-list-menu {
   position: fixed;
   margin-bottom: 20px;
-  border-bottom: 1px solid rgba(0,0,0,.1);
+  border-bottom: 1px solid rgba(0, 0, 0, .1);
   width: 98%;
 }
 
@@ -769,7 +766,7 @@ a:hover {
   padding: 10px 15px;
   cursor: pointer;
   transition: .2s;
-  border: 1px solid rgba(255,255,255,0);
+  border: 1px solid rgba(255, 255, 255, 0);
 }
 
 .orders-list-menu>p>span {
@@ -781,18 +778,18 @@ a:hover {
 }
 
 .orders-list-menu p:hover {
-  background-color: rgba(255,255,255,.15);
+  background-color: rgba(255, 255, 255, .15);
   border-radius: 7px 7px 0px 0px;
-  border: 1px solid rgba(255,255,255,.25);
-  box-shadow: -.5px -.5px 2px rgba(0,0,0,.05);
+  border: 1px solid rgba(255, 255, 255, .25);
+  box-shadow: -.5px -.5px 2px rgba(0, 0, 0, .05);
   color: rgb(112, 164, 177);
 }
 
 .orders-list-active {
-  background-color: rgba(255,255,255, .2) !important;
+  background-color: rgba(255, 255, 255, .2) !important;
   border-radius: 7px 7px 0px 0px !important;
-  border: 1px solid rgba(255,255,255,.5) !important;
-  box-shadow: -.5px -.5px 2px rgba(0,0,0,.15) !important;
+  border: 1px solid rgba(255, 255, 255, .5) !important;
+  box-shadow: -.5px -.5px 2px rgba(0, 0, 0, .15) !important;
   color: rgb(112, 164, 177);
 }
 
@@ -801,6 +798,24 @@ a:hover {
   margin-top: 60px;
   height: 53vh;
 }
+
+.order-items img {
+  width: 50%;
+  height: 50%;
+}
+
+.order-items p {
+  margin-bottom: 0;
+}
+
+.order-shipping-info p {
+  margin-bottom: 0;
+}
+
+.order-info-body {
+  gap: 4rem;
+}
+
 
 /* Admin Side Bar */
 .admin-side-bar-body {
@@ -831,23 +846,23 @@ a:hover {
 }
 
 .manage-button:hover {
-  background-color: rgba(255,255,255,.20);
+  background-color: rgba(255, 255, 255, .20);
 }
 
 .manage-button-active {
-  background-color: rgba(255,255,255,.35);
+  background-color: rgba(255, 255, 255, .35);
   color: rgb(112, 164, 177);
   padding: 20px 10px;
 }
 
 .manage-button-active span {
-  background-color: rgba(255,255,255,0) !important;
+  background-color: rgba(255, 255, 255, 0) !important;
   font-size: 1.5rem;
   transition: .2s;
 }
 
 .manage-button span {
-  background-color: rgba(255,255,255,.4);
+  background-color: rgba(255, 255, 255, .4);
   padding: 12px 15px;
   margin-right: 10px;
   transition: .2s;
@@ -937,7 +952,7 @@ a:hover {
   list-style: none;
   width: 50px;
   height: 50px;
-  background: rgba(131,180,192, .5);
+  background: rgba(131, 180, 192, .5);
   animation: animate 25s linear infinite;
   bottom: -150px;
 
@@ -1263,7 +1278,7 @@ a:hover {
 
 .thin-floating {
   font-size: .8rem !important;
-  color: rgba(0,0,0,.5) !important;
+  color: rgba(0, 0, 0, .5) !important;
 }
 
 .thin-select {
@@ -1356,6 +1371,18 @@ a:hover {
     flex-direction: column !important;
   }
 
+  .d-flex-small {
+    display: flex !important;
+  }
+
+  .gap-small {
+    gap: 1rem;
+  }
+
+  .gap-large {
+    gap: 0;
+  }
+
   .navbar-content {
     width: 95vw;
   }
@@ -1380,7 +1407,7 @@ a:hover {
   }
 
   .site-logo img {
-    width: 130px !important;
+    width: 80px !important;
     margin-top: -5px !important;
   }
 
@@ -1469,6 +1496,11 @@ a:hover {
     text-align: center;
   }
 
+  .order-items img {
+    width: 70px;
+    height: 70px;
+  }
+
   .date-and-name {
     justify-content: center;
   }
@@ -1481,7 +1513,7 @@ a:hover {
     display: none;
     /* transition: .2s; */
   }
-  
+
   .admin-side-bar-mobile-button {
     display: block;
   }
@@ -1643,7 +1675,7 @@ a:hover {
   }
 
   .site-logo img {
-    width: 130px !important;
+    width: 80px !important;
     margin-top: -5px !important;
   }
 
@@ -1682,25 +1714,25 @@ a:hover {
   .update-card-body {
     min-height: 0;
   }
-  
+
   .manage-views-container {
     width: 100vw;
   }
-  
+
   .products-container-content {
     justify-content: center;
   }
-  
+
   .view-all-products-link {
     width: 45%;
     margin: 0;
   }
-  
+
   .product-card {
     min-height: 270px;
     max-height: 270px;
   }
-  
+
   .products-container-content {
     width: 90vw;
   }

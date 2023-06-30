@@ -49,12 +49,11 @@ const allproducts = ({ isVisible, allProducts }) => {
         <title>All Products | Art by Abby</title>
       </Head>
       <main ref={myRef} className='page-content'>
-        
-        <div className="body-white" style={{ paddingTop: `100px` }}>
-        <div className="col-lg-8 m-auto">
-          <h1 className='text-center mt-3 mb-0 site-font'>All Products</h1>
-        <div className="horizontal-line-gray"></div>
-        </div>
+        <div className="body-white" style={{ paddingTop: `130px` }}>
+          <div className="col-lg-8 m-auto">
+            <h1 className='text-center mb-0 site-font'>All Products</h1>
+            <div className="horizontal-line-gray"></div>
+          </div>
           <div className="products-container-body">
             <div className="products-container-content d-flex flex-wrap col-lg-8 m-auto gap-3 align-items-center">
               {allProducts.map((product) => (

@@ -42,6 +42,7 @@ const OrderSchema = new mongoose.Schema(
       default: false
     },
     trackingNumber: String,
+    completionDate: Date,
   },
   { timestamps: true }
 )
