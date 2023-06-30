@@ -12,6 +12,7 @@ import axios from "axios";
 import Order from "../models/order.model";
 import allproducts from "./allproducts";
 import dayjs from "dayjs";
+import { toast } from "react-toastify";
 
 export const getServerSideProps = async () => {
   try {
@@ -71,9 +72,13 @@ const AdminPage = ({ allPosts, allProducts, allOrders }) => {
     allOrders.filter((order) => order.isShipped === false)
   );
   const [trackingNumber, setTrackingNumber] = useState("");
+  const [trackingNumberError, setTrackingNumberError] = useState("");
   const [deleteOrderModalOpen, setDeleteOrderModalOpen] = useState(false);
 
   const [changesMade, setChangesMade] = useState(false);
+
+  let orderTrackingValid = false;
+  orderTrackingValid = trackingNumberError === null;
 
   useEffect(() => {
     setAllLessons(allPosts.filter((p) => p.isLesson === true));
@@ -326,15 +331,56 @@ const AdminPage = ({ allPosts, allProducts, allOrders }) => {
   };
 
   const openDeleteOrderModal = () => {
-    document.querySelector(".admin-page-dark").style = "display: block";
+    document.querySelector(".admin-page-dark").style = "display: block;";
     setTimeout(
       () =>
       (document.querySelector(".admin-page-dark").style =
-      "opacity: 1; display: block"),
+        "opacity: 1; display: block;"),
       1
-      );
+    );
 
     setDeleteOrderModalOpen(true);
+  }
+
+  const handleCloseDeleteOrderModal = () => {
+    document.querySelector(".admin-page-dark").style = "opacity: 0";
+    setTimeout(
+      () =>
+      (document.querySelector(".admin-page-dark").style =
+        "opacity: 0; display: none"),
+      600
+    );
+
+    setDeleteOrderModalOpen(false);
+  }
+
+  const handleTrackingNumber = (e) => {
+    setTrackingNumber(e.target.value)
+    if (e.target.value.length < 5) {
+      setTrackingNumberError("Please add a valid tracking number.")
+    }
+    else if (e.target.value === "") {
+      setTrackingNumberError("Please add a valid tracking number.")
+    }
+    else {
+      setTrackingNumberError(null)
+    }
+  }
+
+  const updateOrder = (order) => {
+    console.log(order);
+    if (orderTrackingValid === true) {
+      axios.post(`/api/orders/update/${order._id}`, {
+        isShipped: true,
+        trackingNumber: trackingNumber
+      })
+        .then((res) => console.log(res))
+        .catch((err) => console.log(err))
+      toast.success(`Shipping notification sent to ${order.customerInfo.email}`)
+    }
+    else {
+      setTrackingNumberError("Please add a valid tracking number.")
+    }
   }
 
   return (
@@ -712,7 +758,7 @@ const AdminPage = ({ allPosts, allProducts, allOrders }) => {
                           </p>
                         </div>
                         <div className="orders-list-view">
-                          {selectedOrdersList.length > 1 ? (
+                          {selectedOrdersList.length > 0 ? (
                             selectedOrdersList.map((order, idx) => (
                               <div key={idx}>
                                 <div className="card mb-2">
@@ -777,7 +823,8 @@ const AdminPage = ({ allPosts, allProducts, allOrders }) => {
                                           {order._id}
                                         </p>
                                       </div>
-                                      <p className="mobile-hide delete-order-desktop"><i class="bi bi-trash-fill"></i> Delete Order</p>
+                                      <p className="mobile-hide delete-order-desktop" onClick={openDeleteOrderModal}><i class="bi bi-trash-fill" ></i> Delete Order</p>
+
                                     </div>
                                   </div>
                                   <div className="card-body">
@@ -811,11 +858,34 @@ const AdminPage = ({ allPosts, allProducts, allOrders }) => {
                                         </div>
                                       </div>
                                       <div className="order-actions col-lg-4">
-                                        <div className="form-floating thin-floating">
-                                          <input type="text" placeholder="p" name="trackingNumber" value={trackingNumber} className="form-control thin-control square-control mb-3" />
-                                          <label htmlFor="trackingNumber">Tracking Number:</label>
-                                        </div>
-                                        <button type="button" className="btn-site-blue roboto" style={{ width: `100%` }}>Add Tracking Number</button>
+
+                                        {order.isShipped === false ? (
+                                          <div>
+                                            <div className="form-floating thin-floating">
+                                              <input type="text" placeholder="p" name="trackingNumber" value={trackingNumber}
+                                                onChange={handleTrackingNumber} className="form-control thin-control square-control" />
+                                              <label htmlFor="trackingNumber">Tracking Number:</label>
+                                              {trackingNumberError ? (
+                                                <p style={{ color: `rgb(206, 139, 139)`, marginBottom: 0 }} className="mt-1">
+                                                  {trackingNumberError}
+                                                </p>
+                                              ) : (
+                                                ""
+                                              )}
+                                            </div>
+                                            <button type="button" className="btn-site-blue roboto mt-3" style={{ width: `100%` }} onClick={() => updateOrder(order)}>Add Tracking Number</button>
+                                          </div>
+                                        ) : (
+                                          <div className="tracking-info">
+                                            <p><b>Tracking Number:</b></p>
+                                            <p>{order.trackingNumber}</p>
+                                            <br />
+                                            <p><b>Order Completed:</b></p>
+                                          </div>
+                                        )}
+
+
+
                                         <div className="desktop-hide">
                                           <div className="horizontal-line-gray"></div>
                                           <button className="roboto btn-site-cancel" style={{ width: `100%` }} onClick={openDeleteOrderModal}><i class="bi bi-trash-fill"></i> Delete Order</button>
@@ -901,14 +971,26 @@ const AdminPage = ({ allPosts, allProducts, allOrders }) => {
                     </div>
                     <div className="horizontal-line"></div>
                     <div className="admin-card-body p-4">
-                      <p>Are you sure you want to delete this order?</p>
-                      <button
-                        className="btn-site-blue roboto mt-3"
-                        style={{ width: `100%` }}
-
-                      >
-                        Access Page
-                      </button>
+                      <div className="text-center">
+                        <p>Are you sure you want to delete this order?</p>
+                        <p>You will also need to refund the customer on Paypal's end.</p>
+                      </div>
+                      <div className="d-flex justify-content-center">
+                        <button
+                          className="btn-site-cancel roboto mt-3"
+                          style={{ width: `45%` }}
+                          onClick={handleCloseDeleteOrderModal}
+                        >
+                          Cancel
+                        </button>
+                        <div style={{ width: `5%` }}></div>
+                        <button
+                          className="btn-site-blue roboto mt-3"
+                          style={{ width: `45%` }}
+                        >
+                          Delete Order
+                        </button>
+                      </div>
                     </div>
                   </div>
                 </div>
