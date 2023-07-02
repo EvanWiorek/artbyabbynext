@@ -23,7 +23,7 @@ function PlaceOrderScreen() {
   //from useContext
   const { state, dispatch } = useContext(Store)
   const { cart } = state;
-  const { cartItems, customerInfo, paymentMethod } = cart;
+  const { cartItems, customerInfo } = cart;
 
   useEffect(() => {
     if (!customerInfo.address) {
@@ -90,7 +90,6 @@ function PlaceOrderScreen() {
     axios.post('/api/orders/create', {
       orderItems: cartItems,
       customerInfo,
-      paymentMethod,
       cartTotal
     })
     .then((res) => {
@@ -177,16 +176,6 @@ function PlaceOrderScreen() {
                             <p style={{ width: `80%` }}>{customerInfo.address}, {customerInfo.city}, {customerInfo.userState},  {customerInfo.postalCode}, {customerInfo.country}</p>
                           </div>
                           <button type="button" style={{ position: `absolute`, right: `15px`, padding: `4px 7px` }} className="btn-site-pink roboto" onClick={() => router.push('/shipping')}>Edit</button>
-                        </div>
-
-                        <div className="horizontal-line-gray"></div>
-
-                        <div className="edit-place-order-line d-flex align-items-center">
-                          <div className="d-flex flex-column-small">
-                            <p className="text-secondary" style={{ width: `80px` }}>Payment</p>
-                            <p>{paymentMethod}</p>
-                          </div>
-                          <button type="button" style={{ position: `absolute`, right: `15px`, padding: `4px 7px` }} className="btn-site-pink roboto" onClick={() => router.push('/payment')}>Edit</button>
                         </div>
 
                       </div>

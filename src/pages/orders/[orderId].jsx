@@ -197,14 +197,12 @@ const OneOrder = ({ isVisible, oneOrder }) => {
                       <h4 className='roboto mb-3'>Payment Details</h4>
                       <div className="d-flex justify-content-between">
                         <div className="left-side">
-                          <p>Payment Method:</p>
                           <p>Subtotal (Including Sales Tax):</p>
                           <p>Shipping:</p>
                           <p>Total:</p>
                           <p></p>
                         </div>
                         <div className="right-side">
-                          <p><b>{order.paymentMethod}</b></p>
                           <p><b>                            {
                             Number.isInteger(order.cartTotal)
                               ? `$${order.cartTotal}.00` : `$${order.cartTotal.toFixed(2)}`

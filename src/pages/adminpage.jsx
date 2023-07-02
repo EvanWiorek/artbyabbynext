@@ -74,6 +74,7 @@ const AdminPage = ({ allPosts, allProducts, allOrders }) => {
   const [trackingNumber, setTrackingNumber] = useState("");
   const [trackingNumberError, setTrackingNumberError] = useState("");
   const [deleteOrderModalOpen, setDeleteOrderModalOpen] = useState(false);
+  const [orderToDelete, setOrderToDelete] = useState();
 
   const [changesMade, setChangesMade] = useState(false);
 
@@ -177,9 +178,9 @@ const AdminPage = ({ allPosts, allProducts, allOrders }) => {
       document
         .getElementById("ordersView")
         .classList.remove("manage-button-active");
-      document
-        .getElementById("settingsView")
-        .classList.remove("manage-button-active");
+      // document
+      //   .getElementById("settingsView")
+      //   .classList.remove("manage-button-active");
     }
     if (adminView === "products") {
       setPostsViewActive(false);
@@ -196,9 +197,9 @@ const AdminPage = ({ allPosts, allProducts, allOrders }) => {
       document
         .getElementById("ordersView")
         .classList.remove("manage-button-active");
-      document
-        .getElementById("settingsView")
-        .classList.remove("manage-button-active");
+      // document
+      //   .getElementById("settingsView")
+      //   .classList.remove("manage-button-active");
     }
     if (adminView === "orders") {
       setPostsViewActive(false);
@@ -215,29 +216,29 @@ const AdminPage = ({ allPosts, allProducts, allOrders }) => {
       document
         .getElementById("ordersView")
         .classList.add("manage-button-active");
-      document
-        .getElementById("settingsView")
-        .classList.remove("manage-button-active");
+      // document
+      //   .getElementById("settingsView")
+      //   .classList.remove("manage-button-active");
     }
-    if (adminView === "settings") {
-      setPostsViewActive(false);
-      setProductsViewActive(false);
-      setOrdersViewActive(false);
-      setSettingsViewActive(true);
+    // if (adminView === "settings") {
+    //   setPostsViewActive(false);
+    //   setProductsViewActive(false);
+    //   setOrdersViewActive(false);
+    //   setSettingsViewActive(true);
 
-      document
-        .getElementById("postsView")
-        .classList.remove("manage-button-active");
-      document
-        .getElementById("productsView")
-        .classList.remove("manage-button-active");
-      document
-        .getElementById("ordersView")
-        .classList.remove("manage-button-active");
-      document
-        .getElementById("settingsView")
-        .classList.add("manage-button-active");
-    }
+    //   document
+    //     .getElementById("postsView")
+    //     .classList.remove("manage-button-active");
+    //   document
+    //     .getElementById("productsView")
+    //     .classList.remove("manage-button-active");
+    //   document
+    //     .getElementById("ordersView")
+    //     .classList.remove("manage-button-active");
+    //   document
+    //     .getElementById("settingsView")
+    //     .classList.add("manage-button-active");
+    // }
 
     if (document.querySelector(".screen-darken").style.display === "block") {
       handleCloseMenu();
@@ -330,7 +331,8 @@ const AdminPage = ({ allPosts, allProducts, allOrders }) => {
     );
   };
 
-  const openDeleteOrderModal = () => {
+  const openDeleteOrderModal = (orderId) => {
+    setOrderToDelete(orderId)
     document.querySelector(".admin-page-dark").style = "display: block;";
     setTimeout(
       () =>
@@ -382,6 +384,19 @@ const AdminPage = ({ allPosts, allProducts, allOrders }) => {
       setTrackingNumberError("Please add a valid tracking number.")
     }
   }
+
+  const deleteOrder = () => {
+    axios
+      .post(`/api/orders/delete/${orderToDelete}`)
+      .then((res) => console.log(res))
+      .catch((err) => console.log(err));
+
+    handleCloseDeleteOrderModal()
+
+    setSelectedOrdersList(selectedOrdersList.filter((order) => order._id !== orderToDelete))
+    
+    router.replace(router.asPath);
+  };
 
   return (
     <>
@@ -508,7 +523,7 @@ const AdminPage = ({ allPosts, allProducts, allOrders }) => {
                   </span>{" "}
                   Back to Home
                 </div>
-                <div
+                {/* <div
                   className="manage-button settings-button"
                   onClick={() => changeAdminView("settings")}
                   id="settingsView"
@@ -517,7 +532,7 @@ const AdminPage = ({ allPosts, allProducts, allOrders }) => {
                     <i className="bi bi-nut-fill"></i>
                   </span>{" "}
                   Settings
-                </div>
+                </div> */}
               </div>
             </div>
             <div
@@ -709,18 +724,10 @@ const AdminPage = ({ allPosts, allProducts, allOrders }) => {
                 {ordersViewActive && (
                   <div
                     className="manage-orders form-body box-shadow-2 mt-3 mb-5"
-                    style={{ height: `88dvh` }}
                   >
                     <h3 className="text-center roboto">Manage Orders</h3>
                     <div className="horizontal-line-gray"></div>
                     <div className="col-lg-9 m-auto">
-                      <ul>
-                        <li>Add tracking number to orders</li>
-                        <li>
-                          When order is checked completed, notify customer
-                        </li>
-                        <li>Refund/cancel orders here?</li>
-                      </ul>
 
                       <div className="orders-list form-body box-shadow-2 mb-3 p-2">
                         <div className="d-flex gap-1 orders-list-menu">
@@ -819,7 +826,7 @@ const AdminPage = ({ allPosts, allProducts, allOrders }) => {
                                           {order._id}
                                         </p>
                                       </div>
-                                      <p className="mobile-hide delete-order-desktop" onClick={openDeleteOrderModal}><i class="bi bi-trash-fill" ></i> Delete Order</p>
+                                      <p className="mobile-hide delete-order-desktop" onClick={() => openDeleteOrderModal(order._id)}><i class="bi bi-trash-fill" ></i> Delete Order</p>
 
                                     </div>
                                   </div>
@@ -900,7 +907,7 @@ const AdminPage = ({ allPosts, allProducts, allOrders }) => {
                     </div>
                   </div>
                 )}
-                {settingsViewActive && <div></div>}
+                {/* {settingsViewActive && <div></div>} */}
               </div>
               {createPostFormOpen && (
                 <CreatePostForm
@@ -969,7 +976,7 @@ const AdminPage = ({ allPosts, allProducts, allOrders }) => {
                     <div className="admin-card-body p-4">
                       <div className="text-center">
                         <p>Are you sure you want to delete this order?</p>
-                        <p>You will also need to refund the customer on Paypal's end.</p>
+                        <p style={{ fontSize: `1.2rem` }}><b>You will also need to refund the customer on Paypal's end.</b></p>
                       </div>
                       <div className="d-flex justify-content-center">
                         <button
@@ -983,6 +990,7 @@ const AdminPage = ({ allPosts, allProducts, allOrders }) => {
                         <button
                           className="btn-site-blue roboto mt-3"
                           style={{ width: `45%` }}
+                          onClick={deleteOrder}
                         >
                           Delete Order
                         </button>

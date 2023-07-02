@@ -793,10 +793,14 @@ a:hover {
   color: rgb(112, 164, 177);
 }
 
+.manage-orders {
+  height: 92dvh;
+}
+
 .orders-list-view {
-  overflow-x: auto;
+  overflow: auto;
   margin-top: 60px;
-  height: 53vh;
+  height: 70vh;
 }
 
 .order-items img {
@@ -891,7 +895,7 @@ a:hover {
 
 .back-home-button {
   position: absolute;
-  bottom: 95px;
+  bottom: 15px;
 }
 
 .admin-side-bar-mobile-button {

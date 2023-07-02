@@ -202,7 +202,7 @@ function ShippingScreen() {
           },
         })
       )
-      router.push('/payment')
+      router.push('/placeorder')
     }
   };
 
