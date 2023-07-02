@@ -12,18 +12,38 @@ import { getError } from "../utils/error";
 import axios from "axios";
 import { PayPalButtons, usePayPalScriptReducer } from "@paypal/react-paypal-js";
 
+function reducer(state, action) {
+  switch (action.type) {
+    case 'PAY_REQUEST':
+      return { ...state, loadingPay: true };
+    case 'PAY_SUCCESS':
+      return { ...state, loadingPay: false, successPay: true };
+    case 'PAY_FAIL':
+      return { ...state, loadingPay: false, errorPay: action.payload }
+    case 'PAY_RESET':
+      return { ...state, loadingPay: false, successPay: false, errorPay: '' }
+    default:
+      state;
+  }
+}
+
 function PlaceOrderScreen() {
   const myRef = useRef();
   const router = useRouter();
   const [contentIsVisible, setContentIsVisible] = useState();
   const [cartTotal, setCartTotal] = useState();
+  const [paypalOrder, setPaypalOrder] = useState();
   const [{ isPending }, paypalDispatch] = usePayPalScriptReducer();
-  // const [{successPay}] = useReducer()
-
-  //from useContext
   const { state, dispatch } = useContext(Store)
   const { cart } = state;
   const { cartItems, customerInfo } = cart;
+  // const [{successPay, loadingPay}] = useReducer(reducer)
+  const [{successPay, loadingPay}] = useReducer(reducer, {
+    successPay: false,
+    loadingPay: false
+  })
+
+  //if successpay, create order and route to order page
 
   useEffect(() => {
     if (!customerInfo.address) {
@@ -60,20 +80,26 @@ function PlaceOrderScreen() {
     priceCount = priceCount.toFixed(2)
     setCartTotal(priceCount)
 
-    // const loadPaypalScript = async () => {
-    //   const { data: clientId } = await axios.get('/api/keys/paypal');
-    //   paypalDispatch({
-    //     type: 'resetOptions',
-    //     value: {
-    //       'client-id': clientId,
-    //       currency: 'USD',
-    //     },
-    //   });
-    //   paypalDispatch({ type: 'setLoadingStatus', value: 'pending' });
-    // }
-    // loadPaypalScript();
+    const loadPaypalScript = async () => {
+      const { data: clientId } = await axios.get('/api/keys/paypal');
+      paypalDispatch({
+        type: 'resetOptions',
+        value: {
+          'client-id': clientId,
+          currency: 'USD',
+        },
+      });
+      paypalDispatch({ type: 'setLoadingStatus', value: 'pending' });
+    }
+    loadPaypalScript();
 
-  }, [contentIsVisible, router, customerInfo.address, paypalDispatch]);
+    setPaypalOrder({
+      cartItems,
+      customerInfo,
+      cartTotal
+    })
+
+  }, [contentIsVisible, router, customerInfo.address, paypalDispatch, successPay]);
 
   const handleGoBack = () => {
     router.back();
@@ -108,6 +134,63 @@ function PlaceOrderScreen() {
         console.log(err);
         toast.error(getError(err))
     })
+  }
+
+  const addOrderToDB = () => {
+    axios.post('/api/orders/create', {
+      orderItems: cartItems,
+      customerInfo,
+      cartTotal
+    })
+    .then((res) => {
+      console.log(res.data);
+      dispatch({ type: 'CART_CLEAR_ITEMS' });
+      Cookies.set(
+        'cart',
+        JSON.stringify({
+          ...cart,
+          cartItems: [],
+        })
+        )
+        router.push(`/orders/${res.data._id}`)
+      })
+      .catch((err) => {
+        console.log(err);
+        toast.error(getError(err))
+    })
+  }
+
+  const createOrder = (data, actions) => {
+    // console.log(order);
+    return actions.order.create({
+      purchase_units: [
+        {
+          amount: { value: cartTotal }
+        }
+      ]
+    }).then((orderId) => {
+      return orderId
+    })
+  }
+
+  const onApprove = (data, actions) => {
+    // console.log('THIS IS A TEST');
+    return actions.order.capture().then(async function (details) {
+      try {
+        dispatch({ type: 'PAY_REQUEST' });
+        dispatch({ type: 'PAY_SUCCESS', payload: data })
+        addOrderToDB();
+        toast.success('Thank you for your order!')
+      }
+      catch (err) {
+        dispatch({ type: 'PAY_FAIL', payload: getError(err) });
+        toast(`${getError(err)} | this is a test`);
+      }
+    })
+  }
+
+  const onError = (err) => {
+    toast(getError(err));
   }
 
   return (
@@ -159,7 +242,7 @@ function PlaceOrderScreen() {
                     <div className="shipping-submit-form m-auto" style={{ paddingBottom: `20px` }}>
                       <h3 className="mb-2 roboto">Place Order</h3>
 
-                      <div className="card p-3 box-shadow-2">
+                      <div className="rounded p-3 box-shadow-2">
                         <div className="edit-place-order-line d-flex align-items-center">
                           <div className="d-flex flex-column-small">
                             <p className="text-secondary" style={{ width: `80px` }}>Contact</p>
@@ -217,13 +300,15 @@ function PlaceOrderScreen() {
                         <h5>${cartTotal}</h5>
                       </div>
 
-                      <button type="submit" className="btn-site-pink roboto mt-2" style={{ width: `100%` }}>Place Order</button>
+                      <div className="mt-2">
+                        <PayPalButtons
+                        createOrder={createOrder}
+                        onApprove={onApprove}
+                        onError={onError}
+                        ></PayPalButtons>
+                      </div>
 
-                      <PayPalButtons
-                      // createOrder={createOrder}
-                      // onApprove={onApprove}
-                      // onError={onError}
-                      ></PayPalButtons>
+                    {loadingPay && <p>Loading...</p>}
 
                     </form>
                   </div>
