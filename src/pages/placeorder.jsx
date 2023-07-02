@@ -118,7 +118,7 @@ function PlaceOrderScreen() {
       <div>
         <SiteHeader />
         <div className="page-content roboto" ref={myRef}>
-          <main style={{ paddingTop: `100px` }}>
+          <main style={{ paddingTop: `120px` }}>
 
             {cartItems.length === 0 ? (
               <div className="text-center mt-5">
