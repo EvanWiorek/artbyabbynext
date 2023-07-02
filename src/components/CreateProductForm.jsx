@@ -611,15 +611,17 @@ export default function CreateProductForm({
                 multiple="multiple"
                 value={newImage}
               />
-              <label className="thin-label mb-1">Product Images (Add at least 1 Image URL) <span style={{ color: `rgb(206, 139, 139)` }}>*</span></label>
-              <div className="d-flex justify-content-between align-items-end">
+              <label className="thin-label mb-1">Product Images <span style={{ color: `rgb(206, 139, 139)` }}>*</span></label>
+              <div className="d-flex justify-content-between align-items-end flex-column-small">
                 <div className="d-flex mt-2 new-product-images-container" style={{ minHeight: `60px` }}>
-                  {displayedImages.map((img, idx) => (
+                  {displayedImages.length >= 1 
+                  ? displayedImages.map((img, idx) => (
                     <div className="new-product-images">
                       <img src={img} alt="" key={idx} style={{ width: `60px`, height: `60px` }} id={img} />
                       <span onClick={() => handleRemoveProductImages(img)}><i className="bi bi-x-circle-fill"></i></span>
                     </div>
-                  ))}
+                  )) 
+                  : <p style={{ color: `rgba(0,0,0,.7)`, textAlign: `center` }}>Please add at least 1 image URL.</p>}
                 </div>
                 <button type="button" className="btn-site-blue mt-2" onClick={handleAddProductImages}>Add Image</button>
               </div>
@@ -652,7 +654,7 @@ export default function CreateProductForm({
               value={productCountInStock}
               onChange={handleProductCountInStock}
             />
-            <label className="thin-label">Product Quantity (Stock Amount) <span style={{ color: `rgb(206, 139, 139)` }}>*</span></label>
+            <label className="thin-label">Amount in Stock <span style={{ color: `rgb(206, 139, 139)` }}>*</span></label>
             {productCountInStockError ? (
               <p style={{ color: "tomato" }} className="mt-1">
                 {productCountInStockError}
@@ -701,7 +703,8 @@ export default function CreateProductForm({
                 value={priceName}
                 onChange={handlePriceName}
               />
-              <label className="thin-label">Price Name (ie, small, large, etc.) <span style={{ color: `rgb(206, 139, 139)` }}>*</span></label>
+              <label className="thin-label">Price Name <span style={{ color: `rgb(206, 139, 139)` }}>*</span></label>
+              <p style={{ marginBottom: 0, color: `rgba(0,0,0,.7)` }}>Example: small, large, etc.</p>
               {priceNameError ? (
                 <p style={{ color: "tomato" }} className="mt-1">
                   {priceNameError}
@@ -718,7 +721,8 @@ export default function CreateProductForm({
                 value={priceType}
                 onChange={handlePriceType}
               />
-              <label className="thin-label">Price Descriptor (ie, if option name is 'Small', type would be 'Size'.) <span style={{ color: `rgb(206, 139, 139)` }}>*</span></label>
+              <label className="thin-label">Price Descriptor <span style={{ color: `rgb(206, 139, 139)` }}>*</span></label>
+              <p style={{ marginBottom: 0, color: `rgba(0,0,0,.7)` }}>Example: if option name is 'Small', type would be 'Size'.</p>
               {priceTypeError ? (
                 <p style={{ color: "tomato" }} className="mt-1">
                   {priceTypeError}
@@ -756,7 +760,7 @@ export default function CreateProductForm({
                   multiple="multiple"
                   value={newImage}
                 />
-                <label className="thin-label mb-1">Price Option Image <span style={{ color: `rgba(0,0,0,.5)` }}>(Optional)</span></label>
+                <label className="thin-label mb-1">Image <span style={{ color: `rgba(0,0,0,.5)` }}>(Optional)</span></label>
                 <div className="d-flex justify-content-between align-items-end">
                   <div className="d-flex mt-2 new-product-images-container" style={{ minHeight: `60px` }}>
                     {priceOptionImages.map((img, idx) => (
@@ -779,7 +783,7 @@ export default function CreateProductForm({
                 value={priceDesc}
                 onChange={handlePriceOptionDesc}
               />
-              <label className="thin-label">Description of Option <span style={{ color: `rgba(0,0,0,.5)` }}>(Optional)</span></label>
+              <label className="thin-label">Description <span style={{ color: `rgba(0,0,0,.5)` }}>(Optional)</span></label>
             </div>
 
             <div className="d-flex justify-content-center" id="create-price-option">
@@ -798,8 +802,8 @@ export default function CreateProductForm({
                 <table className="table table-sm m-auto">
                   <thead>
                     <tr>
-                      <th scope="col">Price Option Name</th>
-                      <th scope="col">Price Option Type</th>
+                      <th scope="col">Option Name</th>
+                      <th scope="col">Option Type</th>
                       <th scope="col">Actions</th>
                     </tr>
                   </thead>
@@ -872,7 +876,8 @@ export default function CreateProductForm({
                 value={addOptionName}
                 onChange={handleAddOptionName}
               />
-              <label className="thin-label">Option Name (ie, Red, Blue, etc.) <span style={{ color: `rgb(206, 139, 139)` }}>*</span></label>
+              <label className="thin-label">Option Name <span style={{ color: `rgb(206, 139, 139)` }}>*</span></label>
+              <p style={{ marginBottom: 0, color: `rgba(0,0,0,.7)` }}>Example: Red, Blue, etc.</p>
               {addOptionNameError ? (
                 <p style={{ color: "tomato" }} className="mt-1">
                   {addOptionNameError}
@@ -890,7 +895,8 @@ export default function CreateProductForm({
                 value={addOptionType}
                 onChange={handleAddOptionType}
               />
-              <label className="thin-label">Option Descriptor (ie, if option name is "Red", type would be "Color".) <span style={{ color: `rgb(206, 139, 139)` }}>*</span></label>
+              <label className="thin-label">Option Descriptor <span style={{ color: `rgb(206, 139, 139)` }}>*</span></label>
+              <p style={{ marginBottom: 0, color: `rgba(0,0,0,.7)` }}>Example: if option name is "Red", descripter would be "Color".</p>
               {addOptionTypeError ? (
                 <p style={{ color: "tomato" }} className="mt-1">
                   {addOptionTypeError}
@@ -910,7 +916,7 @@ export default function CreateProductForm({
                   multiple="multiple"
                   value={newImage}
                 />
-                <label className="thin-label mb-1">Option Image <span style={{ color: `rgba(0,0,0,.5)` }}>(Optional)</span></label>
+                <label className="thin-label mb-1">Image <span style={{ color: `rgba(0,0,0,.5)` }}>(Optional)</span></label>
                 <div className="d-flex justify-content-between align-items-end">
                   <div className="d-flex mt-2 new-product-images-container" style={{ minHeight: `60px` }}>
                     {addOptionImages.map((img, idx) => (
@@ -933,7 +939,7 @@ export default function CreateProductForm({
                 value={addOptionDesc}
                 onChange={handleAddOptionDesc}
               />
-              <label className="thin-label">Description of Option <span style={{ color: `rgba(0,0,0,.5)` }}>(Optional)</span></label>
+              <label className="thin-label">Description <span style={{ color: `rgba(0,0,0,.5)` }}>(Optional)</span></label>
             </div>
 
             <div className="d-flex justify-content-center" id="create-additional-option">
@@ -952,8 +958,8 @@ export default function CreateProductForm({
                 <table className="table table-sm m-auto">
                   <thead>
                     <tr>
-                      <th scope="col">Price Option Name</th>
-                      <th scope="col">Price Option Type</th>
+                      <th scope="col">Option Name</th>
+                      <th scope="col">Option Type</th>
                       <th scope="col">Actions</th>
                     </tr>
                   </thead>

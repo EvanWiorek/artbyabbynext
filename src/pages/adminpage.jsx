@@ -549,94 +549,90 @@ const AdminPage = ({ allPosts, allProducts, allOrders }) => {
                       <div className="form-body all-posts-list-container box-shadow-2">
                         <h4 className="text-center roboto mt-2">Art Lessons</h4>
                         <div className="horizontal-line-gray"></div>
-                        <table className="table table-sm m-auto">
-                          <thead>
-                            <tr>
-                              <th scope="col">Post Title</th>
-                              <th scope="col">Actions</th>
-                            </tr>
-                          </thead>
-                          <tbody>
-                            {allLessons.map((p) => {
-                              let postType = "";
-                              if (p.isLesson === true) {
-                                postType = "Art Lesson";
-                              } else if (p.isUpdate === true) {
-                                postType = "News/Update";
-                              }
-                              return (
-                                <tr>
-                                  <td>{p.postTitle}</td>
-                                  <td>
-                                    <div className="d-flex justify-content-center gap-1">
-                                      <button
-                                        className="btn-site-blue roboto table-button-small"
-                                        onClick={() =>
-                                          handleUpdateFormOpen(p._id)
-                                        }
-                                      >
-                                        Edit
-                                      </button>
-                                      <button
-                                        className="btn-site-cancel roboto table-button-small"
-                                        onClick={() => deletePost(p._id)}
-                                      >
-                                        Delete
-                                      </button>
-                                    </div>
-                                  </td>
-                                </tr>
-                              );
-                            })}
-                          </tbody>
-                        </table>
+
+                        <div className="art-lessons-table col-11 justify-content-center m-auto">
+                          <div className="d-flex justify-content-between">
+                            <h5 className="roboto">Post Title</h5>
+                            <h5 className="roboto" style={{ marginRight: `50px` }}>Actions</h5>
+                          </div>
+                        </div>
+
+                        {allLessons.map((p) => {
+                          return (
+                            <div className="col-11 m-auto">
+                              <div className="horizontal-line-gray" style={{ marginBottom: `5px`, marginTop: `5px` }}></div>
+
+                              <div className="d-flex justify-content-between">
+                                <div className="left-side">
+                                  <p>{p.postTitle}</p>
+                                </div>
+                                <div className="right-side">
+                                  <div className="d-flex gap-3">
+                                    <button
+                                      className="btn-site-blue roboto table-button-small"
+                                      onClick={() =>
+                                        handleUpdateFormOpen(p._id)
+                                      }
+                                    >
+                                      Edit
+                                    </button>
+                                    <button
+                                      className="btn-site-cancel roboto table-button-small"
+                                      onClick={() => deletePost(p._id)}
+                                    >
+                                      Delete
+                                    </button>
+                                  </div>
+                                </div>
+                              </div>
+                            </div>
+                          )
+                        })}
                       </div>
                       <div className="form-body all-posts-list-container box-shadow-2 mt-3 mb-3">
                         <h4 className="text-center roboto mt-2">
                           News & Updates
                         </h4>
                         <div className="horizontal-line-gray"></div>
-                        <table className="table table-sm m-auto">
-                          <thead>
-                            <tr>
-                              <th scope="col">Post Title</th>
-                              <th scope="col">Actions</th>
-                            </tr>
-                          </thead>
-                          <tbody>
-                            {allUpdates.map((p) => {
-                              let postType = "";
-                              if (p.isLesson === true) {
-                                postType = "Art Lesson";
-                              } else if (p.isUpdate === true) {
-                                postType = "News/Update";
-                              }
-                              return (
-                                <tr>
-                                  <td>{p.postTitle}</td>
-                                  <td>
-                                    <div className="d-flex justify-content-center gap-1">
-                                      <button
-                                        className="btn-site-blue roboto table-button-small"
-                                        onClick={() =>
-                                          handleUpdateFormOpen(p._id)
-                                        }
-                                      >
-                                        Edit
-                                      </button>
-                                      <button
-                                        className="btn-site-cancel roboto table-button-small"
-                                        onClick={() => deletePost(p._id)}
-                                      >
-                                        Delete
-                                      </button>
-                                    </div>
-                                  </td>
-                                </tr>
-                              );
-                            })}
-                          </tbody>
-                        </table>
+
+                        <div className="updates-table col-11 justify-content-center m-auto">
+                          <div className="d-flex justify-content-between">
+                            <h5 className="roboto">Post Title</h5>
+                            <h5 className="roboto" style={{ marginRight: `50px` }}>Actions</h5>
+                          </div>
+                        </div>
+
+                        {allUpdates.map((p) => (
+                          <div className="col-11 m-auto">
+                            <div className="horizontal-line-gray" style={{ marginBottom: `5px`, marginTop: `5px` }}></div>
+
+                            <div className="d-flex justify-content-between">
+                              <div className="left-side">
+                                <p>{p.postTitle}</p>
+                              </div>
+                              <div className="right-side">
+                                <div className="d-flex gap-3">
+                                  <button
+                                    className="btn-site-blue roboto table-button-small"
+                                    onClick={() =>
+                                      handleUpdateFormOpen(p._id)
+                                    }
+                                  >
+                                    Edit
+                                  </button>
+                                  <button
+                                    className="btn-site-cancel roboto table-button-small"
+                                    onClick={() => deletePost(p._id)}
+                                  >
+                                    Delete
+                                  </button>
+                                </div>
+                              </div>
+                            </div>
+
+                          </div>
+                        ))}
+
                       </div>
                     </div>
                   </div>
@@ -671,41 +667,41 @@ const AdminPage = ({ allPosts, allProducts, allOrders }) => {
                           All Products
                         </h4>
                         <div className="horizontal-line-gray"></div>
-                        <table className="table table-sm m-auto">
-                          <thead>
-                            <tr>
-                              <th scope="col">Product Name</th>
-                              <th scope="col">Actions</th>
-                            </tr>
-                          </thead>
-                          <tbody>
-                            {allProducts.map((prod) => {
-                              return (
-                                <tr>
-                                  <td>{prod.name}</td>
-                                  <td>
-                                    <div className="d-flex gap-1">
-                                      <button
-                                        className="btn-site-blue roboto table-button-small"
-                                        onClick={() =>
-                                          handleOpenProductEditForm(prod._id)
-                                        }
-                                      >
-                                        Edit
-                                      </button>
-                                      <button
-                                        className="btn-site-cancel roboto table-button-small"
-                                        onClick={() => deleteProduct(prod._id)}
-                                      >
-                                        Delete
-                                      </button>
-                                    </div>
-                                  </td>
-                                </tr>
-                              );
-                            })}
-                          </tbody>
-                        </table>
+
+                        <div className="products-table col-11 justify-content-center m-auto">
+                          <div className="d-flex justify-content-between">
+                            <h5 className="roboto">Product Name</h5>
+                            <h5 className="roboto" style={{ marginRight: `50px` }}>Actions</h5>
+                          </div>
+                          {allProducts.map((prod) => (
+                            <div className="">
+                              <div className="horizontal-line-gray" style={{ marginBottom: `5px`, marginTop: `5px` }}></div>
+                              <div className="d-flex justify-content-between">
+                                <div className="left-side">
+                                  <p>{prod.name}</p>
+                                </div>
+                                <div className="right-side">
+                                  <div className="d-flex gap-3">
+                                    <button
+                                      className="btn-site-blue roboto table-button-small"
+                                      onClick={() =>
+                                        handleOpenProductEditForm(prod._id)
+                                      }
+                                    >
+                                      Edit
+                                    </button>
+                                    <button
+                                      className="btn-site-cancel roboto table-button-small"
+                                      onClick={() => deleteProduct(prod._id)}
+                                    >
+                                      Delete
+                                    </button>
+                                  </div>
+                                </div>
+                              </div>
+                            </div>
+                          ))}
+                        </div>
                       </div>
                     </div>
                   </div>

@@ -1454,6 +1454,13 @@ a:hover {
     width: 90vw;
   }
 
+  .new-product-images-container {
+    display: flex;
+    flex-wrap: wrap;
+    gap: .3rem;
+    justify-content: center;
+  }
+
   .small-card {
     width: 90vw !important;
   }
@@ -1654,6 +1661,7 @@ a:hover {
     object-fit: cover;
     transition: .1s;
   }
+  
 }
 
 /* Tablet and Smaller Desktop */
