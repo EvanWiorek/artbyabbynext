@@ -174,7 +174,7 @@ const ProductDetails = ({ productData }) => {
       const quantity = existItem ? existItem.quantity + 1 : 1;
 
       if (productData.countInStock < quantity) {
-        toast("Sorry, item is out of stock.");
+        toast(`Sorry, ${productName} is out of stock.`);
         return;
       }
 

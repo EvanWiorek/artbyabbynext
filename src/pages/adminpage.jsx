@@ -422,6 +422,7 @@ const AdminPage = ({ allPosts, allProducts, allOrders }) => {
       </Head>
       <main ref={myRef}>
 
+        <div className="admin-page-dark" style={{ display: `none` }}></div>
         {loggedIn === false ?
           (<div>
             <div className="admin-page-dark"></div>
@@ -609,7 +610,7 @@ const AdminPage = ({ allPosts, allProducts, allOrders }) => {
                             <div className="col-11 m-auto">
                               <div className="horizontal-line-gray" style={{ marginBottom: `5px`, marginTop: `5px` }}></div>
 
-                              <div className="d-flex justify-content-between">
+                              <div className="d-flex justify-content-between gap-1">
                                 <div className="left-side">
                                   <p>{p.postTitle}</p>
                                 </div>
@@ -653,7 +654,7 @@ const AdminPage = ({ allPosts, allProducts, allOrders }) => {
                           <div className="col-11 m-auto">
                             <div className="horizontal-line-gray" style={{ marginBottom: `5px`, marginTop: `5px` }}></div>
 
-                            <div className="d-flex justify-content-between">
+                            <div className="d-flex justify-content-between gap-2">
                               <div className="left-side">
                                 <p>{p.postTitle}</p>
                               </div>
