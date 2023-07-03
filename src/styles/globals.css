@@ -200,6 +200,68 @@ textarea:focus {
   }
 }
 
+.io-fade-in {
+  opacity: 0;
+  transition: .7s;
+}
+
+.io-fade-in.show {
+  opacity: 1;
+}
+
+.io-fade-in-slow {
+  opacity: 0;
+  transition: 1.8s;
+}
+
+.io-fade-in-slow.show {
+  opacity: 1;
+}
+
+.io-fade-in-up {
+  opacity: 0;
+  transition: 1.8s;
+  transform: translateY(50px);
+}
+
+.io-fade-in-up.show {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+.io-fade-in-right {
+  opacity: 0;
+  transition: 1.8s;
+  transform: translateX(50px);
+}
+
+.io-fade-in-right.show {
+  opacity: 1;
+  transform: translateX(0);
+}
+
+.io-fade-in-zoom-out {
+  opacity: 0;
+  transition: 1.5s;
+  transform: scale(1.1);
+}
+
+.io-fade-in-zoom-out.show {
+  opacity: 1;
+  transform: scale(1);
+}
+
+.io-fade-in-zoom-in {
+  opacity: 0;
+  transition: 1.5s;
+  transform: scale(.9);
+}
+
+.io-fade-in-zoom-in.show {
+  opacity: 1;
+  transform: scale(1);
+}
+
 .white-bg {
   width: 100%;
   height: 125px;
@@ -234,6 +296,29 @@ a {
 
 a:hover {
   color: rgb(131, 180, 192) !important;
+}
+
+.footer-link {
+  transition: .2s;
+  cursor: pointer;
+}
+
+.footer-link:hover {
+  color: rgb(131, 180, 192) !important;
+}
+
+.product-title-link {
+  transition: .2s;
+  cursor: pointer;
+}
+
+.product-title-link:hover {
+  color: rgb(131, 180, 192);
+}
+
+.product-image-link {
+  transition: .2s;
+  cursor: pointer;
 }
 
 .links p {
@@ -408,7 +493,7 @@ a:hover {
 }
 
 .body-white {
-  background-color: rgb(255, 255, 255);
+  background-color: rgb(255,255,255);
   box-shadow: 2px 0px 3px rgba(0, 0, 0, .2);
   position: relative;
   z-index: 1;
@@ -418,6 +503,21 @@ a:hover {
 .body-color {
   background-color: rgb(255, 255, 255);
   box-shadow: 2px 0px 3px rgba(0, 0, 0, .2);
+  position: relative;
+  z-index: 1;
+  min-height: 80vh;
+}
+
+.body-pink {
+  background-color: rgb(250, 247, 248);
+  position: relative;
+  z-index: 1;
+  min-height: 80vh;
+  box-shadow: 2px 0px 3px rgba(0, 0, 0, .2);
+}
+
+.body-blue {
+  background-color: rgb(230, 237, 239);
   position: relative;
   z-index: 1;
   min-height: 80vh;

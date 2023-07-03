@@ -6,14 +6,17 @@ import { connectMongoDB } from "@/src/libs/MongoConnect";
 import Product from '../models/product.model';
 import Cookies from 'js-cookie';
 import { useRouter } from 'next/router';
+import AbbyPost from '../models/post.model';
 
 export const getServerSideProps = async () => {
   try {
     await connectMongoDB();
     const allProducts = await Product.find();
+    const allLessons = await AbbyPost.find({ isLesson: true });
     return {
       props: {
-        allProducts: JSON.parse(JSON.stringify(allProducts))
+        allProducts: JSON.parse(JSON.stringify(allProducts)),
+        allLessons: JSON.parse(JSON.stringify(allLessons))
       }
     }
   }
@@ -25,7 +28,7 @@ export const getServerSideProps = async () => {
   }
 }
 
-export default function Home({ allProducts }) {
+export default function Home({ allProducts, allLessons }) {
   const myRef = useRef();
   const [headerIsVisible, setHeaderIsVisible] = useState();
   const router = useRouter();
@@ -35,8 +38,51 @@ export default function Home({ allProducts }) {
     const observer = new IntersectionObserver((entries) => {
       const entry = entries[0];
       setHeaderIsVisible(entry.isIntersecting)
+
+      entries.forEach(entry => {
+        entry.target.classList.toggle("show", entry.isIntersecting)
+        if (entry.isIntersecting) {
+          observer.unobserve(entry.target)
+        }
+      })
     })
     observer.observe(myRef.current)
+
+    const fadeIns = document.querySelectorAll(".io-fade-in");
+
+    fadeIns.forEach(fadeIn => {
+      observer.observe(fadeIn)
+    })
+
+    const fadeInSlows = document.querySelectorAll(".io-fade-in-slow");
+
+    fadeInSlows.forEach(fadeIn => {
+      observer.observe(fadeIn)
+    })
+
+    const fadeInUps = document.querySelectorAll(".io-fade-in-up");
+
+    fadeInUps.forEach(fadeIn => {
+      observer.observe(fadeIn)
+    })
+
+    const fadeInRights = document.querySelectorAll(".io-fade-in-right");
+
+    fadeInRights.forEach(fadeIn => {
+      observer.observe(fadeIn)
+    })
+
+    const fadeInZoomOuts = document.querySelectorAll(".io-fade-in-zoom-out");
+
+    fadeInZoomOuts.forEach(fadeIn => {
+      observer.observe(fadeIn)
+    })
+
+    const fadeInZoomIns = document.querySelectorAll(".io-fade-in-zoom-in");
+
+    fadeInZoomIns.forEach(fadeIn => {
+      observer.observe(fadeIn)
+    })
 
     document.querySelector(".navbar-body").style = "background-color: transparent; backdrop-filter: blur(0); box-shadow: 0px 0px rgba(0,0,0,0)"
 
@@ -93,6 +139,18 @@ export default function Home({ allProducts }) {
     router.push(href)
   }
 
+  const getTrueURL = (videoURL) => {
+    if (videoURL.length > 28) {
+      const stepOne = videoURL.split("v=")[1];
+      const stepTwo = stepOne.split("&")[0]
+      return stepTwo;
+    }
+    else {
+      const stepOne = videoURL.split("e/")[1];
+      return stepOne;
+    }
+  }
+
   return (
     <Layout headerIsVisible={headerIsVisible}>
       <Head>
@@ -100,7 +158,6 @@ export default function Home({ allProducts }) {
       </Head>
       <main>
         <div className="pulse-loader"></div>
-        {/* <div className="loading-overlay"></div> */}
         <div className="index-container">
           <div className="fade-in-screen"></div>
           <div className="parallax-container" ref={myRef}>
@@ -115,19 +172,21 @@ export default function Home({ allProducts }) {
               <button type='button' className='btn-site-pink roboto box-shadow-2' style={{ width: `50%` }} onClick={handleShopButton}>Shop</button>
             </div>
           </div>
-          <div className="body-white">
+          <div className="body-pink">
             <br />
             <br />
             <br />
             <br />
-            <h1 className='site-font text-center all-products-title'>Featured Products</h1>
-            <div className="products-container-body m-auto">
+            <h1 className='site-font text-center all-products-title io-fade-in'>Featured Products</h1>
+            <br />
+            <br />
+            <div className="products-container-body m-auto io-fade-in-zoom-in">
               <div className="products-container-content d-flex flex-wrap col-lg-8 m-auto gap-3 align-items-center">
-                {inStockProducts.slice(0,7).map((product) => (
+                {inStockProducts.slice(0, 7).map((product) => (
                   <ProductItem product={product} key={product._id} />
                 ))}
                 <div className="d-flex flex-column align-items-center desktop-link roboto view-all-products-link">
-                  <p onClick={() => handleRoute("/allproducts")} style={{ cursor: `pointer`, marginBottom: 0 }}>View All Products</p>
+                  <p onClick={() => handleRoute("/allproducts")} style={{ cursor: `pointer`, marginBottom: 0, fontSize: `1.2rem` }}>View All Products</p>
                   <div className="desktop-link-line"></div>
                 </div>
               </div>
@@ -135,6 +194,23 @@ export default function Home({ allProducts }) {
             <br />
             <br />
             <br />
+            <div className="body-blue io-fade-in-slow">
+              <br />
+              <h1 className='site-font text-center all-products-title io-fade-in-right'>Join me in an art lesson!</h1>
+              <br />
+              <br />
+              <div className="d-flex col-lg-10 m-auto gap-5">
+                <iframe src={`https://www.youtube.com/embed/${getTrueURL(allLessons[0].videoURL)}`} className='one-lesson-video col-lg-6 box-shadow-2 io-fade-in-zoom-out'>
+                </iframe>
+                <div className='mt-3 m-auto roboto details-content io-fade-in-right' dangerouslySetInnerHTML={{ __html: allLessons[0].postContent }} />
+              </div>
+              <br />
+              <br />
+              <div className="d-flex flex-column align-items-center desktop-link roboto view-all-products-link io-fade-in-right" style={{ width: `150px` }}>
+                <p onClick={() => handleRoute("/lessons")} style={{ cursor: `pointer`, marginBottom: 0, fontSize: `1.2rem` }} className='io-fade-in-right'>View All Lessons</p>
+                <div className="desktop-link-line"></div>
+              </div>
+            </div>
             <br />
             <br />
             <br />

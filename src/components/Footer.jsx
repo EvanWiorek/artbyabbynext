@@ -1,6 +1,15 @@
 import Link from "next/link";
+import { useRouter } from "next/router";
 
 const Footer = () => {
+  const router = useRouter();
+
+  const handleRoute = (href) => {
+    document.querySelector(".pulse-loader").style = "display: flex"
+    document.querySelector(".index-container").style = "opacity: .7; filter: saturate(.1)"
+    router.push(href)
+  }
+
   return (
     <div className="footer-body roboto">
       <div className="footer-content col-10 m-auto">
@@ -22,21 +31,16 @@ const Footer = () => {
           </div>
           <div className="column-2 col-lg-2">
             <p className="sub-text">READ MORE</p>
-            <Link href="/about" className="footer-text">About</Link>
-            <br />
-            <Link href="/contact" className="footer-text">Contact Us</Link>
-            <br />
-            <Link href="/return-policy" className="footer-text">Return Policy</Link>
-            <br />
-            <Link href="/return-policy" className="footer-text">Refund Policy</Link>
+            <div onClick={() => handleRoute("/about")} className="footer-text footer-link">About</div>
+            <div onClick={() => handleRoute("/contact")} className="footer-text footer-link">Contact Us</div>
+            <div onClick={() => handleRoute("/return-policy")} className="footer-text footer-link">Return Policy</div>
+            <div onClick={() => handleRoute("/refund-policy")} className="footer-text footer-link">Refund Policy</div>
           </div>
           <div className="column-3 col-lg-2">
             <p className="sub-text">NAVIGATION</p>
-            <Link href="/allproducts" className="footer-text">All Products</Link>
-            <br />
-            <Link href="/updates" className="footer-text">Stores sales/updates</Link>
-            <br />
-            <Link href="/lessons" className="footer-text">Virutal Art Lessons</Link>
+            <div onClick={() => handleRoute("/allproducts")} className="footer-text footer-link">All Products</div>
+            <div onClick={() => handleRoute("/updates")} className="footer-text footer-link">Stores sales/updates</div>
+            <div onClick={() => handleRoute("/lessons")} className="footer-text footer-link">Virutal Art Lessons</div>
           </div>
         </div>
         <div className="horizontal-line-gray"></div>
