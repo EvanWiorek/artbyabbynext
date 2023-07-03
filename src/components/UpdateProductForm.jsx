@@ -89,6 +89,7 @@ export default function CreateProductForm({
     setProductCountInStockError(null)
     setProductPriceError(null)
     setAdditionalOptionsError(null)
+    setProductShippingCostError(null)
   }, [])
 
   let formIsValid = false;

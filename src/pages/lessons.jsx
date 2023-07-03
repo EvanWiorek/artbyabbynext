@@ -67,7 +67,12 @@ const Lessons = ({ allLessons }) => {
           <h1 className='text-center mt-3 mb-0 site-font'>Virtual Art Lessons</h1>
           <div className="lesson-post-list col-lg-7 m-auto">
 
-            {allLessons.map((lesson) => (
+            {allLessons.length < 1 
+            ? (<div>
+              <div className="horizontal-line-gray"></div>
+              <p className="text-center roboto">No lessons to display.</p>
+            </div>)
+            : allLessons.map((lesson) => (
               <div key={lesson._id} className='m-auto mt-3'>
                 <div className="horizontal-line-gray"></div>
                 <div className="d-flex justify-content-center mb-2"><img src={`http://img.youtube.com/vi/${getTrueURL(lesson.videoURL)}/0.jpg`} alt="Thumbnail" className='desktop-hide box-shadow' /></div>

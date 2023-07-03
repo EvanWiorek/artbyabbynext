@@ -118,6 +118,7 @@ export default function CreatePostForm({ setCreatePostFormOpen, setPostTitleErro
         .catch((err) => console.log(err))
 
       router.replace(router.asPath);
+      router.reload(window.location.pathname)
       handleFormClose();
     }
   };

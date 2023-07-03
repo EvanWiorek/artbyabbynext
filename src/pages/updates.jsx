@@ -54,7 +54,12 @@ const Lessons = ({ allUpdates }) => {
           <h1 className='text-center mt-3 mb-0 site-font'>News & Updates</h1>
           <div className="update-post-list col-lg-7 m-auto">
 
-            {allUpdates.map((update) => (
+            {allUpdates.length < 1 
+            ? (<div>
+              <div className="horizontal-line-gray"></div>
+              <p className="text-center roboto">No news to display.</p>
+            </div>)
+            : allUpdates.map((update) => (
               <div key={update._id} className='m-auto mt-3'>
                 <div className="horizontal-line-gray"></div>
                 <div className="d-flex justify-content-center mb-2"><img src={`${update.imageURL}`} alt="Thumbnail" className='desktop-hide box-shadow' /></div>

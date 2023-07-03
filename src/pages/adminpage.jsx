@@ -64,6 +64,8 @@ const AdminPage = ({ allPosts, allProducts, allOrders }) => {
   const [productCountInStockError, setProductCountInStockError] = useState();
   const [productPriceOptionsError, setProductPriceOtionsError] = useState();
   const [oneProduct, setOneProduct] = useState();
+  const [activeProducts, setActiveProducts] = useState(allProducts.filter((prod) => prod.countInStock > 0))
+  const [outOfStockProducts, setUutOfStockProducts] = useState(allProducts.filter((prod) => prod.countInStock === 0))
 
   //Admin Views
   const [postsViewActive, setPostsViewActive] = useState(true);
@@ -143,7 +145,7 @@ const AdminPage = ({ allPosts, allProducts, allOrders }) => {
     });
     const data = await response.json();
     console.log(data);
-    router.replace(router.asPath);
+    router.reload(window.location.pathname)
   };
 
   const handleUpdateFormOpen = async (postId) => {
@@ -662,7 +664,9 @@ const AdminPage = ({ allPosts, allProducts, allOrders }) => {
                           </div>
                         </div>
 
-                        {allLessons.map((p) => {
+                        {allLessons.length < 1
+                        ? (<p className="text-center">No lessons to display.</p>)
+                        : allLessons.map((p) => {
                           return (
                             <div className="col-11 m-auto">
                               <div className="horizontal-line-gray" style={{ marginBottom: `5px`, marginTop: `5px` }}></div>
@@ -707,7 +711,9 @@ const AdminPage = ({ allPosts, allProducts, allOrders }) => {
                           </div>
                         </div>
 
-                        {allUpdates.map((p) => (
+                        {allUpdates.length < 1
+                        ? (<p className="text-center">No updates to display.</p>)
+                        : allUpdates.map((p) => (
                           <div className="col-11 m-auto">
                             <div className="horizontal-line-gray" style={{ marginBottom: `5px`, marginTop: `5px` }}></div>
 
@@ -747,13 +753,6 @@ const AdminPage = ({ allPosts, allProducts, allOrders }) => {
                     <h3 className="text-center roboto">Manage Products</h3>
                     <div className="horizontal-line-gray"></div>
                     <div className="col-lg-9 m-auto">
-                      <ul>
-                        <li>Add/remove a discount price for all products</li>
-                        <li>
-                          Create discount codes that when used lower the price
-                          on the cart menu?
-                        </li>
-                      </ul>
                       <div className="d-flex justify-content-center mt-3">
                         <button
                           onClick={handleCreateProductFormOpen}
@@ -769,7 +768,7 @@ const AdminPage = ({ allPosts, allProducts, allOrders }) => {
                       </div>
                       <div className="form-body all-posts-list-container box-shadow-2 mb-3">
                         <h4 className="text-center roboto mt-2">
-                          All Products
+                          Active Products
                         </h4>
                         <div className="horizontal-line-gray"></div>
 
@@ -778,7 +777,52 @@ const AdminPage = ({ allPosts, allProducts, allOrders }) => {
                             <h5 className="roboto">Product Name</h5>
                             <h5 className="roboto" style={{ marginRight: `50px` }}>Actions</h5>
                           </div>
-                          {allProducts.map((prod) => (
+                          { activeProducts.length < 1 
+                          ? (<p className="text-center">No products to display.</p>)
+                          : activeProducts.map((prod) => (
+                            <div className="">
+                              <div className="horizontal-line-gray" style={{ marginBottom: `5px`, marginTop: `5px` }}></div>
+                              <div className="d-flex justify-content-between">
+                                <div className="left-side">
+                                  <p>{prod.name}</p>
+                                </div>
+                                <div className="right-side">
+                                  <div className="d-flex gap-3">
+                                    <button
+                                      className="btn-site-blue roboto table-button-small"
+                                      onClick={() =>
+                                        handleOpenProductEditForm(prod._id)
+                                      }
+                                    >
+                                      Edit
+                                    </button>
+                                    <button
+                                      className="btn-site-cancel roboto table-button-small"
+                                      onClick={() => deleteProduct(prod._id)}
+                                    >
+                                      Delete
+                                    </button>
+                                  </div>
+                                </div>
+                              </div>
+                            </div>
+                          ))}
+                        </div>
+                      </div>
+                      <div className="form-body all-posts-list-container box-shadow-2 mb-3">
+                        <h4 className="text-center roboto mt-2">
+                          Out of Stock
+                        </h4>
+                        <div className="horizontal-line-gray"></div>
+
+                        <div className="products-table col-11 justify-content-center m-auto">
+                          <div className="d-flex justify-content-between">
+                            <h5 className="roboto">Product Name</h5>
+                            <h5 className="roboto" style={{ marginRight: `50px` }}>Actions</h5>
+                          </div>
+                          {outOfStockProducts.length < 1
+                          ? (<p className="text-center">No products out of stock.</p>) 
+                          : outOfStockProducts.map((prod) => (
                             <div className="">
                               <div className="horizontal-line-gray" style={{ marginBottom: `5px`, marginTop: `5px` }}></div>
                               <div className="d-flex justify-content-between">
