@@ -1694,6 +1694,10 @@ a:hover {
     width: 0 !important;
     gap: 0 !important;
   }
+  
+  .parallax-container {
+    height: 100dvh !important;
+  }
 
   .desktop-hide {
     display: block;
@@ -1771,7 +1775,7 @@ a:hover {
   }
 
   .products-container-content {
-    width: 90vw;
+    width: 70vw;
   }
 
   .product-card img {
@@ -1779,6 +1783,10 @@ a:hover {
     height: 250px;
     object-fit: cover;
     transition: .1s;
+  }
+
+  .product-card {
+    min-height: 350px;
   }
 }
 

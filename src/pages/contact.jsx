@@ -73,10 +73,10 @@ const ContactPage = () => {
 
     Email.send({
       Host: "smtp.elasticemail.com",
-      Username: 'wiorek.evan@gmail.com',
-      Password: "33BCE3F0F2479D1EA6B49B489186D0E71057",
-      To: 'wiorek.evan@gmail.com',
-      From: 'wiorek.evan@gmail.com',
+      Username: 'artbyabbystore@gmail.com',
+      Password: "7C3910F614C948FBFB64543DB30349BCF6FB",
+      To: 'artbyabbystore@gmail.com',
+      From: 'artbyabbystore@gmail.com',
       Subject: `New Contact Form - ${userName} - Art By Abby`,
       Body: `
       <div style="background-color: rgba(206,139,139, .8); color: white; width: 70%; margin: 0 auto; border-radius: 5px; padding: 15px; font-family: Trebuchet MS; font-size: 1rem; font-weight: 100">
