@@ -68,6 +68,8 @@ function imageHandler() {
 export default function UpdatePostForm({ setUpdateFormOpen, setPostTitleError, setPostTypeError, postTitleError, onePost, setChangesMade }) {
   const [postTitle, setPostTitle] = useState(onePost.postTitle);
   const [postContent, setPostContent] = useState(onePost.postContent);
+  const [postImageError, setPostImageError] = useState("");
+  const [postVideoError, setPostVideoError] = useState("");
   const [videoURL, setVideoURL] = useState(onePost.videoURL);
   const [imageURL, setImageURL] = useState(onePost.imageURL);
   const [postType, setPostType] = useState("");
@@ -83,22 +85,51 @@ export default function UpdatePostForm({ setUpdateFormOpen, setPostTitleError, s
   })
 
   let formIsValid = false;
-  formIsValid = postTitleError === null;
+  formIsValid = postTitleError === null && postImageError === null && postVideoError === null;
 
   const handleIsLesson = (e) => {
     setIsLesson(true)
     setIsUpdate(false)
-    console.log('HANDLE LESSON TEST');
-    console.log('isLesson', isLesson);
-    console.log('isUpdate', isUpdate);
+    setPostImageError(null)
+    if (videoURL === "") {
+      setPostVideoError("")
+    }
+    else {
+      setPostVideoError(null)
+    }
   }
-  
+
   const handleIsUpdate = (e) => {
     setIsLesson(false)
     setIsUpdate(true)
-    console.log('HANDLE UPDATE TEST');
-    console.log('isLesson', isLesson);
-    console.log('isUpdate', isUpdate);
+    setPostVideoError(null)
+      if (imageURL.length < 1) {
+        setPostImageError("")
+      }
+      else {
+        setPostImageError(null)
+      }
+  }
+  
+  const handlePostImage = (e) => {
+    setImageURL(e.target.value)
+    if (e.target.value.length < 1 || !e.target.value.includes("http")) {
+      setPostImageError("Invalid image URL.")
+    }
+    else {
+      setPostImageError(null)
+    }
+  }
+
+  
+  const handlePostVideo = (e) => {
+    setVideoURL(e.target.value)
+    if (e.target.value.length < 1 || !e.target.value.includes("http")) {
+      setPostVideoError("Invalid video URL.")
+    }
+    else {
+      setPostVideoError(null)
+    }
   }
 
   const handlePostTitle = (e) => {
@@ -164,9 +195,9 @@ export default function UpdatePostForm({ setUpdateFormOpen, setPostTitleError, s
               value={postTitle}
               onChange={handlePostTitle}
             />
-            <label className="thin-label">Post Title</label>
+            <label className="thin-label">Post Title <span style={{ color: `rgb(206, 139, 139)` }}>*</span></label>
             {postTitleError ? (
-              <p style={{ color: "tomato" }} className="mt-1">
+              <p style={{ color: "rgb(206, 139, 139)" }} className="mt-1">
                 {postTitleError}
               </p>
             ) : (
@@ -174,43 +205,57 @@ export default function UpdatePostForm({ setUpdateFormOpen, setPostTitleError, s
             )}
           </div>
           <div className="mt-2 " style={{ backgroundColor: `white`, padding: `10px`, borderRadius: `5px` }}>
-            <label>Post Content</label>
+            <label>Post Content <span style={{ color: `rgb(206, 139, 139)` }}>*</span></label>
             <ReactQuill
               modules={modules} formats={formats} theme="snow" value={postContent} onChange={setPostContent} style={{ backgroundColor: `white` }} />
           </div>
-          <div className="form-floating mt-2">
+          {isLesson && <div className="form-floating mt-2">
             <input
               type="text"
               placeholder="p"
               className="form-control"
               value={videoURL}
-              onChange={(e) => setVideoURL(e.target.value)}
+              onChange={handlePostVideo}
             />
-            <label className="thin-label">Video URL (Optional)</label>
-          </div>
-          <div className="form-floating">
+            <label className="thin-label">Video URL <span style={{ color: `rgba(0,0,0,.5)` }}>(Optional)</span></label>
+            {postVideoError ? (
+              <p style={{ color: "rgb(206, 139, 139)" }} className="mt-1">
+                {postVideoError}
+              </p>
+            ) : (
+              ""
+            )}
+          </div>}
+          {isUpdate && <div className="form-floating">
             <input
               type="text"
               placeholder="p"
               className="form-control mt-2"
               value={imageURL}
-              onChange={(e) => setImageURL(e.target.value)}
+              onChange={handlePostImage}
             />
-            <label className="thin-label">Image URL (Optional)</label>
-          </div>
+            <label className="thin-label" id="postImageInput">Image URL (Optional)</label>
+            {postImageError ? (
+              <p style={{ color: "rgb(206, 139, 139)" }} className="mt-1">
+                {postImageError}
+              </p>
+            ) : (
+              ""
+            )}
+          </div>}
           <div className="radio-options mt-3">
             <h5>What kind of post is this?</h5>
-            {isLesson === true ? <input type="radio" value={isLesson} name="isOption" id="isLesson" onChange={handleIsLesson} checked /> : <input type="radio" value={isLesson} name="isOption" id="isLesson" onChange={handleIsLesson} /> }
+            {isLesson === true ? <input type="radio" value={isLesson} name="isOption" id="isLesson" onChange={handleIsLesson} checked /> : <input type="radio" value={isLesson} name="isOption" id="isLesson" onChange={handleIsLesson} />}
             <label htmlFor="isLesson">&nbsp; This is an art lesson</label>
             <br />
             {isUpdate === true ? <input type="radio" value={isUpdate} name="isOption" id="isUpdate" onChange={handleIsUpdate} checked /> :
-            <input type="radio" value={isUpdate} name="isOption" id="isUpdate" onChange={handleIsUpdate} />}
+              <input type="radio" value={isUpdate} name="isOption" id="isUpdate" onChange={handleIsUpdate} />}
             <label htmlFor="isUpdate">&nbsp; This is news/an update</label>
           </div>
           <br />
           <div className="d-flex gap-3 justify-content-end">
             <button className="btn-site-cancel roboto" onClick={handleFormClose}>Cancel</button>
-            <button type="submit" className="btn-site-blue roboto">Update Post</button>
+            <button type="submit" className={`roboto btn-site-blue ${formIsValid ? "" : "disabled"}`}>Update Post</button>
           </div>
         </form>
       </div>
