@@ -254,12 +254,15 @@ function PlaceOrderScreen() {
         }
 
         for (const item in ordersHash) {
+          //call to get product data
           axios.get(`/api/products/${item}`)
           .then((res) => {
             console.log(res.data);
+            //grabs the current count in stock for that product
             let updatedCountInStock = res.data.countInStock
             updatedCountInStock = updatedCountInStock - ordersHash[item]
             
+            //updates the count in stock for that product
             axios.post(`/api/products/update/${item}`, {
               countInStock: updatedCountInStock
             })
