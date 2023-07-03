@@ -395,7 +395,64 @@ const AdminPage = ({ allPosts, allProducts, allOrders }) => {
       })
         .then((res) => console.log(res))
         .catch((err) => console.log(err))
-      toast.success(`Shipping notification sent to ${order.customerInfo.email}`)
+
+        const completedOrder = order._id
+
+        setSelectedOrdersList(selectedOrdersList.filter((order) => order._id !== completedOrder))
+
+        router.replace(router.asPath);
+
+        setTrackingNumber("");
+        setTrackingNumberError("");
+
+
+      Email.send({
+        Host: "smtp.elasticemail.com",
+        Username: 'artbyabbystore@gmail.com',
+        Password: "7C3910F614C948FBFB64543DB30349BCF6FB",
+        To: `${order.customerInfo.email}`,
+        From: 'artbyabbystore@gmail.com',
+        Subject: `Your order has shipped! - Art By Abby - ${order._id}`,
+        Body: `
+        <div style="width: 40%; margin: 0 auto; font-family: Trebuchet MS; font-size: 1rem; font-weight: 100;">
+        <div style="text-align: center;">
+          <img src="https://ci3.googleusercontent.com/proxy/ISWk4XgrVMPDFscKfJjxO1J3oDT2yV7SnOOFO3o-aSMOwz2HY-bemqhUBwb3mWOA5zg=s0-d-e1-ft#https://i.imgur.com/7ueOWLt.png" alt="logo" style="width: 80px;">
+          <h2 style="font-weight: 100;">Shipping Confirmation</h2>
+        </div>
+        <div style="height: .5px; width: 100%; background-color: rgba(0,0,0,.1); margin-top: 10px; margin-bottom: 10px;">
+        </div>
+        <h3 style="font-weight: 100;">Hi ${order.customerInfo.fullName},</h3>
+        <h2 style="text-align: center; font-weight: 100;">Your order has shipped!</h2>
+        <h4>
+          <span style="color: rgba(0,0,0,.5)">Order ID:</span>
+          <a href="https://artbyabby.app/orders${order._id}"
+            style="color: rgb(206, 139, 139); text-decoration: none;">${order._id}</a>
+        </h4>
+        <h4 style="font-weight: 100;"><span style="color: rgba(0,0,0,.5)">Tracking Number:</span> ${trackingNumber}
+        </h4>
+        <br>
+        <div style="width: 100%; padding: 10px 0px; border: 0; background-color: rgb(206, 139, 139); text-align: center;">
+          <a href="https://google.com/search?q=${trackingNumber}" style="color: white; text-decoration: none; font-weight: 100;">Track
+            Order</a>
+        </div>
+        <br>
+        <h4 style="text-align: center; font-weight: 100;">Thank you again for your order, and we hope to see you again soon!</h4>
+        <br>
+        <br>
+      </div>
+          `
+      })
+        .then(
+          message => {
+            if (message === 'OK') {
+              toast.success(`Shipping notification sent to ${order.customerInfo.email}`)
+            }
+            else {
+              toast.error(message)
+            }
+          }
+        )
+
     }
     else {
       setTrackingNumberError("Please add a valid tracking number.")
@@ -917,6 +974,7 @@ const AdminPage = ({ allPosts, allProducts, allOrders }) => {
                                             <p>{order.trackingNumber}</p>
                                             <br />
                                             <p><b>Order Completed:</b></p>
+                                            <p>{dayjs(order.updatedAt).format("MMM DD, YYYY")}</p>
                                           </div>
                                         )}
 
