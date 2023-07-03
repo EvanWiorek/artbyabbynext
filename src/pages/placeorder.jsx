@@ -193,7 +193,7 @@ function PlaceOrderScreen() {
             Host: "smtp.elasticemail.com",
             Username: 'artbyabbystore@gmail.com',
             Password: "7C3910F614C948FBFB64543DB30349BCF6FB",
-            To: `artbyabbystore`,
+            To: `artbyabbystore@gmail.com`,
             From: 'artbyabbystore@gmail.com',
             Subject: `You have a new order! - Art By Abby - ${res.data._id}`,
             Body: `
@@ -239,6 +239,39 @@ function PlaceOrderScreen() {
             cartItems: [],
           })
         )
+
+        //need to remove from stock for each item
+        let ordersHash = {}
+        for(let i = 0; i < res.data.orderItems.length; i++) {
+          //if the product id is not already in the ids array, add it
+
+          if(res.data.orderItems[i].originalId in ordersHash) {
+            ordersHash[res.data.orderItems[i].originalId] = ordersHash[res.data.orderItems[i].originalId] + res.data.orderItems[i].quantity
+          }
+          else {
+            ordersHash[res.data.orderItems[i].originalId] = res.data.orderItems[i].quantity
+          }
+        }
+
+        for (const item in ordersHash) {
+          axios.get(`/api/products/${item}`)
+          .then((res) => {
+            console.log(res.data);
+            let updatedCountInStock = res.data.countInStock
+            updatedCountInStock = updatedCountInStock - ordersHash[item]
+            
+            axios.post(`/api/products/update/${item}`, {
+              countInStock: updatedCountInStock
+            })
+            .then((res) => {
+              console.log(res);
+            })
+            .catch((err) => console.log(err))
+          })
+
+        }
+        
+
         router.push(`/orders/${res.data._id}`)
       })
       .catch((err) => {
