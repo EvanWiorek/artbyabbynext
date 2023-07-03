@@ -10,12 +10,14 @@ export default function CreateProductForm({
   setProductCategoryError,
   setProductCountInStockError,
   setProductPriceOptionsError,
+  setProductShippingCostError,
   productNameError,
   productImagesError,
   productSlugError,
   productCategoryError,
   productCountInStockError,
   productPriceOptionsError,
+  productShippingCostError,
   oneProduct }) {
   const [productPriceError, setProductPriceError] = useState();
   const [productName, setProductName] = useState(oneProduct.name);
@@ -25,6 +27,8 @@ export default function CreateProductForm({
   // const [imagesToUpload, setImagesToUpload] = useState([]);
   // const [createObjectURL, setCreateObjectURL] = useState();
   const [productCategory, setProductCategory] = useState(oneProduct.category);
+  const [productShippingCost, setProductShippingCost] = useState(oneProduct.shippingCost);
+  console.log(oneProduct.shippingCost);
   const [productCountInStock, setProductCountInStock] = useState(oneProduct.countInStock);
   const [productDescription, setProductDescription] = useState(oneProduct.description);
   const [productDescriptionError, setProductDescriptionError] = useState("");
@@ -95,6 +99,7 @@ export default function CreateProductForm({
     && productCountInStockError === null
     && productPriceError === null
     && additionalOptionsError === null
+    && productShippingCostError === null
 
   let priceOptionIsValid = false;
   priceOptionIsValid =
@@ -181,6 +186,16 @@ export default function CreateProductForm({
     }
     else {
       setProductCountInStockError(null)
+    }
+  }
+
+  const handleProductShippingCost = (e) => {
+    setProductShippingCost(e.target.value);
+    if (e.target.value.length < 1) {
+      setProductShippingCostError("Product shipping cost cannot be blank.")
+    }
+    else {
+      setProductShippingCostError(null)
     }
   }
 
@@ -497,6 +512,7 @@ export default function CreateProductForm({
           category: productCategory,
           countInStock: productCountInStock,
           description: productDescription,
+          shippingCost: productShippingCost,
           priceOptions: tempProductPriceOptions,
           additionalOptions: productAdditionalOptions
         }
@@ -516,6 +532,7 @@ export default function CreateProductForm({
           category: productCategory,
           countInStock: productCountInStock,
           description: productDescription,
+          shippingCost: productShippingCost,
           priceOptions: productPriceOptions,
           additionalOptions: productAdditionalOptions
         }
@@ -559,6 +576,9 @@ export default function CreateProductForm({
     setNoAdditional(false);
     setProductAdditionalOptions([]);
     setProductPriceOptions([]);
+    ("");
+    setProductShippingCost("");
+    setProductShippingCostError("");
 
     // setTimeout(() => , 100)
     router.replace(router.asPath)
@@ -653,6 +673,24 @@ export default function CreateProductForm({
             {productCountInStockError ? (
               <p style={{ color: "tomato" }} className="mt-1">
                 {productCountInStockError}
+              </p>
+            ) : (
+              ""
+            )}
+          </div>
+
+          <div className="form-floating mt-2">
+            <input
+              type="text"
+              placeholder="p"
+              className="form-control"
+              value={productShippingCost}
+              onChange={handleProductShippingCost}
+            />
+            <label className="thin-label">Shipping Cost <span style={{ color: `rgb(206, 139, 139)` }}>*</span></label>
+            {productShippingCostError ? (
+              <p style={{ color: "tomato" }} className="mt-1">
+                {productShippingCostError}
               </p>
             ) : (
               ""

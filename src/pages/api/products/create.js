@@ -6,11 +6,11 @@ export default async function handler(req, res) {
     res.status(405).send({ msg: "Only POST requests are allowed." });
     return;
   }
-  const { name, images, slug, category, description, countInStock, priceOptions, additionalOptions } = req.body;
+  const { name, images, slug, category, description, countInStock, shippingCost, priceOptions, additionalOptions } = req.body;
 
   try {
     await connectMongoDB();
-    Product.create({ name, images, slug, category, countInStock, description, priceOptions, additionalOptions  }).then((data) => {
+    Product.create({ name, images, slug, category, shippingCost, countInStock, description, priceOptions, additionalOptions  }).then((data) => {
       console.log('data from try catch in controller: ', data);
       res.status(201).send(data);
     })

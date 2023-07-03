@@ -41,6 +41,7 @@ const ProductDetails = ({ productData }) => {
   const [productDataLoaded, setProductDataLoaded] = useState(false);
   const [productName, setProductName] = useState(productData.name);
   const [productPrice, setProductPrice] = useState(productData.priceOptions[0].price);
+  const [shippingCost, setShippingCost] = useState(productData.shippingCost)
   const [productPriceOption, setProductPriceOption] = useState('');
   const [additionalOption, setAdditionalOption] = useState('');
   const [productPriceOptionError, setProductPriceOptionError] = useState('');
@@ -160,6 +161,7 @@ const ProductDetails = ({ productData }) => {
       originalId: productData._id,
       tempId: `${productData._id}-${productPriceOption.optionName}-${additionalOption.optionName}`,
       productPriceOption: productPriceOption,
+      shippingCost: shippingCost,
       additionalOption: additionalOption,
       productPrice: productPrice
     }

@@ -32,13 +32,16 @@ function PlaceOrderScreen() {
   const router = useRouter();
   const [contentIsVisible, setContentIsVisible] = useState();
   const [cartTotal, setCartTotal] = useState();
+  const [shippingTotal, setShippingTotal] = useState();
+  const [subTotal, setSubTotal] = useState();
   const [paypalOrder, setPaypalOrder] = useState();
+  const [salesTax, setSalesTax] = useState();
   const [{ isPending }, paypalDispatch] = usePayPalScriptReducer();
   const { state, dispatch } = useContext(Store)
   const { cart } = state;
   const { cartItems, customerInfo } = cart;
   // const [{successPay, loadingPay}] = useReducer(reducer)
-  const [{successPay, loadingPay}] = useReducer(reducer, {
+  const [{ successPay, loadingPay }] = useReducer(reducer, {
     successPay: false,
     loadingPay: false
   })
@@ -67,18 +70,36 @@ function PlaceOrderScreen() {
     }
 
     let priceCount = 0;
-    for(let i = 0; i < cartItems.length; i++) {
-      // console.log(cartItems[i]);
-      // console.log(cartItems[i].quantity);
+    let shippingCount = 0;
+    let itemIds = []
+    console.log(cartItems);
+    for (let i = 0; i < cartItems.length; i++) {
       let currentPrice = cartItems[i].productPrice
-      
-      if(cartItems[i].quantity > 1) {
+      if (!itemIds.includes
+        (cartItems[i].originalId)) {
+        itemIds.push(cartItems[i].originalId);
+        shippingCount = shippingCount + cartItems[i].shippingCost
+      }
+
+      if (cartItems[i].quantity > 1) {
         currentPrice = cartItems[i].quantity * cartItems[i].productPrice
       }
       priceCount = priceCount + currentPrice
     }
-    priceCount = priceCount.toFixed(2)
-    setCartTotal(priceCount)
+    let taxes = priceCount + (priceCount * .06)
+    taxes = taxes - priceCount
+    let taxes2 = taxes.toFixed(2)
+    setSalesTax(taxes2)
+    
+    let priceCount2 = priceCount.toFixed(2)
+    setSubTotal(priceCount2)
+    
+    let shippingCount2 = shippingCount.toFixed(2)
+    setShippingTotal(shippingCount2)
+    
+    let final = priceCount + taxes + shippingCount
+    final = final.toFixed(2)
+    setCartTotal(final)
 
     const loadPaypalScript = async () => {
       const { data: clientId } = await axios.get('/api/keys/paypal');
@@ -112,28 +133,28 @@ function PlaceOrderScreen() {
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    
+
     axios.post('/api/orders/create', {
       orderItems: cartItems,
       customerInfo,
       cartTotal
     })
-    .then((res) => {
-      console.log(res.data);
-      dispatch({ type: 'CART_CLEAR_ITEMS' });
-      Cookies.set(
-        'cart',
-        JSON.stringify({
-          ...cart,
-          cartItems: [],
-        })
+      .then((res) => {
+        console.log(res.data);
+        dispatch({ type: 'CART_CLEAR_ITEMS' });
+        Cookies.set(
+          'cart',
+          JSON.stringify({
+            ...cart,
+            cartItems: [],
+          })
         )
         router.push(`/orders/${res.data._id}`)
       })
       .catch((err) => {
         console.log(err);
         toast.error(getError(err))
-    })
+      })
   }
 
   const addOrderToDB = () => {
@@ -142,22 +163,22 @@ function PlaceOrderScreen() {
       customerInfo,
       cartTotal
     })
-    .then((res) => {
-      console.log(res.data);
-      dispatch({ type: 'CART_CLEAR_ITEMS' });
-      Cookies.set(
-        'cart',
-        JSON.stringify({
-          ...cart,
-          cartItems: [],
-        })
+      .then((res) => {
+        console.log(res.data);
+        dispatch({ type: 'CART_CLEAR_ITEMS' });
+        Cookies.set(
+          'cart',
+          JSON.stringify({
+            ...cart,
+            cartItems: [],
+          })
         )
         router.push(`/orders/${res.data._id}`)
       })
       .catch((err) => {
         console.log(err);
         toast.error(getError(err))
-    })
+      })
   }
 
   const createOrder = (data, actions) => {
@@ -293,7 +314,24 @@ function PlaceOrderScreen() {
 
                       })}
 
-                      <div className="horizontal-line-gray mt-4"></div>
+
+                      <div className="d-flex justify-content-between mt-4 mb-0">
+                        <h6>Sub Total</h6>
+                        <h6>${subTotal}</h6>
+                      </div>
+
+
+                      <div className="horizontal-line-gray"></div>
+
+                      <div className="d-flex justify-content-between mt-3">
+                        <h6>Shipping</h6>
+                        <h6>${shippingTotal}</h6>
+                      </div>
+
+                      <div className="d-flex justify-content-between mt-3">
+                        <h6>Sales Tax</h6>
+                        <h6>${salesTax}</h6>
+                      </div>
 
                       <div className="d-flex justify-content-between mt-3">
                         <h5>Total</h5>
@@ -302,13 +340,13 @@ function PlaceOrderScreen() {
 
                       <div className="mt-2">
                         <PayPalButtons
-                        createOrder={createOrder}
-                        onApprove={onApprove}
-                        onError={onError}
+                          createOrder={createOrder}
+                          onApprove={onApprove}
+                          onError={onError}
                         ></PayPalButtons>
                       </div>
 
-                    {loadingPay && <p>Loading...</p>}
+                      {loadingPay && <p>Loading...</p>}
 
                     </form>
                   </div>

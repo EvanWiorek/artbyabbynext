@@ -56,6 +56,7 @@ const AdminPage = ({ allPosts, allProducts, allOrders }) => {
   const [productNameError, setProductNameError] = useState();
   const [productImagesError, setProductImagesError] = useState();
   const [productSlugError, setProductSlugError] = useState();
+  const [productShippingCostError, setProductShippingCostError] = useState();
   const [productCategoryError, setProductCategoryError] = useState();
   const [productCountInStockError, setProductCountInStockError] = useState();
   const [productPriceOptionsError, setProductPriceOtionsError] = useState();
@@ -944,6 +945,8 @@ const AdminPage = ({ allPosts, allProducts, allOrders }) => {
                   setProductCategoryError={setProductCategoryError}
                   setProductCountInStockError={setProductCountInStockError}
                   setProductPriceOtionsError={setProductPriceOtionsError}
+                  productShippingCostError={productShippingCostError}
+                  setProductShippingCostError={setProductShippingCostError}
                 />
               )}
               {updateProductFormOpen && (
@@ -962,6 +965,8 @@ const AdminPage = ({ allPosts, allProducts, allOrders }) => {
                   setProductCountInStockError={setProductCountInStockError}
                   setProductPriceOtionsError={setProductPriceOtionsError}
                   oneProduct={oneProduct}
+                  productShippingCostError={productShippingCostError}
+                  setProductShippingCostError={setProductShippingCostError}
                 />
               )}
 
