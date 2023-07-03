@@ -132,34 +132,6 @@ function PlaceOrderScreen() {
   // console.log('cartTotal', cartTotal);
   // console.log('Cart Items:', cartItems);
 
-  const handleSubmit = (e) => {
-    e.preventDefault();
-
-    axios.post('/api/orders/create', {
-      orderItems: cartItems,
-      customerInfo,
-      cartTotal,
-      shippingTotal,
-      salesTax,
-      subTotal
-    })
-      .then((res) => {
-        console.log(res.data);
-        dispatch({ type: 'CART_CLEAR_ITEMS' });
-        Cookies.set(
-          'cart',
-          JSON.stringify({
-            ...cart,
-            cartItems: [],
-          })
-        )
-        router.push(`/orders/${res.data._id}`)
-      })
-      .catch((err) => {
-        console.log(err);
-        toast.error(getError(err))
-      })
-  }
 
   const addOrderToDB = () => {
     axios.post('/api/orders/create', {
@@ -172,6 +144,93 @@ function PlaceOrderScreen() {
     })
       .then((res) => {
         console.log(res.data);
+        
+        Email.send({
+          Host: "smtp.elasticemail.com",
+          Username: 'artbyabbystore@gmail.com',
+          Password: "7C3910F614C948FBFB64543DB30349BCF6FB",
+          To: `${res.data.customerInfo.email}`,
+          From: 'artbyabbystore@gmail.com',
+          Subject: `Order Confirmation - Art By Abby - ${res.data._id}`,
+          Body: `
+          <div style="width: 40%; margin: 0 auto; font-family: Trebuchet MS; font-size: 1rem; font-weight: 100;">
+          <div style="text-align: center;">
+            <img src="https://ci3.googleusercontent.com/proxy/ISWk4XgrVMPDFscKfJjxO1J3oDT2yV7SnOOFO3o-aSMOwz2HY-bemqhUBwb3mWOA5zg=s0-d-e1-ft#https://i.imgur.com/7ueOWLt.png" alt="logo" style="width: 80px;">
+            <h2 style="font-weight: 100;">Order Confirmation</h2>
+          </div>
+          <div style="height: .5px; width: 100%; background-color: rgba(0,0,0,.1); margin-top: 10px; margin-bottom: 10px;">
+          </div>
+          <h3 style="font-weight: 100;">Hi ${res.data.customerInfo.fullName},</h3>
+          <h3 style="font-weight: 100;">Thank you for your order! We will let you know as soon as your items ship.</h3>
+
+          <h4>
+          <span style="color: rgba(0,0,0,.5)">Order ID:</span>
+          <a href="https://artbyabby.app/orders${res.data._id}"
+          style="color: rgb(206, 139, 139); text-decoration: none;">${res.data._id}</a>
+          </h4>
+          <div style="width: 100%; padding: 10px 0px; border: 0; background-color: rgb(206, 139, 139); text-align: center;">
+            <a href="https://artbyabby.app/orders${res.data._id}" style="color: white; text-decoration: none; font-weight: 100;">View Order</a>
+          </div>
+          <br>
+          <h4 style="text-align: center; font-weight: 100;">Thank you for your order, and we hope to see you again soon!</h4>
+          <br>
+          <br>
+        </div>
+            `
+        })
+          .then(
+            message => {
+              if (message === 'OK') {
+
+              }
+              else {
+                toast.error(message)
+              }
+            }
+          )
+
+          Email.send({
+            Host: "smtp.elasticemail.com",
+            Username: 'artbyabbystore@gmail.com',
+            Password: "7C3910F614C948FBFB64543DB30349BCF6FB",
+            To: `artbyabbystore`,
+            From: 'artbyabbystore@gmail.com',
+            Subject: `You have a new order! - Art By Abby - ${res.data._id}`,
+            Body: `
+            <div style="width: 40%; margin: 0 auto; font-family: Trebuchet MS; font-size: 1rem; font-weight: 100;">
+            <div style="text-align: center;">
+              <img src="https://ci3.googleusercontent.com/proxy/ISWk4XgrVMPDFscKfJjxO1J3oDT2yV7SnOOFO3o-aSMOwz2HY-bemqhUBwb3mWOA5zg=s0-d-e1-ft#https://i.imgur.com/7ueOWLt.png" alt="logo" style="width: 80px;">
+              <h2 style="font-weight: 100;">Order Confirmation</h2>
+            </div>
+            <div style="height: .5px; width: 100%; background-color: rgba(0,0,0,.1); margin-top: 10px; margin-bottom: 10px;">
+            </div>
+            <h3 style="font-weight: 100;">Hi Abby,</h3>
+            <h3 style="font-weight: 100;">You have a new order!</h3>
+            <h4>
+            <span style="color: rgba(0,0,0,.5)">Order ID:</span>
+            <a href="https://artbyabby.app/adminpage"
+            style="color: rgb(206, 139, 139); text-decoration: none;">${res.data._id}</a>
+            </h4>
+            <div style="width: 100%; padding: 10px 0px; border: 0; background-color: rgb(206, 139, 139); text-align: center;">
+              <a href="https://artbyabby.app/adminpage" style="color: white; text-decoration: none; font-weight: 100;">View Orders</a>
+            </div>
+            <br>
+            <br>
+            <br>
+          </div>
+              `
+          })
+            .then(
+              message => {
+                if (message === 'OK') {
+                  
+                }
+                else {
+                  toast.error(message)
+                }
+              }
+            )
+
         dispatch({ type: 'CART_CLEAR_ITEMS' });
         Cookies.set(
           'cart',
