@@ -636,9 +636,8 @@ const AdminPage = ({ allPosts, allProducts, allOrders }) => {
             <div className="pt-4 roboto manage-views-container col-lg-10">
               <div className="manage-views-content">
                 {postsViewActive && (
-                  <div className="create-post form-body box-shadow-2 mt-3 mb-5">
-                    <h3 className="text-center roboto">Manage Posts</h3>
-                    <div className="horizontal-line-gray"></div>
+                  <div className="create-post mt-3 mb-5">
+                    <h2 className="text-center roboto mb-4">Manage Posts</h2>
                     <div className="col-lg-9 m-auto">
                       <div className="d-flex justify-content-center">
                         <button
@@ -749,10 +748,10 @@ const AdminPage = ({ allPosts, allProducts, allOrders }) => {
                   </div>
                 )}
                 {productsViewActive && (
-                  <div className="manage-products form-body box-shadow-2 mt-3 mb-5">
-                    <h3 className="text-center roboto">Manage Products</h3>
-                    <div className="horizontal-line-gray"></div>
+                  <div className="manage-products mt-3 mb-5">
+                    <h2 className="text-center roboto mb-4">Manage Products</h2>
                     <div className="col-lg-9 m-auto">
+                      <div className="" style={{ width: `100vw` }}></div>
                       <div className="d-flex justify-content-center mt-3">
                         <button
                           onClick={handleCreateProductFormOpen}
@@ -857,10 +856,9 @@ const AdminPage = ({ allPosts, allProducts, allOrders }) => {
                 )}
                 {ordersViewActive && (
                   <div
-                    className="manage-orders form-body box-shadow-2 mt-3 mb-5"
+                    className="manage-orders mt-3 mb-5"
                   >
-                    <h3 className="text-center roboto">Manage Orders</h3>
-                    <div className="horizontal-line-gray"></div>
+                    <h2 className="text-center roboto mb-4">Manage Orders</h2>
                     <div className="col-lg-9 m-auto">
 
                       <div className="orders-list form-body box-shadow-2 mb-3 p-2">
@@ -1026,7 +1024,7 @@ const AdminPage = ({ allPosts, allProducts, allOrders }) => {
 
                                         <div className="desktop-hide">
                                           <div className="horizontal-line-gray"></div>
-                                          <button className="roboto btn-site-cancel" style={{ width: `100%` }} onClick={openDeleteOrderModal}><i class="bi bi-trash-fill"></i> Delete Order</button>
+                                          <button className="roboto btn-site-cancel" style={{ width: `100%` }} onClick={() => openDeleteOrderModal(order._id)}><i class="bi bi-trash-fill"></i> Delete Order</button>
                                         </div>
                                       </div>
                                     </div>

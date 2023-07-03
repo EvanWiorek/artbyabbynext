@@ -36,17 +36,21 @@ export default function Home({ allProducts, allLessons }) {
 
   useEffect(() => {
     const observer = new IntersectionObserver((entries) => {
-      const entry = entries[0];
-      setHeaderIsVisible(entry.isIntersecting)
-
       entries.forEach(entry => {
         entry.target.classList.toggle("show", entry.isIntersecting)
-        if (entry.isIntersecting) {
+        if (entry.isIntersecting === true) {
           observer.unobserve(entry.target)
+          entry.target.classList.add("show-permanent")
         }
       })
     })
-    observer.observe(myRef.current)
+
+    const headerObserver = new IntersectionObserver((entries) => {
+      const entry = entries[0];
+      setHeaderIsVisible(entry.isIntersecting)
+    })
+    
+    headerObserver.observe(myRef.current)
 
     const fadeIns = document.querySelectorAll(".io-fade-in");
 
@@ -177,7 +181,7 @@ export default function Home({ allProducts, allLessons }) {
             <br />
             <br />
             <br />
-            <h1 className='site-font text-center all-products-title io-fade-in'>Featured Products</h1>
+            <h1 className='site-font text-center all-products-title io-fade-in-slow'>Featured Products</h1>
             <br />
             <br />
             <div className="products-container-body m-auto io-fade-in-zoom-in">
@@ -186,7 +190,7 @@ export default function Home({ allProducts, allLessons }) {
                   <ProductItem product={product} key={product._id} />
                 ))}
                 <div className="d-flex flex-column align-items-center desktop-link roboto view-all-products-link">
-                  <p onClick={() => handleRoute("/allproducts")} style={{ cursor: `pointer`, marginBottom: 0, fontSize: `1.2rem` }}>View All Products</p>
+                  <p onClick={() => handleRoute("/allproducts")} style={{ cursor: `pointer`, marginBottom: 0, fontSize: `1.2rem` }} className='io-fade-in-up'>View All Products</p>
                   <div className="desktop-link-line"></div>
                 </div>
               </div>
@@ -194,7 +198,10 @@ export default function Home({ allProducts, allLessons }) {
             <br />
             <br />
             <br />
-            <div className="body-blue io-fade-in-slow">
+            {allLessons.length < 1 
+            ? ("")
+            : (
+              <div className="body-blue io-fade-in-slow">
               <br />
               <h1 className='site-font text-center all-products-title io-fade-in-right'>Join me in an art lesson!</h1>
               <br />
@@ -206,11 +213,13 @@ export default function Home({ allProducts, allLessons }) {
               </div>
               <br />
               <br />
-              <div className="d-flex flex-column align-items-center desktop-link roboto view-all-products-link io-fade-in-right" style={{ width: `150px` }}>
-                <p onClick={() => handleRoute("/lessons")} style={{ cursor: `pointer`, marginBottom: 0, fontSize: `1.2rem` }} className='io-fade-in-right'>View All Lessons</p>
+              <div className="d-flex flex-column align-items-center desktop-link roboto view-all-products-link io-fade-in-up" style={{ width: `150px` }}>
+                <p onClick={() => handleRoute("/lessons")} style={{ cursor: `pointer`, marginBottom: 0, fontSize: `1.2rem` }} className='io-fade-in-up'>View All Lessons</p>
                 <div className="desktop-link-line"></div>
               </div>
             </div>
+            ) 
+            }
             <br />
             <br />
             <br />

@@ -165,11 +165,11 @@ function PlaceOrderScreen() {
 
           <h4>
           <span style="color: rgba(0,0,0,.5)">Order ID:</span>
-          <a href="https://artbyabby.app/orders${res.data._id}"
+          <a href="https://artbyabby.app/orders/${res.data._id}"
           style="color: rgb(206, 139, 139); text-decoration: none;">${res.data._id}</a>
           </h4>
           <div style="width: 100%; padding: 10px 0px; border: 0; background-color: rgb(206, 139, 139); text-align: center;">
-            <a href="https://artbyabby.app/orders${res.data._id}" style="color: white; text-decoration: none; font-weight: 100;">View Order</a>
+            <a href="https://artbyabby.app/orders/${res.data._id}" style="color: white; text-decoration: none; font-weight: 100;">View Order</a>
           </div>
           <br>
           <h4 style="text-align: center; font-weight: 100;">Thank you for your order, and we hope to see you again soon!</h4>

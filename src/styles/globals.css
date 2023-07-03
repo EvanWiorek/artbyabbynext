@@ -262,6 +262,11 @@ textarea:focus {
   transform: scale(1);
 }
 
+.show-permanent {
+  opacity: 1 !important;
+  transform: scale(1);
+}
+
 .white-bg {
   width: 100%;
   height: 125px;
@@ -1675,6 +1680,10 @@ a:hover {
     display: block;
   }
 
+  .manage-products {
+    
+  }
+
   .details-content img {
     width: 100%;
   }
@@ -1892,6 +1901,7 @@ a:hover {
 
   .manage-views-container {
     width: 100vw;
+
   }
 
   .products-container-content {
