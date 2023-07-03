@@ -138,7 +138,10 @@ function PlaceOrderScreen() {
     axios.post('/api/orders/create', {
       orderItems: cartItems,
       customerInfo,
-      cartTotal
+      cartTotal,
+      shippingTotal,
+      salesTax,
+      subTotal
     })
       .then((res) => {
         console.log(res.data);
@@ -162,7 +165,10 @@ function PlaceOrderScreen() {
     axios.post('/api/orders/create', {
       orderItems: cartItems,
       customerInfo,
-      cartTotal
+      cartTotal,
+      shippingTotal,
+      salesTax,
+      subTotal
     })
       .then((res) => {
         console.log(res.data);

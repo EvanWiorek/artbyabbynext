@@ -13,6 +13,7 @@ import Order from "../models/order.model";
 import allproducts from "./allproducts";
 import dayjs from "dayjs";
 import { toast } from "react-toastify";
+import Cookies from "js-cookie";
 
 export const getServerSideProps = async () => {
   try {
@@ -38,15 +39,17 @@ export const getServerSideProps = async () => {
 const AdminPage = ({ allPosts, allProducts, allOrders }) => {
   const myRef = useRef();
   const router = useRouter();
-  const [loggedIn, setLoggedIn] = useState("");
+  const [loggedIn, setLoggedIn] = useState(false);
   const [createPostFormOpen, setCreatePostFormOpen] = useState(false);
   const [createProductFormOpen, setCreateProductFormOpen] = useState(false);
   const [updateFormOpen, setUpdateFormOpen] = useState(false);
   const [updateProductFormOpen, setUpdateProductFormOpen] = useState(false);
+  const [adminPassword, setAdminPassword] = useState("");
+  const [adminPasswordError, setAdminPasswordError] = useState("");
+  const passwordString = "ArtByAbby63Df"
 
   //AbbyPost
   const [postTitleError, setPostTitleError] = useState("");
-  // const adminPassword = ""
   const [postTypeError, setPostTypeError] = useState("");
   const [allLessons, setAllLessons] = useState([]);
   const [allUpdates, setAllUpdates] = useState([]);
@@ -66,7 +69,7 @@ const AdminPage = ({ allPosts, allProducts, allOrders }) => {
   const [postsViewActive, setPostsViewActive] = useState(true);
   const [productsViewActive, setProductsViewActive] = useState(false);
   const [ordersViewActive, setOrdersViewActive] = useState(false);
-  const [settingsViewActive, setSettingsViewActive] = useState(false);
+  // const [settingsViewActive, setSettingsViewActive] = useState(false);
 
   //Orders
   const [selectedOrdersList, setSelectedOrdersList] = useState(
@@ -82,27 +85,40 @@ const AdminPage = ({ allPosts, allProducts, allOrders }) => {
   let orderTrackingValid = false;
   orderTrackingValid = trackingNumberError === null;
 
+  let loginIsValid = false;
+  loginIsValid = adminPasswordError === null;
+
   useEffect(() => {
     setAllLessons(allPosts.filter((p) => p.isLesson === true));
     setAllUpdates(allPosts.filter((p) => p.isUpdate === true));
+
+    console.log('cookies out: ', Cookies.get('loggedIn'));
+
+    if (Cookies.get('loggedIn') != undefined) {
+      setLoggedIn(true)
+    }
   }, [changesMade]);
 
-  const handlePassword = () => {
-    setLoggedIn(true);
-    document.querySelector(".admin-page-dark").style = "opacity: 0";
-    setTimeout(
-      () =>
-      (document.querySelector(".admin-page-dark").style =
-        "opacity: 0; display: none"),
-      600
-    );
-    document.querySelector(".admin-card").style = "opacity: 0";
-    setTimeout(
-      () =>
-      (document.querySelector(".admin-card").style =
-        "opacity: 0; display: none"),
-      600
-    );
+  const handleAdminPassword = (e) => {
+    setAdminPassword(e.target.value)
+    console.log(e.target.value);
+    if (e.target.value !== passwordString) {
+      setAdminPasswordError("Password is incorrect.")
+    }
+    else {
+      setAdminPasswordError(null)
+    }
+  }
+
+  const handleLogin = () => {
+    if (loginIsValid === true) {
+      setLoggedIn(true);
+
+      Cookies.set('loggedIn', true)
+    }
+    else {
+      setAdminPasswordError("Password is incorrect and smells.")
+    }
   };
 
   const backToHome = () => {
@@ -168,7 +184,7 @@ const AdminPage = ({ allPosts, allProducts, allOrders }) => {
       setPostsViewActive(true);
       setProductsViewActive(false);
       setOrdersViewActive(false);
-      setSettingsViewActive(false);
+      // setSettingsViewActive(false);
 
       document
         .getElementById("postsView")
@@ -187,7 +203,7 @@ const AdminPage = ({ allPosts, allProducts, allOrders }) => {
       setPostsViewActive(false);
       setProductsViewActive(true);
       setOrdersViewActive(false);
-      setSettingsViewActive(false);
+      // setSettingsViewActive(false);
 
       document
         .getElementById("postsView")
@@ -206,7 +222,7 @@ const AdminPage = ({ allPosts, allProducts, allOrders }) => {
       setPostsViewActive(false);
       setProductsViewActive(false);
       setOrdersViewActive(true);
-      setSettingsViewActive(false);
+      // setSettingsViewActive(false);
 
       document
         .getElementById("postsView")
@@ -395,7 +411,7 @@ const AdminPage = ({ allPosts, allProducts, allOrders }) => {
     handleCloseDeleteOrderModal()
 
     setSelectedOrdersList(selectedOrdersList.filter((order) => order._id !== orderToDelete))
-    
+
     router.replace(router.asPath);
   };
 
@@ -405,33 +421,48 @@ const AdminPage = ({ allPosts, allProducts, allOrders }) => {
         <title>Admin Page | Art by Abby</title>
       </Head>
       <main ref={myRef}>
-        <div className="admin-page-dark"></div>
-        <div className="admin-card box-shadow roboto small-card">
-          <div className="admin-card-header text-center roboto p-3">
-            <h3 className="roboto">Admin Page</h3>
-          </div>
-          <div className="horizontal-line"></div>
-          <div className="admin-card-body p-4">
-            <p>To access this page, enter the password below:</p>
-            <div className="form-floating thin-floating">
-              <input
-                type="password"
-                name="adminPassword"
-                id="adminPassword"
-                placeholder="p"
-                className="form-control thin-control"
-              />
-              <label htmlFor="adminPassword">Password</label>
+
+        {loggedIn === false ?
+          (<div>
+            <div className="admin-page-dark"></div>
+            <div className="admin-card box-shadow roboto small-card">
+              <div className="admin-card-header text-center roboto p-3">
+                <h3 className="roboto">Admin Page</h3>
+              </div>
+              <div className="horizontal-line"></div>
+              <div className="admin-card-body p-4">
+                <p>To access this page, enter the password below:</p>
+                <div className="form-floating thin-floating">
+                  <input
+                    type="password"
+                    name="adminPassword"
+                    id="adminPassword"
+                    value={adminPassword}
+                    onChange={handleAdminPassword}
+                    placeholder="p"
+                    className="form-control thin-control"
+                  />
+                  <label htmlFor="adminPassword">Password</label>
+                  {adminPasswordError ? (
+                    <p style={{ color: "rgb(206, 139, 139)" }} className="mt-1">
+                      {adminPasswordError}
+                    </p>
+                  ) : (
+                    ""
+                  )}
+                </div>
+                <button
+                  className="btn-site-blue roboto mt-3"
+                  style={{ width: `100%` }}
+                  onClick={handleLogin}
+                >
+                  Access Page
+                </button>
+              </div>
             </div>
-            <button
-              className="btn-site-blue roboto mt-3"
-              style={{ width: `100%` }}
-              onClick={handlePassword}
-            >
-              Access Page
-            </button>
-          </div>
-        </div>
+          </div>)
+          : ("")
+        }
 
         {/* background animation */}
         <div className="area">
@@ -765,7 +796,7 @@ const AdminPage = ({ allPosts, allProducts, allOrders }) => {
                           {selectedOrdersList.length > 0 ? (
                             selectedOrdersList.map((order, idx) => (
                               <div key={idx}>
-                                <div className="card mb-2">
+                                <div className="card mb-2 orders-list-order">
                                   <div className="card-header">
                                     <div className="d-flex gap-large flex-column-small">
                                       <div className="order-info d-flex-small gap-small">
@@ -827,13 +858,13 @@ const AdminPage = ({ allPosts, allProducts, allOrders }) => {
                                           {order._id}
                                         </p>
                                       </div>
-                                      <p className="mobile-hide delete-order-desktop" onClick={() => openDeleteOrderModal(order._id)}><i class="bi bi-trash-fill" ></i> Delete Order</p>
+                                      <p className="mobile-hide tablet-show delete-order-desktop" onClick={() => openDeleteOrderModal(order._id)}><i class="bi bi-trash-fill" ></i> Delete Order</p>
 
                                     </div>
                                   </div>
                                   <div className="card-body">
                                     <div className="order-info-body d-flex flex-column-small gap-small">
-                                      <div className="order-list col-lg-3">
+                                      <div className="order-list">
                                         {order.orderItems.map((orderItem, idx) => (
                                           <div className="order-items d-flex gap-3 mb-3" key={idx}>
                                             <img
@@ -861,7 +892,7 @@ const AdminPage = ({ allPosts, allProducts, allOrders }) => {
                                           <p>{order.customerInfo.phoneNumber}</p>
                                         </div>
                                       </div>
-                                      <div className="order-actions col-lg-4">
+                                      <div className="order-actions">
 
                                         {order.isShipped === false ? (
                                           <div>

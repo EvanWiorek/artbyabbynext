@@ -1,9 +1,16 @@
 import { connectMongoDB } from "@/src/libs/MongoConnect";
 import Order from "@/src/models/order.model";
 
-
 export default async function handler(req, res) {
-  const { orderItems, customerInfo, paymentMethod, cartTotal } = req.body
+  const {
+    orderItems,
+    customerInfo,
+    paymentMethod,
+    cartTotal,
+    shippingTotal,
+    salesTax,
+    subTotal,
+  } = req.body;
 
   try {
     await connectMongoDB();
@@ -11,15 +18,16 @@ export default async function handler(req, res) {
       orderItems,
       customerInfo,
       paymentMethod,
-      cartTotal
-    })
-    .then((data) => {
+      cartTotal,
+      shippingTotal,
+      salesTax,
+      subTotal,
+    }).then((data) => {
       console.log(data);
       res.status(201).send(data);
-    })
-  }
-  catch (err) {
+    });
+  } catch (err) {
     console.log(err);
-    res.status(400).send({ err, msg: "Something went wrong." })
+    res.status(400).send({ err, msg: "Something went wrong." });
   }
 }

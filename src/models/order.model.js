@@ -37,6 +37,9 @@ const OrderSchema = new mongoose.Schema(
     ],
     paymentMethod: String,
     cartTotal: Number,
+    shippingTotal: Number,
+    salesTax: Number,
+    subTotal: Number,
     isShipped: {
       type: Boolean,
       default: false
