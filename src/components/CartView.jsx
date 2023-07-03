@@ -3,6 +3,7 @@ import { useContext, useState } from 'react';
 import { Store } from '../utils/Store';
 import dynamic from 'next/dynamic';
 import { useRouter } from 'next/router';
+import { toast } from 'react-toastify';
 
 function CartView() {
   const { state, dispatch } = useContext(Store);
@@ -24,13 +25,17 @@ function CartView() {
   }
 
   const handleUpdateCart = (item, action) => {
-
     let quantity = Number(item.quantity);
     if (action === 'minus') {
       quantity--;
     }
     else if (action === 'plus') {
-      quantity++;
+      if(item.quantity < item.countInStock) {
+        quantity++;
+      }
+      else {
+        toast(`Sorry, ${item.productName} is out of stock.`)
+      }
     }
     dispatch({ type: 'CART_ADD_ITEM', payload: { ...item, quantity } })
     if (quantity === 0) {
@@ -54,7 +59,7 @@ function CartView() {
                 <div key={item.tempId}>
                   <div className="horizontal-line-gray"></div>
                   <div className='d-flex gap-3'>
-                    <img src={item.productImage} alt={item.productName} style={{ width: `110px`, height: `110px` }} />
+                    <img src={item.productImage} alt={item.productName} style={{ width: `100px`, height: `100px` }} />
                     <div className='cart-item-info' style={{ minHeight: `110px` }}>
                       <Link href={`/product/${item.slug}`}>{item.productName}</Link>
                       <p>
@@ -69,7 +74,7 @@ function CartView() {
                           ? <br />
                           : <p>{item.productPriceOption.optionName} {item.additionalOption.optionName}</p>}
 
-                      <div className="d-flex align-items-center gap-1 remove-items" onClick={() => handleRemoveItem(item)} style={{ cursor: `pointer`, marginTop: `20px` }}>
+                      <div className="d-flex align-items-center gap-1 remove-items" onClick={() => handleRemoveItem(item)} style={{ cursor: `pointer`, marginTop: `10px` }}>
                         <p style={{ fontSize: `1.3rem`, color: `rgba(0,0,0,.5)`, marginTop: `-2px` }}>×</p>
                         <p style={{ textDecoration: `underline`, fontSize: `.8rem` }} className='remove-items-text'>{item.quantity > 1 ? 'Remove Items' : 'Remove Item'}</p>
                       </div>

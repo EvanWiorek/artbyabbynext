@@ -162,11 +162,10 @@ const ProductDetails = ({ productData }) => {
       tempId: `${productData._id}-${productPriceOption.optionName}-${additionalOption.optionName}`,
       productPriceOption: productPriceOption,
       shippingCost: shippingCost,
+      countInStock: productData.countInStock,
       additionalOption: additionalOption,
       productPrice: productPrice
     }
-
-    // console.log(compiledProduct);
 
     if (formIsValid === true) {
       const existItem = state.cart.cartItems.find(
