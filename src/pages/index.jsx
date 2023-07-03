@@ -29,6 +29,7 @@ export default function Home({ allProducts }) {
   const myRef = useRef();
   const [headerIsVisible, setHeaderIsVisible] = useState();
   const router = useRouter();
+  const [inStockProducts, setInStockProducts] = useState(allProducts.filter((prod) => prod.countInStock > 0));
 
   useEffect(() => {
     const observer = new IntersectionObserver((entries) => {
@@ -122,7 +123,7 @@ export default function Home({ allProducts }) {
             <h1 className='site-font text-center all-products-title'>Featured Products</h1>
             <div className="products-container-body m-auto">
               <div className="products-container-content d-flex flex-wrap col-lg-8 m-auto gap-3 align-items-center">
-                {allProducts.slice(0,7).map((product) => (
+                {inStockProducts.slice(0,7).map((product) => (
                   <ProductItem product={product} key={product._id} />
                 ))}
                 <div className="d-flex flex-column align-items-center desktop-link roboto view-all-products-link">

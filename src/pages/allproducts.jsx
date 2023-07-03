@@ -26,6 +26,7 @@ export const getServerSideProps = async () => {
 const allproducts = ({ isVisible, allProducts }) => {
   const myRef = useRef();
   const [contentIsVisible, setContentIsVisible] = useState();
+  const [inStockProducts, setInStockProducts] = useState(allProducts.filter((prod) => prod.countInStock > 0));
 
   useEffect(() => {
     const observer = new IntersectionObserver((entries) => {
@@ -56,7 +57,7 @@ const allproducts = ({ isVisible, allProducts }) => {
           </div>
           <div className="products-container-body">
             <div className="products-container-content d-flex flex-wrap col-lg-8 m-auto gap-3 align-items-center">
-              {allProducts.map((product) => (
+              {inStockProducts.map((product) => (
                 <ProductItem product={product} key={product._id} />
               ))}
             </div>
