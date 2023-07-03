@@ -1360,8 +1360,13 @@ a:hover {
 .order-summary {
   margin-top: 20px;
   width: 350px;
-  min-height: 500px;
+  /* min-height: 500px; */
   padding: 10px;
+}
+
+.order-summary h4 {
+  font-weight: 300 !important;
+  color: rgb(206, 139, 139);
 }
 
 .single-item-count {
@@ -1631,10 +1636,14 @@ a:hover {
     align-content: center;
   }
 
+  .order-items-list-mobile {
+    width: 90vw;
+  }
+
   .order-summary {
-    transform: scale(.95);
-    font-size: 1.05rem;
-    margin-top: 0;
+    width: 90vw;
+    margin: 0 auto;
+    margin-top: 1.5rem !important;
   }
 
   .order-sum-text {
