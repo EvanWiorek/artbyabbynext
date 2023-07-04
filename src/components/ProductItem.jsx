@@ -36,7 +36,6 @@ export default function ProductItem({ product }) {
           <div className="product-title-link" onClick={() => handleRoute(product._id)}>
             {product.name}
           </div>
-          <br />
 
           <p style={{ margin: 0, fontWeight: `300`, color: `rgba(0,0,0,.7)` }}>
             {

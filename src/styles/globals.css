@@ -490,6 +490,26 @@ a:hover {
   pointer-events: none;
 }
 
+.products-container-body {
+  padding-top: 25px;
+}
+
+.featured-lesson {
+  gap: 3rem;
+}
+
+.featured-lesson iframe {
+  margin-top: 15px;
+}
+
+.featured-lesson.details-content {
+  margin-top: 15px;
+}
+
+.view-all-lessons-link {
+  margin-top: 20px;
+}
+
 .navbar-white {
   width: 100vw;
   height: 127px;
@@ -498,7 +518,7 @@ a:hover {
 }
 
 .body-white {
-  background-color: rgb(255,255,255);
+  background-color: rgb(255, 255, 255);
   box-shadow: 2px 0px 3px rgba(0, 0, 0, .2);
   position: relative;
   z-index: 1;
@@ -906,9 +926,7 @@ a:hover {
   height: 92dvh;
 }
 
-.order-shipping-info {
-
-}
+.order-shipping-info {}
 
 .orders-list-view {
   overflow-y: auto;
@@ -1535,10 +1553,10 @@ a:hover {
     display: block;
   }
 
-  
-.desktop-hide-alt {
-  display: block !important;
-}
+
+  .desktop-hide-alt {
+    display: block !important;
+  }
 
   .parallax-container {
     height: 100dvh !important;
@@ -1556,16 +1574,6 @@ a:hover {
     margin-top: -5px !important;
   }
 
-  .abby-name {
-    font-size: .7rem !important;
-  }
-
-  .navbar-white {
-    width: 100vw;
-    height: 91px;
-    background-color: white;
-  }
-
   .cart-button {
     transform: scale(1.2);
   }
@@ -1577,6 +1585,32 @@ a:hover {
 
   .left-side-mobile button {
     transform: scale(1.2);
+  }
+  
+  .products-container-body {
+  padding-top: 25px;
+  }
+
+  .featured-lesson {
+    width: 90vw;
+    gap: 0;
+  }
+
+  .featured-lesson iframe {
+    margin-top: 0;
+  }
+  
+  .featured-lesson.details-content {
+        margin-top: 0;
+  }
+
+  .view-all-products-link p {
+    font-size: 1rem !important;
+  }
+
+  .view-all-lessons-link {
+    text-align: center;
+    margin-top: 0;
   }
 
   .admin-card {
@@ -1680,9 +1714,7 @@ a:hover {
     display: block;
   }
 
-  .manage-products {
-    
-  }
+  .manage-products {}
 
   .details-content img {
     width: 100%;
@@ -1812,7 +1844,7 @@ a:hover {
   .after-order-details-page {
     width: 90vw;
   }
-  
+
 }
 
 /* Tablet and Smaller Desktop */
@@ -1832,7 +1864,7 @@ a:hover {
     width: 0 !important;
     gap: 0 !important;
   }
-  
+
   .parallax-container {
     height: 100dvh !important;
   }
@@ -1841,10 +1873,10 @@ a:hover {
     display: block;
   }
 
-  
-.desktop-hide-alt {
-  display: block !important;
-}
+
+  .desktop-hide-alt {
+    display: block !important;
+  }
 
   .right-side-desktop {
     display: none !important;
@@ -1863,14 +1895,27 @@ a:hover {
     margin-top: -5px !important;
   }
 
-  .abby-name {
-    font-size: .7rem !important;
+  
+  .featured-lesson {
+    width: 90vw;
+    gap: 0;
   }
 
-  .navbar-white {
-    width: 100vw;
-    height: 86px;
-    background-color: white;
+  .featured-lesson iframe {
+    margin-top: 0;
+  }
+  
+  .featured-lesson.details-content {
+        margin-top: 0;
+  }
+
+  .view-all-products-link p {
+    font-size: 1rem !important;
+  }
+
+  .view-all-lessons-link {
+    text-align: center;
+    margin-top: 0;
   }
 
   .one-lesson-container {
@@ -1932,7 +1977,7 @@ a:hover {
   .product-card {
     min-height: 350px;
   }
-  
+
   .orders-list-order {
     width: 79vw;
   }

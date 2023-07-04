@@ -183,7 +183,6 @@ export default function Home({ allProducts, allLessons }) {
             <br />
             <h1 className='site-font text-center all-products-title io-fade-in-slow'>Featured Products</h1>
             <br />
-            <br />
             <div className="products-container-body m-auto io-fade-in-zoom-in">
               <div className="products-container-content d-flex flex-wrap col-lg-8 m-auto gap-3 align-items-center">
                 {inStockProducts.slice(0, 7).map((product) => (
@@ -205,17 +204,18 @@ export default function Home({ allProducts, allLessons }) {
               <br />
               <h1 className='site-font text-center all-products-title io-fade-in-right'>Join me in an art lesson!</h1>
               <br />
-              <br />
-              <div className="d-flex col-lg-10 m-auto gap-5">
-                <iframe src={`https://www.youtube.com/embed/${getTrueURL(allLessons[0].videoURL)}`} className='one-lesson-video col-lg-6 box-shadow-2 io-fade-in-zoom-out'>
-                </iframe>
-                <div className='mt-3 m-auto roboto details-content io-fade-in-right' dangerouslySetInnerHTML={{ __html: allLessons[0].postContent }} />
-              </div>
-              <br />
-              <br />
-              <div className="d-flex flex-column align-items-center desktop-link roboto view-all-products-link io-fade-in-up" style={{ width: `150px` }}>
-                <p onClick={() => handleRoute("/lessons")} style={{ cursor: `pointer`, marginBottom: 0, fontSize: `1.2rem` }} className='io-fade-in-up'>View All Lessons</p>
-                <div className="desktop-link-line"></div>
+              <div className="d-flex flex-column align-items-center">
+                <div className="d-flex col-lg-9 m-auto flex-column-small featured-lesson">
+                  <iframe src={`https://www.youtube.com/embed/${getTrueURL(allLessons[allLessons.length-1].videoURL)}`} className='one-lesson-video col-lg-6 box-shadow-2 io-fade-in-zoom-out'>
+                  </iframe>
+                  <div className='mt-3 m-auto roboto details-content io-fade-in-right' dangerouslySetInnerHTML={{ __html: allLessons[allLessons.length-1].postContent }} />
+                </div>
+                <br />
+                <div className="d-flex flex-column align-items-center desktop-link roboto view-all-lessons-link io-fade-in-up" style={{ width: `150px` }}>
+                  <p onClick={() => handleRoute("/lessons")} style={{ cursor: `pointer`, marginBottom: 0, fontSize: `1.2rem` }} className='io-fade-in-up'>View All Lessons</p>
+                  <div className="desktop-link-line"></div>
+                </div>
+                {/* <br /> */}
               </div>
             </div>
             ) 
