@@ -119,7 +119,7 @@ const AdminPage = ({ allPosts, allProducts, allOrders }) => {
       Cookies.set('loggedIn', true)
     }
     else {
-      setAdminPasswordError("Password is incorrect and smells.")
+      setAdminPasswordError("Password is incorrect.")
     }
   };
 
