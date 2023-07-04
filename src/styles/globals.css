@@ -1688,10 +1688,18 @@ a:hover {
   }
 
   .orders-list-view {
-    min-width: 88vw;
+    /* padding-right: 30px;
+    margin-right: 5px;
+    margin-left: 5px; */
+    padding-right: 10vw;
+    margin-right: 5px;
+    margin-left: 5px;
+    /* min-width: 88vw; */
     /* margin-left: auto;
     margin-right: auto; */
   }
+
+  .manage-orders {}
 
   .orders-list-order {
     width: 79vw;
@@ -1946,7 +1954,10 @@ a:hover {
 
   .manage-views-container {
     width: 100vw;
-
+    /* position: absolute;
+    left: 50%;
+    -ms-transform: translateX(-50%);
+    transform: translateX(-50%); */
   }
 
   .products-container-content {
